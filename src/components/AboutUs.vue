@@ -1,160 +1,135 @@
 <template>
   <div>
-    <div class="nav">
-      <button @click="changeTab('about-us')" :class="{ active: activeTab === 'about-us' }">About Us</button>
-      <button @click="changeTab('history')" :class="{ active: activeTab === 'history' }">History</button>
-      <button @click="changeTab('vision-mission')" :class="{ active: activeTab === 'vision-mission' }">Vision/Mission</button>
-    </div>
-    
+    <nav>
+      <button
+        v-for="tab in tabs"
+        :key="tab"
+        :class="{ active: currentTab === tab }"
+        @click="currentTab = tab"
+      >
+        {{ tab }}
+      </button>
+    </nav>
+    <main>
+      <div v-if="currentTab === 'about'">
+        <h2> About Us Content</h2>
+        <hr class="divider" />
+        <div class="content-below-divider">
+          <p>Apollo Technologies is an Information and Communication Technology Services organisation that leads a group of companies engaged in the delivery of:</p>
+          <div class="service">
+            <img src="@/assets/placeholder.png" alt="Software Services" />
+            <span>Software Services</span>
+          </div>
+          <div class="service">
+            <img src="@/assets/placeholder.png" alt="IT and Network Infrastructure and Services" />
+            <span>IT and Network Infrastructure and Services</span>
+          </div>
 
-    <div v-if="activeTab === 'about-us'" class="tab-content">
-      <h2 >About Us</h2>
-      <div class="tab-header">    
-        <div class="about-content">
           <p>
-            Apollo Technologies is an Information and Communication Technology Services organisation that leads a group of companies engaged in the delivery of:</p>
-          <ul class="bullet-list">
-            <li>
-              <img src="@/assets/placeholder.png" alt="Generic placeholder image" class="bullet-image" />
-              Software Services
-            </li>
-            <li>
-              <img src="@/assets/placeholder.png" alt="Generic placeholder image" class="bullet-image" />
-              IT and Network Infrastructure and Services
-            </li>
-            <li>
-              <p>
-                Apollo Technologies Inc. develops and operates innovative and mission-critical systems in various sectors, mainly in:                                        
-              </p>                
-              <ul class="bullet-list">
-                <li>
-                  <img src="@/assets/placeholder.png" alt="Generic placeholder image" class="bullet-image" />
-                  Supply Chain Management
-                </li>
-              </ul>
-            </li>
-            <li>
-              <img src="@/assets/placeholder.png" alt="Generic placeholder image" class="bullet-image" />
-              Fintech in Banks and non-Bank environments
-            </li>
-            <li>
-              <img src="@/assets/placeholder.png" alt="Generic placeholder image" class="bullet-image" />
-              e-Government Systems
-            </li>
-          </ul>
+            Apollo Technologies Inc. develops and operates innovative and mission-critical systems in various sectors, mainly in:
+          </p>
+          <div class="service">
+            <img src="@/assets/placeholder.png" alt="Supply Chain Management" />
+            <span>Supply Chain Management</span>
+          </div>
+          <div class="service">
+            <img src="@/assets/placeholder.png" alt="Fintech in Banks and non-Bank environments" />
+            <span>Fintech in Banks and non-Bank environments</span>
+          </div>
+          <div class="service">
+            <img src="@/assets/placeholder.png" alt="e-Government Systems" />
+            <span>e-Government Systems</span>
+          </div>
+          <div class="service">
+            <img src="@/assets/placeholder.png" alt="Information Technology Infrastructure" />
+            <span>Information Technology Infrastructure</span>
+          </div>
         </div>
       </div>
-    </div>
-    
-    <div v-if="activeTab === 'history'" class="tab-content">
-      <h2>History</h2>
-      <div class="tab-header">
-        <div>
-          <p class="left-justified-paragraph">
-            At its founding in 2002, Apollo Technologies Inc. set out to exploit the use of open global standards, open-source technologies, and the extensive use of Internet technology to build innovative Information and Communication Technology (ICT) solutions. It aligned the seismic technological changes at that time (the Web browser, Internet technologies, the emergence of open-source software) with its vision of empowering change in the emerging market through creation of innovative Information and Communication Technology solutions.
-            The company believed that by adopting open standards rather than proprietary standards and sticking to global standards and open-source software, it would facilitate the transformative power of ICT to aid Philippine entities compete in the global space. It focused its efforts on creating innovative technologies suited for the emerging market where IT infrastructure is weak or non-existent, IT budgets are limited, and IT skills within organizations are scarce.
-            The use of open standards and open-source software allowed the company to offer its solution as a low-cost “software as a service” way back in 2002 when it wasn’t a buzzword yet. The world was still on licensed software and locked in vendor-based proprietary technologies. By building a strong engineering culture, the company built solutions for both large and small companies. It offered a “subscription type, pay-per-use” model allowing easy adoption by its targeted clients with a low-cost usage model. The trailblazing effort paved the way to a business model that enables the company to partner with companies/Government institutions and offer its software technology and engineering expertise to build innovative ICT solutions geared for the emerging market.
+      <div v-if="currentTab === 'history'">
+        <h2>Our History</h2>
+        <hr class="divider" />
+        <div class="content-below-divider">
+          <p>
+            At its founding in 2002, Apollo Technologies Inc. set out to exploit the use of open global standards, open-source technologies, and the extensive use of Internet technology to build innovative Information and Communication Technology (ICT) solutions. It aligned the seismic technological changes at that time (the Web browser, Internet technologies, the emergence of open-source software) with its vision of empowering change in the emerging market through the creation of innovative Information and Communication Technology solutions.
+          </p>
+          <p>
+            The company believed that by adopting open standards rather than proprietary standards and sticking to global standards and open-source software, it would facilitate the transformative power of ICT to aid Philippine entities to compete in the global space. It focused its efforts on creating innovative technologies suited for the emerging market where IT infrastructure is weak or non-existent, IT budgets are limited, and IT skills within organizations are scarce.
+          </p>
+          <p>
+            The use of open standards and open-source software allowed the company to offer its solution as a low-cost “software as a service” way back in 2002 when it wasn’t a buzzword yet. The world was still on licensed software and locked in vendor-based proprietary technologies. By building a strong engineering culture, the company built solutions for both large and small companies. It offered a “subscription type, pay-per-use” model allowing easy adoption by its targeted clients with a low-cost usage model. The trailblazing effort paved the way for a business model that enables the company to partner with companies/Government institutions and offer its software technology and engineering expertise to build innovative ICT solutions geared for the emerging market.
           </p>
         </div>
-      </div>
-    </div>
-    
-    <div v-if="activeTab === 'vision-mission'" class="tab-fill">
-      <h2>Vision/Mission</h2>
-      <p class ="tab-fill" >Our vision is to...</p>
-    </div>
+      </div>      
+    </main>
   </div>
 </template>
 
-<script>
-export default {
-  data() {
-    return {
-      activeTab: 'about-us'
-    };
-  },
-  methods: {
-    changeTab(tab) {
-      this.activeTab = tab;
-    }
-  }
-};
+<script setup>
+import { ref } from 'vue';
+
+const currentTab = ref('about');
+const tabs = ['about', 'history', 'vision'];
 </script>
 
 <style>
-  .nav {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 20px;
-  }
-
-  .nav button {
-    padding: 8px 15px;
-    margin: 0 8px;
-    background-color: transparent;
-    border: 2px solid red;
-    border-radius: 10px;
-    color: red;
-    cursor: pointer;
-    transition: background-color 0.3s, color 0.3s;
-  }
-
-  .nav button.active {
-    background-color: red;
-    color: white;
-  }
-
-  .tab-header {
-    margin-top: 20px;
-    border: 1px solid #ccc;
-    padding: 20px;
-    border-left: none;
-    border-right: none;
-    width: -50px;
-  }
-
-  .tab-content {
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-    position: relative;
-
-  }
-  .left-justified-paragraph {
-    text-align: left;
-    margin: 10px 0;
-    line-height: 2.0;
-    margin-left: 100px;
-    margin-right: 100px;
-    font-size: 1.25rem;
-    font-weight: 300;
-  }
-  
-  .about-content {
-    margin-bottom: 20px;
-    font-size: 1.25rem;
-    font-weight: 300;
-    line-height: 2.0;
-    
-  }
-
-  .bullet-list {
-    list-style-type: none;
-    padding-left: 0;
-    margin: 0;
-  }
-
-  .bullet-list li {
-    margin-bottom: 10px;
-    display: flex;
-    align-items: center;
-  }
-
-.bullet-image {
-  max-width: 20px;
-  height: auto;
-  margin-right: 10px;
+/* Add your styles here */
+nav {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
 }
 
+button {
+  margin: 0 10px;
+  margin-bottom: 40px;
+  padding: 10px 20px; /* Adjust padding to make buttons bigger */
+  font-size: 16px; /* Increase font size */
+  border: 1px solid red;
+  background-color: white;
+  color: red;
+  cursor: pointer;
+  transition: background-color 0.3s ease-in-out;
+  border-radius: 10px;
+}
 
+button.active {
+  background-color: red;
+  color: white;
+}
+
+main {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.divider {
+  border-top: 1px solid #ccc;
+  margin-top: 10px;
+}
+
+.content-below-divider {
+  margin-top: 20px;
+  margin-left: 100px; /* Add left margin */
+  margin-right: 100pxpx; /* Add right margin */
+  font-size: 1.25rem;
+  font-weight: 300;
+  line-height: 2.0;
+}
+div.content-below-divider p {
+  text-align: left;
+  margin: 10px 0;
+}
+
+/* Adjust alignment of service divs */
+.service {
+  display: flex;
+  align-items: flex-start; /* Align content to the start (top) of the flex container */
+  margin-top: 10px; /* Add some space between service divs */
+}
+
+.service img {
+  margin-right: 10px;
+  max-height: 40px; /* Limit the height of images for consistent display */
+}
 </style>
