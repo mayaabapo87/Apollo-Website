@@ -11,10 +11,11 @@
       </button>
     </nav>
     <main>
-      <div v-if="currentTab === 'about'">
-        <h2> About Us Content</h2>
+      <div v-if="currentTab === 'About Us'">
+        <h2 class = "title-heading"> ABOUT US</h2>
         <hr class="divider" />
         <div class="content-below-divider">
+          <img src="@/assets/logo.png" alt="Company Logo" class="company-logo" />
           <p>Apollo Technologies is an Information and Communication Technology Services organisation that leads a group of companies engaged in the delivery of:</p>
           <div class="service">
             <img src="@/assets/placeholder.png" alt="Software Services" />
@@ -43,10 +44,12 @@
           <div class="service">
             <img src="@/assets/placeholder.png" alt="Information Technology Infrastructure" />
             <span>Information Technology Infrastructure</span>
-          </div>
+          </div> 
+          <hr class="divider" />
         </div>
       </div>
-      <div v-if="currentTab === 'history'">
+    
+      <div v-if="currentTab === 'History'">
         <h2>Our History</h2>
         <hr class="divider" />
         <div class="content-below-divider">
@@ -68,8 +71,8 @@
 <script setup>
 import { ref } from 'vue';
 
-const currentTab = ref('about');
-const tabs = ['about', 'history', 'vision'];
+const currentTab = ref('About Us');
+const tabs = ['About Us', 'History', 'vision'];
 </script>
 
 <style>
@@ -81,20 +84,20 @@ nav {
 }
 
 button {
-  margin: 0 10px;
+  margin: 0 30px;
   margin-bottom: 40px;
-  padding: 10px 20px;
-  font-size: 16px;
-  border: 1px solid red;
+  padding: 15px 30px;
+  font-size: 25px;
+  border: 3px solid #ac0c0c;
   background-color: white;
-  color: red;
+  color: #ac0c0c;
   cursor: pointer;
   transition: background-color 0.3s ease-in-out;
-  border-radius: 10px;
+  border-radius: 15px;
 }
 
 button.active {
-  background-color: red;
+  background-color: #ac0c0c;
   color: white;
 }
 
@@ -106,8 +109,8 @@ main {
 }
 
 .divider {
-  border-top: 1px solid #ccc;
-  margin-top: 10px;
+  border-top: 1.5px solid black;
+  margin-top: 50px;
 }
 
 .content-below-divider {
@@ -132,4 +135,18 @@ div.content-below-divider p {
   margin-right: 10px;
   max-height: 40px;
 }
+
+.title-heading{
+  margin-top: 60px;
+  font-size: 40px;
+  font-weight: bold;
+  color: 
+  #444444;
+}
+
+.company-logo{
+  width: 200px; /* Make the logo stretch to the width of the container */
+  max-height: 200px; /* Set the maximum height for the logo */
+}
+
 </style>
