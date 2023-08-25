@@ -83,8 +83,8 @@ nav {
 button {
   margin: 0 10px;
   margin-bottom: 40px;
-  padding: 10px 20px; /* Adjust padding to make buttons bigger */
-  font-size: 16px; /* Increase font size */
+  padding: 10px 20px;
+  font-size: 16px;
   border: 1px solid red;
   background-color: white;
   color: red;
@@ -101,8 +101,8 @@ button.active {
 main {
   margin-top: 20px;
   text-align: center;
-  margin-left: 50px; /* Add left margin */
-  margin-right: 50px; /* Corrected right margin value */
+  margin: 0 auto; /* Center-align content horizontally */
+  max-width: 1100px; /* Limit the maximum width of content */
 }
 
 .divider {
@@ -112,8 +112,6 @@ main {
 
 .content-below-divider {
   margin-top: 20px;
-  margin-left: 100px; /* Add left margin */
-  margin-right: 100px; /* Corrected right margin value */
   font-size: 1.25rem;
   font-weight: 300;
   line-height: 2.0;
@@ -124,15 +122,14 @@ div.content-below-divider p {
   margin: 10px 0;
 }
 
-/* Adjust alignment of service divs */
 .service {
   display: flex;
-  align-items: flex-start; /* Align content to the start (top) of the flex container */
-  margin-top: 10px; /* Add some space between service divs */
+  align-items: flex-start;
+  margin-top: 10px;
 }
 
 .service img {
   margin-right: 10px;
-  max-height: 40px; /* Limit the height of images for consistent display */
+  max-height: 40px;
 }
 </style>
