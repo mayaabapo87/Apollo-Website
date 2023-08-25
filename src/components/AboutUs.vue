@@ -101,6 +101,8 @@ button.active {
 main {
   margin-top: 20px;
   text-align: center;
+  margin-left: 50px; /* Add left margin */
+  margin-right: 50px; /* Corrected right margin value */
 }
 
 .divider {
@@ -111,11 +113,12 @@ main {
 .content-below-divider {
   margin-top: 20px;
   margin-left: 100px; /* Add left margin */
-  margin-right: 100pxpx; /* Add right margin */
+  margin-right: 100px; /* Corrected right margin value */
   font-size: 1.25rem;
   font-weight: 300;
   line-height: 2.0;
 }
+
 div.content-below-divider p {
   text-align: left;
   margin: 10px 0;
