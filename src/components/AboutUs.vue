@@ -14,7 +14,7 @@
           <p>Apollo Technologies is an Information and Communication Technology Services organisation that leads a group
             of companies engaged in the delivery of:</p>
           <div class="service">
-            <img src="@/assets/placeholder.png" alt="Software Services" />
+            <img src="@/assets/placeholder.png" />
             <span>Software Services</span>
           </div>
           <div class="service">
@@ -250,4 +250,5 @@ div.content-below-divider p {
   font-weight: bold;
   color:
     #444444;
-}</style>
+}
+</style>
