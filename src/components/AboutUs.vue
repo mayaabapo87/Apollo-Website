@@ -7,42 +7,47 @@
     </nav>
     <main>
       <div v-if="currentTab === 'ABOUT US'">
-        <h2 class="title-heading">ABOUT US</h2>
+        <h2 class="title-heading"> ABOUT US</h2>
         <hr class="divider" />
-        <div class="content-below-divider">
-          <img src="@/assets/logo.png" alt="Company Logo" class="company-logo" />
-          <p>Apollo Technologies is an Information and Communication Technology Services organisation that leads a group
-            of companies engaged in the delivery of:</p>
-          <div class="service">
-            <img src="@/assets/placeholder.png" />
-            <span>Software Services</span>
+        <div class="aboutcontent-below-divider">
+          <div class="content-column">
+            <p>Apollo Technologies is an Information and Communication Technology Services organisation that leads a group
+              of companies engaged in the delivery of:</p>
+            <div class="service">
+              <img src="@/assets/placeholder.png" class="about-placeholder" />
+              <span>Software Services</span>
+            </div>
+            <div class="service">
+              <img src="@/assets/placeholder.png" class="about-placeholder" />
+              <span>IT and Network Infrastructure and Services</span>
+            </div>
+            <br> <!-- line break -->
+            <p>
+              Apollo Technologies Inc. develops and operates innovative and mission-critical systems in various sectors,
+              mainly in:
+            </p>
+            <div class="service">
+              <img src="@/assets/placeholder.png" class="about-placeholder" />
+              <span>Supply Chain Management</span>
+            </div>
+            <div class="service">
+              <img src="@/assets/placeholder.png" class="about-placeholder" />
+              <span>Fintech in Banks and non-Bank environments</span>
+            </div>
+            <div class="service">
+              <img src="@/assets/placeholder.png" class="about-placeholder" />
+              <span>e-Government Systems</span>
+            </div>
+            <div class="service">
+              <img src="@/assets/placeholder.png" class="about-placeholder" />
+              <span>Information Technology Infrastructure</span>
+            </div>
           </div>
-          <div class="service">
-            <img src="@/assets/placeholder.png" alt="IT and Network Infrastructure and Services" />
-            <span>IT and Network Infrastructure and Services</span>
+          <div class="image-column">
+            <img src="@/assets/aboutus.png" class="about-pic" />
           </div>
-          <p>
-            Apollo Technologies Inc. develops and operates innovative and mission-critical systems in various sectors,
-            mainly in:
-          </p>
-          <div class="service">
-            <img src="@/assets/placeholder.png" alt="Supply Chain Management" />
-            <span>Supply Chain Management</span>
-          </div>
-          <div class="service">
-            <img src="@/assets/placeholder.png" alt="Fintech in Banks and non-Bank environments" />
-            <span>Fintech in Banks and non-Bank environments</span>
-          </div>
-          <div class="service">
-            <img src="@/assets/placeholder.png" alt="e-Government Systems" />
-            <span>e-Government Systems</span>
-          </div>
-          <div class="service">
-            <img src="@/assets/placeholder.png" alt="Information Technology Infrastructure" />
-            <span>Information Technology Infrastructure</span>
-          </div>
-          <hr class="divider" />
         </div>
+        <hr class="divider" />
       </div>
 
       <div v-if="currentTab === 'HISTORY'">
@@ -68,6 +73,7 @@
             and offer its software technology and engineering expertise to build innovative ICT solutions geared for the
             emerging market.</p>
         </div>
+        <img src="@/assets/history-pic.png" class="hist-pic" />
         <hr class="divider" />
       </div>
 
@@ -129,10 +135,37 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
 
 const currentTab = ref('ABOUT US');
 const tabs = ['ABOUT US', 'HISTORY', 'VISION/MISSION'];
+
+// Function to navigate to the next tab
+const nextTab = () => {
+  const currentIndex = tabs.indexOf(currentTab.value);
+  if (currentIndex !== -1 && currentIndex < tabs.length - 1) {
+    currentTab.value = tabs[currentIndex + 1];
+  }
+};
+
+// Function to navigate to the previous tab
+const prevTab = () => {
+  const currentIndex = tabs.indexOf(currentTab.value);
+  if (currentIndex > 0) {
+    currentTab.value = tabs[currentIndex - 1];
+  }
+};
+
+// Add event listeners for arrow key presses
+onMounted(() => {
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'ArrowRight') {
+      nextTab();
+    } else if (event.key === 'ArrowLeft') {
+      prevTab();
+    }
+  });
+});
 </script>
 
 <style>
@@ -141,6 +174,10 @@ nav {
   display: flex;
   justify-content: center;
   margin-top: 20px;
+}
+
+.arrowNav {
+  border-color: #ac0c0c;
 }
 
 button {
@@ -156,9 +193,12 @@ button {
   border-radius: 15px;
 }
 
+
 button.active {
   background-color: #ac0c0c;
   color: white;
+  border-color: #ac0c0c;
+  /* Add this line to maintain red border color */
 }
 
 main {
@@ -180,12 +220,27 @@ main {
   font-size: 1.25rem;
   font-weight: 300;
   line-height: 2.0;
+
+}
+
+.aboutcontent-below-divider {
+  margin-top: 20px;
+  font-size: 1.25rem;
+  font-weight: 300;
+  line-height: 2.0;
+  display: flex;
 }
 
 div.content-below-divider p {
   text-align: left;
   margin: 10px 0;
 }
+
+div.aboutcontent-below-divider p {
+  text-align: left;
+  margin: 10px 0;
+}
+
 
 .service {
   display: flex;
@@ -204,13 +259,6 @@ div.content-below-divider p {
   font-weight: bold;
   color:
     #444444;
-}
-
-.company-logo {
-  width: 200px;
-  /* Make the logo stretch to the width of the container */
-  max-height: 200px;
-  /* Set the maximum height for the logo */
 }
 
 .two-columns {
@@ -245,10 +293,47 @@ div.content-below-divider p {
   margin-top: 40px;
 }
 
+.about-placeholder {
+  margin-right: 30px;
+  margin-top: 5px;
+}
+
 .content-text {
   font-size: 35px;
   font-weight: bold;
   color:
     #444444;
 }
-</style>
+
+.image-column {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: -200px;
+}
+
+.content-column {
+  flex: 1;
+  padding-right: 20px;
+}
+
+.about-pic {
+  width: 300;
+  height: 550px;
+  margin-top: 170px;
+  border-radius: 10px;
+}
+
+.hist-pic {
+  margin-top: 50px;
+  width: 100%;
+  height: 300px;
+}
+
+.bordered-box {
+  border: 1px solid #000;
+  padding: 20px;
+  margin-top: 20px;
+  border-radius: 10px;
+}</style>
