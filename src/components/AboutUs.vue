@@ -169,7 +169,7 @@ onMounted(() => {
 </script>
 
 <style>
-/* Add your styles here */
+
 nav {
   display: flex;
   justify-content: center;
@@ -198,16 +198,13 @@ button.active {
   background-color: #ac0c0c;
   color: white;
   border-color: #ac0c0c;
-  /* Add this line to maintain red border color */
 }
 
 main {
   margin-top: 20px;
   text-align: center;
   margin: 0 auto;
-  /* Center-align content horizontally */
   max-width: 1100px;
-  /* Limit the maximum width of content */
 }
 
 .divider {
