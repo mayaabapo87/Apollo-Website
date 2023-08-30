@@ -137,10 +137,11 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 
+//function to click tab
 const currentTab = ref('ABOUT US');
 const tabs = ['ABOUT US', 'HISTORY', 'VISION/MISSION'];
 
-// Function to navigate to the next tab
+// Function to navigate to the next tab for keys
 const nextTab = () => {
   const currentIndex = tabs.indexOf(currentTab.value);
   if (currentIndex !== -1 && currentIndex < tabs.length - 1) {
@@ -148,7 +149,7 @@ const nextTab = () => {
   }
 };
 
-// Function to navigate to the previous tab
+// Function to navigate to the previous tab for  keys
 const prevTab = () => {
   const currentIndex = tabs.indexOf(currentTab.value);
   if (currentIndex > 0) {
@@ -174,10 +175,6 @@ nav {
   display: flex;
   justify-content: center;
   margin-top: 20px;
-}
-
-.arrowNav {
-  border-color: #ac0c0c;
 }
 
 button {
@@ -333,4 +330,5 @@ div.aboutcontent-below-divider p {
   padding: 20px;
   margin-top: 20px;
   border-radius: 10px;
-}</style>
+}
+</style>
