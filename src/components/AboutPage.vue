@@ -264,6 +264,7 @@ div.aboutcontent-below-divider p {
   padding: 20px;
   border: 1px solid #ccc;
   margin: 10px;
+  margin-bottom: 90px;
 }
 
 .bullets {
@@ -274,6 +275,7 @@ div.aboutcontent-below-divider p {
   line-height: 2.0;
   font-size: 1.25rem;
   justify-content: left;
+  
 }
 
 .col-content {
@@ -321,6 +323,7 @@ div.aboutcontent-below-divider p {
   margin-top: 50px;
   width: 100%;
   height: 300px;
+  margin-bottom: 90px;
 }
 
 .bordered-box {

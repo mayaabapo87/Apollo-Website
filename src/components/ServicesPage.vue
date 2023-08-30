@@ -1,6 +1,5 @@
 <template>
   <div class="services-container">
-    <div class="top-divider"></div>
     <h1 class="services-title">Discover Our Services</h1>
     <div class="services-box">
       <div v-for="(service, index) in services" :key="index" class="service-item">
@@ -65,12 +64,13 @@ export default {
   margin: 20px 0;
   text-align: center;
   border-bottom: 2px solid #999;
-  padding: 15px 0;
+  padding: 20px;
   width: 100%;
   box-sizing: border-box;
   margin-bottom: 50px;
   min-width: 50vh;
   background-color: #ac0c0c;
+  margin-top: -3px;
 }
 
 .services-box {
