@@ -47,7 +47,6 @@
             <img src="@/assets/aboutus.png" class="about-pic" />
           </div>
         </div>
-        <hr class="divider" />
       </div>
 
       <div v-if="currentTab === 'HISTORY'">
@@ -74,7 +73,6 @@
             emerging market.</p>
         </div>
         <img src="@/assets/history-pic.png" class="hist-pic" />
-        <hr class="divider" />
       </div>
 
       <div v-if="currentTab === 'VISION/MISSION'">
@@ -127,7 +125,6 @@
             </div>
           </div>
         </div>
-        <hr class="divider" />
       </div>
     </main>
 
@@ -223,6 +220,7 @@ main {
   font-weight: 300;
   line-height: 2.0;
   display: flex;
+  margin-bottom: 100px;
 }
 
 div.content-below-divider p {

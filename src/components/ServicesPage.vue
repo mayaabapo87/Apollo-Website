@@ -51,24 +51,26 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
-  min-height: 90vh;
-  background-color: #e8e8e8;
-  
+  background-color: #f7f7f7;
+  min-width: 50vh;
+  height: 670px;
+  margin: 0 auto;
 }
-
 .services-title {
   font-family: 'Arial', sans-serif;
   font-size: 36px;
-  color: #676767;
+  color: white;
   text-transform: uppercase;
   letter-spacing: 2px;
   margin: 20px 0;
   text-align: center;
   border-bottom: 2px solid #999;
-  padding: 10px 0;
-  width: 80%; /* Adjust width */
+  padding: 15px 0;
+  width: 100%;
   box-sizing: border-box;
-  margin-bottom: 40px;
+  margin-bottom: 50px;
+  min-width: 50vh;
+  background-color: #ac0c0c;
 }
 
 .services-box {
@@ -76,6 +78,7 @@ export default {
   grid-template-columns: repeat(2, 1fr);
   gap: 20px;
   max-width: 900px;
+  justify-content: center;
 }
 
 .service-item {
@@ -84,7 +87,6 @@ export default {
   align-items: center;
   border: 2px solid #ddd;
   border-radius: 10px;
-
   background-color: #b7b7b7;
   padding: 20px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
