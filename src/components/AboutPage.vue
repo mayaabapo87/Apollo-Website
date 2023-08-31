@@ -165,7 +165,6 @@ onMounted(() => {
   });
 });
 </script>
-
 <style>
 
 nav {
@@ -332,4 +331,54 @@ div.aboutcontent-below-divider p {
   margin-top: 20px;
   border-radius: 10px;
 }
+
+/* Mobile view */
+@media (max-width: 768px) {
+  /* Adjustments for mobile view */
+  .container {
+    padding: 10px; /* Add padding to the container */
+  }
+
+  nav {
+    flex-direction: column; /* Display tabs vertically */
+    align-items: center;
+  }
+
+  button {
+    margin: 5px 0;
+    font-size: 18px;
+    padding: 5px 20px;
+  }
+
+  .content-column {
+    padding-right: 0; /* Remove right padding */
+  }
+
+  .image-column {
+    display: none; /* Hide image column in mobile view */
+  }
+
+  .about-pic,
+  .hist-pic {
+    width: 100%;
+    height: auto;
+    max-height: 300px;
+  }
+
+  .divider,
+  .aboutcontent-below-divider,
+  .content-below-divider {
+    margin-top: 10px;
+  }
+
+  .title-heading {
+    font-size: 30px;
+    margin-top: 30px;
+  }
+
+  .content-text {
+    font-size: 25px;
+  }
+}
+
 </style>

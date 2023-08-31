@@ -51,10 +51,16 @@ export default {
   flex-direction: column;
   align-items: center;
   background-color: #f7f7f7;
-  min-width: 50vh;
+  width: 100vw;
   height: 670px;
-  margin: 0 auto;
+  margin: 0;
+  position: relative; /* Add relative positioning */
+  left: 50%; /* Move the container to the center */
+  transform: translateX(-50%); /* Adjust to center the container */
 }
+
+
+
 .services-title {
   font-family: 'Arial', sans-serif;
   font-size: 36px;
@@ -65,12 +71,12 @@ export default {
   text-align: center;
   border-bottom: 2px solid #999;
   padding: 20px;
-  width: 100%;
   box-sizing: border-box;
   margin-bottom: 50px;
   min-width: 50vh;
   background-color: #ac0c0c;
-  margin-top: -3px;
+  width: 100%; /* Set width to 100% */
+  margin-top: 0; /* Remove negative margin-top */
 }
 
 .services-box {
@@ -111,5 +117,34 @@ export default {
 .service-details {
   margin-top: 10px;
   color: white;
+}
+
+@media screen and (max-width: 600px) {
+  .services-title {
+    font-size: 24px;
+    padding: 20px 0;
+    margin-top: -3px;
+    margin-bottom: 20px;
+  }
+
+  .services-box {
+    display: flex;
+    width: 200pxnp;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .service-item {
+    margin-bottom: 20px;
+  }
+
+  .service-description {
+    font-size: 18px;
+    margin-top: 10px;
+  }
+
+  .service-details {
+    font-size: 14px;
+  }
 }
 </style>
