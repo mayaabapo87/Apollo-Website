@@ -14,15 +14,17 @@
         <span class="arrow">&#8594;</span>
       </button>
     </div>
-    <button class="view-button" @click="showServicesModal">View All Services</button>
+    <button class="view-button" @click="showServicesModal">View All Projects</button>
     <transition name="fade" mode="out-in">
       <div v-if="showModal" class="modal-container" @click="closeServicesModalOutside">
         <div class="modal-content">
-          <h2 class="modal-title">All Services</h2>
+          <h2 class="modal-title">All Projects</h2>
           <div class="services-grid">
             <div v-for="(service, index) in projects" :key="index" class="service-item">
               <img :src="service.image" :alt="service.title" class="service-image" />
-              <h3 class="service-title">{{ service.title }}</h3>
+              <h3 class="service-title">
+                <a class="project-title-link" @click="openProjectModal(service)">{{ service.title }}</a>
+              </h3>
               <p class="service-details">{{ service.details }}</p>
             </div>
           </div>
@@ -41,6 +43,17 @@
         </div>
       </div>
     </transition>
+      <!-- Centered Modal -->
+  <transition name="fade" mode="out-in">
+    <div v-if="isCenteredModalOpen" class="centered-modal">
+      <div class="centered-modal-content">
+        <h2 class="centered-modal-title">{{ centeredModalService.title }}</h2>
+        <img :src="centeredModalService.image" :alt="centeredModalService.title" class="centered-modal-image" />
+        <p class="centered-modal-description" v-html="centeredModalService.modalInfo"></p>
+        <button class="close-button" @click="closeCenteredModal">Close</button>
+      </div>
+    </div>
+  </transition>
   </div>
 </template>
 
@@ -157,12 +170,13 @@ export default {
   flex-direction: column;
   align-items: center;
   width: 100vw;
-  height: 500px;
+  height: 530px;
   margin: 0;
   position: relative;
   left: 50%;
   transform: translateX(-50%);
-  background-color: #f7f7f7;
+  background-color: #e0e0e0;
+  margin-top: 40px;
 }
 
 .project-nav {
@@ -176,12 +190,10 @@ export default {
   flex-direction: column;
   align-items: center;
   width: 500px;
-
   height: 250px;
-
-  border: 2px solid #ddd;
+  border: 5px solid #f4f4f4;
   border-radius: 10px;
-  background-color: #b7b7b7;
+  background-color: #F5F5F5;
   padding: 20px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   margin: 0 20px;
@@ -191,19 +203,13 @@ export default {
 
 .project-image {
   width: 200px;
-  height: auto;
+  height: 90px;
   border-radius: 5px;
-}
-
-.project-title {
-  font-size: 20px;
-  margin-top: 15px;
-  color: white;
 }
 
 .project-description {
   margin-top: 10px;
-  color: white;
+  color: black;
 }
 
 .nav-button {
@@ -214,10 +220,11 @@ export default {
   color: #ac0c0c;
 }
 
-  .arrow {
-    transform: translateY(2px);
-    font-size: 40px; 
-  }
+.arrow {
+  transform: translateY(2px);
+  font-size: 40px;
+}
+
 .view-button {
   margin-top: 20px;
   background-color: #ac0c0c;
@@ -263,21 +270,15 @@ export default {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 20px;
-  width: 80%;
-  max-width: 600px;
+  max-width: 700px;
   margin: 0 auto;
 }
 
 .service-image {
-  max-width: 100%;
-  height: auto;
+  width: 190px;
+  height: 90px;
   border-radius: 5px;
   margin-bottom: 10px;
-}
-
-.services-list {
-  display: grid;
-  gap: 20px;
 }
 
 .service-item {
@@ -296,20 +297,17 @@ export default {
   color: white;
   text-transform: uppercase;
   letter-spacing: 2px;
-  margin: 20px 0;
-  text-align: center;
   border-bottom: 2px solid #999;
   padding: 20px;
-  box-sizing: border-box;
   margin-bottom: 50px;
-  min-width: 50vh;
   background-color: #ac0c0c;
   width: 100%;
-  margin-top: 0;
+  margin-top: -1px;
 }
 
 .service-details {
   font-size: 16px;
+  text-align: center;
 }
 
 .close-button {
@@ -326,7 +324,7 @@ export default {
 .project-title-link {
   font-size: 20px;
   margin-top: 15px;
-  color: white;
+  color: #1281fb;
   text-decoration: none;
   cursor: pointer;
 }
@@ -337,9 +335,8 @@ export default {
 
 .project-modal {
   position: fixed;
-  width: 1200px;
-  height: 300px;
-  margin-top: 100px;
+  width:  100%;
+  height: 100%;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
@@ -347,6 +344,7 @@ export default {
   justify-content: center;
   align-items: center;
   z-index: 999;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 
@@ -374,10 +372,8 @@ export default {
 }
 
 .project-modal-description {
-  font-size: 15px;
+  font-size: 14px;
   margin-bottom: 20px;
   text-align: justify;
 }
-
-
 </style>

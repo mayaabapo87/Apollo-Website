@@ -52,14 +52,12 @@ export default {
   align-items: center;
   background-color: #f7f7f7;
   width: 100vw;
-  height: 670px;
+  height: 700px;
   margin: 0;
-  position: relative; /* Add relative positioning */
-  left: 50%; /* Move the container to the center */
-  transform: translateX(-50%); /* Adjust to center the container */
+  position: relative; 
+  left: 50%; 
+  transform: translateX(-50%); 
 }
-
-
 
 .services-title {
   font-family: 'Arial', sans-serif;
