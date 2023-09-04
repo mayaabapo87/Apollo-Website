@@ -176,9 +176,9 @@ export default {
   flex-direction: column;
   align-items: center;
   width: 500px;
-  /* Set fixed width */
+
   height: 250px;
-  /* Set fixed height */
+
   border: 2px solid #ddd;
   border-radius: 10px;
   background-color: #b7b7b7;
@@ -186,7 +186,7 @@ export default {
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   margin: 0 20px;
   overflow: hidden;
-  /* Prevent content overflow */
+
 }
 
 .project-image {
@@ -216,7 +216,7 @@ export default {
 
   .arrow {
     transform: translateY(2px);
-    font-size: 40px; /* Adjust the font-size as needed */
+    font-size: 40px; 
   }
 .view-button {
   margin-top: 20px;
@@ -248,15 +248,10 @@ export default {
   border-radius: 10px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   width: 90%;
-  /* Adjust the width as needed */
   max-width: 800px;
-  /* Adjust the max-width as needed */
   height: 500px;
-  /* Adjust the height as needed */
   margin: 0 auto;
-  /* Center the modal horizontally */
   overflow: auto;
-  /* Add scrollbar if content exceeds height */
 }
 
 .modal-title {
@@ -269,11 +264,8 @@ export default {
   grid-template-columns: repeat(2, 1fr);
   gap: 20px;
   width: 80%;
-  /* Adjust the width as needed */
   max-width: 600px;
-  /* Adjust the max-width as needed */
   margin: 0 auto;
-  /* Center the grid */
 }
 
 .service-image {
@@ -296,7 +288,6 @@ export default {
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   text-align: center;
   overflow: hidden;
-  /* Prevent content overflow */
 }
 
 .services-title {
@@ -314,9 +305,7 @@ export default {
   min-width: 50vh;
   background-color: #ac0c0c;
   width: 100%;
-  /* Set width to 100% */
   margin-top: 0;
-  /* Remove negative margin-top */
 }
 
 .service-details {
@@ -344,7 +333,6 @@ export default {
 
 .project-title-link:hover {
   text-decoration: underline;
-  /* Add underline on hover */
 }
 
 .project-modal {
