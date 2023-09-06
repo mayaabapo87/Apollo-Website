@@ -65,16 +65,12 @@ export default {
   color: white;
   text-transform: uppercase;
   letter-spacing: 2px;
-  margin: 20px 0;
-  text-align: center;
   border-bottom: 2px solid #999;
   padding: 20px;
-  box-sizing: border-box;
   margin-bottom: 50px;
-  min-width: 50vh;
   background-color: #ac0c0c;
-  width: 100%; /* Set width to 100% */
-  margin-top: 0; /* Remove negative margin-top */
+  width: 100%;
+  margin-top: -1px;
 }
 
 .services-box {
@@ -117,32 +113,32 @@ export default {
   color: white;
 }
 
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 780px) {
   .services-title {
-    font-size: 24px;
-    padding: 20px 0;
-    margin-top: -3px;
-    margin-bottom: 20px;
+    font-size: 18px; /* Adjust the title font size for smaller screens */
+    margin-top: 0; /* Remove negative top margin */
+    margin-bottom: 10px; /* Reduce bottom margin */
   }
 
   .services-box {
     display: flex;
-    width: 200pxnp;
+    width: 100%; /* Make the boxes full-width on smaller screens */
     flex-direction: column;
     align-items: center;
   }
 
   .service-item {
-    margin-bottom: 20px;
+    margin-bottom: 10px; /* Reduce margin between service items */
   }
 
   .service-description {
-    font-size: 18px;
-    margin-top: 10px;
+    font-size: 16px; /* Adjust font size for service descriptions */
+    margin-top: 5px; /* Adjust top margin for better spacing */
   }
 
   .service-details {
-    font-size: 14px;
+    font-size: 14px; /* Adjust font size for service details */
   }
 }
+
 </style>

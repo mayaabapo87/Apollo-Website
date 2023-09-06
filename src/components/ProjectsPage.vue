@@ -14,46 +14,31 @@
         <span class="arrow">&#8594;</span>
       </button>
     </div>
-    <button class="view-button" @click="showServicesModal">View All Projects</button>
-    <transition name="fade" mode="out-in">
-      <div v-if="showModal" class="modal-container" @click="closeServicesModalOutside">
-        <div class="modal-content">
-          <h2 class="modal-title">All Projects</h2>
-          <div class="services-grid">
-            <div v-for="(service, index) in projects" :key="index" class="service-item">
-              <img :src="service.image" :alt="service.title" class="service-image" />
-              <h3 class="service-title">
-                <a class="project-title-link" @click="openProjectModal(service)">{{ service.title }}</a>
-              </h3>
-              <p class="service-details">{{ service.details }}</p>
-            </div>
-          </div>
-          <button class="close-button" @click="closeServicesModal">Close</button>
+    <button class="view-button" @click="showServicesModal">View All</button>
+  </div>
+  <div v-if="showModal" class="modal-container" @click="closeServicesModalOutside">
+    <div class="modal-content">
+      <h2 class="modal-title">All Projects</h2>
+      <div class="services-grid">
+        <div v-for="(service, index) in projects" :key="index" class="service-item">
+          <img :src="service.image" :alt="service.title" class="service-image" />
+          <h3 class="service-title">
+            <a class="project-title-link" @click="openProjectModal(service)">{{ service.title }}</a>
+          </h3>
+          <p class="service-details">{{ service.details }}</p>
         </div>
       </div>
-    </transition>
-    <!-- Project Modal -->
-    <transition name="fade" mode="out-in">
-      <div v-if="isProjectModalOpen" class="project-modal">
-        <div class="project-modal-content">
-          <h2 class="project-modal-title">{{ selectedProject.title }}</h2>
-          <img :src="selectedProject.image" :alt="selectedProject.title" class="project-modal-image" />
-          <p class="project-modal-description" v-html="selectedProject.modalInfo"></p>
-          <button class="close-button" @click="closeProjectModal">Close</button>
-        </div>
-      </div>
-    </transition>
-      <!-- Centered Modal -->
-  <transition name="fade" mode="out-in">
-    <div v-if="isCenteredModalOpen" class="centered-modal">
-      <div class="centered-modal-content">
-        <h2 class="centered-modal-title">{{ centeredModalService.title }}</h2>
-        <img :src="centeredModalService.image" :alt="centeredModalService.title" class="centered-modal-image" />
-        <p class="centered-modal-description" v-html="centeredModalService.modalInfo"></p>
-        <button class="close-button" @click="closeCenteredModal">Close</button>
-      </div>
+      <button class="close-button-proj" @click="closeServicesModal">Close</button>
     </div>
-  </transition>
+  </div>
+  <!-- Project Modal -->
+  <div v-if="isProjectModalOpen" class="project-modal">
+    <div class="project-modal-content">
+      <h2 class="project-modal-title">{{ selectedProject.title }}</h2>
+      <img :src="selectedProject.image" :alt="selectedProject.title" class="project-modal-image" />
+      <p class="project-modal-description" v-html="selectedProject.modalInfo"></p>
+      <button class="close-button" @click="closeProjectModal">Close</button>
+    </div>
   </div>
 </template>
 
@@ -150,9 +135,11 @@ export default {
     openProjectModal(project) {
       this.selectedProject = project;
       this.isProjectModalOpen = true;
+      document.body.style.overflow = 'hidden';
     },
     closeProjectModal() {
       this.isProjectModalOpen = false;
+      document.body.style.overflow = 'auto';
     },
     showServicesModal() {
       this.showModal = true;
@@ -170,7 +157,7 @@ export default {
   flex-direction: column;
   align-items: center;
   width: 100vw;
-  height: 530px;
+  height: 560px;
   margin: 0;
   position: relative;
   left: 50%;
@@ -183,7 +170,6 @@ export default {
   display: flex;
   align-items: center;
 }
-
 
 .project-box {
   display: flex;
@@ -221,8 +207,9 @@ export default {
 }
 
 .arrow {
-  transform: translateY(2px);
+  transform: translateY(px);
   font-size: 40px;
+  margin: -100px;
 }
 
 .view-button {
@@ -234,6 +221,8 @@ export default {
   border-radius: 5px;
   font-size: 16px;
   cursor: pointer;
+  margin-left: 40%;
+  margin-right: 40%;
 }
 
 .modal-container {
@@ -242,18 +231,17 @@ export default {
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.7);
   display: flex;
   justify-content: center;
   align-items: center;
   z-index: 999;
+  background-color: rgba(0, 0, 0, 0.7);
 }
 
 .modal-content {
   background-color: white;
   padding: 20px;
   border-radius: 10px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   width: 90%;
   max-width: 800px;
   height: 500px;
@@ -319,6 +307,8 @@ export default {
   border-radius: 5px;
   font-size: 16px;
   cursor: pointer;
+  margin-left: 40%;
+  margin-right: 40%;
 }
 
 .project-title-link {
@@ -335,7 +325,7 @@ export default {
 
 .project-modal {
   position: fixed;
-  width:  100%;
+  width: 100%;
   height: 100%;
   top: 50%;
   left: 50%;
@@ -344,10 +334,8 @@ export default {
   justify-content: center;
   align-items: center;
   z-index: 999;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  background-color: rgba(0, 0, 0, 0.7);
 }
-
-
 
 .project-modal-content {
   background-color: white;
@@ -372,8 +360,128 @@ export default {
 }
 
 .project-modal-description {
-  font-size: 14px;
+  font-size: 0.9rem;
   margin-bottom: 20px;
   text-align: justify;
 }
-</style>
+
+@media (max-width: 780px) {
+
+  .project-container {
+    margin-top: 420px;
+    width: fit-content;
+  }
+  .services-grid{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    width: 307px;
+    margin: 0 auto;
+    margin-left: -10px;
+  }
+ 
+  .project-box {
+    width: 150px;
+  }
+
+  .arrow {
+    font-size: 30px;
+    margin: 0 -300px;
+    transform: translateX(5px);
+  }
+  .nav-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 24px;
+    color: #ac0c0c;
+    margin: -10px;
+  }
+  .project-image {
+    width: 50px;
+    height: auto;
+  }
+
+  .project-title-link {
+    font-size: 15px;
+  }
+
+  .project-description {
+    font-size: 12px;
+  }
+
+  .services-title {
+    font-size: 24px;
+  }
+
+  .modal-content {
+    height: 80vh;
+    max-width: 90%;
+  }
+
+  .project-modal {
+    position: fixed;
+    width: 80%;
+    height: 20%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+    background-color: rgba(0, 0, 0, 0.7);
+    margin-left: -25px;
+
+
+  }
+
+  .project-modal-title {
+    font-size: 13px;
+  }
+
+  .project-modal-image {
+    width: 45px;
+    height: auto;
+    margin-top: -10px;
+    margin-left: -3px;
+  }
+
+  .project-modal-description {
+    font-size: 11px;
+    line-height: 1;
+  }
+
+  .service-image {
+    width: 50px;
+    height: auto;
+  }
+
+  .services-title {
+    font-size: 15px;
+  }
+
+  .service-details {
+    font-size: 12px;
+  }
+
+  .close-button {
+    margin-top: 5px;
+    background-color: #ac0c0c;
+    color: white;
+    border: none;
+    padding: 5px 15px;
+    border-radius: 3px;
+    font-size: 10px;
+  }
+  .close-button-proj{
+    margin-top: 20px;
+    background-color: #ac0c0c;
+    color: white;
+    border: none;
+    padding: 5px 15px;
+    border-radius: 3px;
+    font-size: 10px;
+    margin-left: -43px;
+
+  }
+}</style>

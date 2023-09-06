@@ -52,15 +52,15 @@
       <div v-if="currentTab === 'HISTORY'">
         <h2 class="title-heading">HISTORY</h2>
         <hr class="divider" />
-        <div class="content-below-divider">
-          <p class="col-content">At its founding in 2002, Apollo Technologies Inc. set out to exploit the use of open global standards, open-source technologies, and the extensive use of Internet technology to build innovative Information and
-            Communication Technology (ICT) solutions. It aligned the seismic technological changes at that time (the Web browser, Internet technologies, the emergence of open-source software) with its vision of empowering change inthe emerging market through the creation of innovative Information and Communication Technology solutions.</p>
-          <p> The company believed that by adopting open standards rather than proprietary standards and sticking to
+          <p class="justify">At its founding in 2002, Apollo Technologies Inc. set out to exploit the use of open global standards, open-source technologies, and the extensive use of Internet technology to build innovative Information and Communication Technology (ICT) solutions. It aligned the seismic technological changes at that time (the Web
+            browser, Internet technologies, the emergence of open-source software) with its vision of empowering change in
+            the emerging market through the creation of innovative Information and Communication Technology solutions.</p>
+          <p class="justify"> The company believed that by adopting open standards rather than proprietary standards and sticking to
             global standards and open-source software, it would facilitate the transformative power of ICT to aid
             Philippine entities to compete in the global space. It focused its efforts on creating innovative technologies
             suited for the emerging market where IT infrastructure is weak or non-existent, IT budgets are limited, and IT
             skills within organizations are scarce.</p>
-          <p >The use of open standards and open-source software allowed the company to offer its solution as a low-cost
+          <p class="justify">The use of open standards and open-source software allowed the company to offer its solution as a low-cost
             “software as a service” way back in 2002 when it wasn’t a buzzword yet. The world was still on licensed
             software and locked in vendor-based proprietary technologies. By building a strong engineering culture, the
             company built solutions for both large and small companies. It offered a “subscription type, pay-per-use”
@@ -68,12 +68,11 @@
             paved the way for a business model that enables the company to partner with companies/Government institutions
             and offer its software technology and engineering expertise to build innovative ICT solutions geared for the
             emerging market.</p>
-        </div>
         <img src="@/assets/history-pic.png" class="hist-pic" />
       </div>
 
-      <div v-if="currentTab === 'VISION/MISSION'">
-        <h2 class="title-heading">VISION/MISSION</h2>
+      <div v-if="currentTab === 'PURPOSE'">
+        <h2 class="title-heading">OUR PURPOSE</h2>
         <hr class="divider" />
         <h2 class="content-text">VISION</h2>
         <p class="content-below-divider">We empower change in the emerging market through innovative Information and
@@ -132,7 +131,7 @@ import { ref, onMounted } from 'vue';
 
 //function to click tab
 const currentTab = ref('ABOUT');
-const tabs = ['ABOUT', 'HISTORY', 'VISION/MISSION'];
+const tabs = ['ABOUT', 'HISTORY', 'PURPOSE'];
 
 // Function to navigate to the next tab for keys
 const nextTab = () => {
@@ -172,6 +171,7 @@ nav {
 button {
   margin: 0 30px;
   margin-bottom: 40px;
+  margin-left: 60px;
   padding: 10px 30px;
   font-size: 25px;
   border: 3px solid #ac0c0c;
@@ -180,6 +180,7 @@ button {
   cursor: pointer;
   transition: background-color 0.3s ease-in-out;
   border-radius: 15px;
+  justify-content: center;
 }
 
 
@@ -228,11 +229,20 @@ div.aboutcontent-below-divider p {
   margin: 10px 0;
 }
 
+.justify{
+  text-align: justify;
+  margin-top: 20px;
+  font-size: 1.25rem;
+  font-weight: 300;
+  line-height: 2.0;
+
+}
 
 .service {
   display: flex;
   align-items: flex-start;
   margin-top: 10px;
+  text-align: left;
 }
 
 .service img {
@@ -330,60 +340,73 @@ div.aboutcontent-below-divider p {
 }
 
 /* Mobile view */
-@media (max-width: 768px) {
-  /* Adjustments for mobile view */
+@media (max-width: 780px) {
   .container {
-    padding: 10px; /* Add padding to the container */
+    padding: 5px; /* Decrease padding for smaller screens */
+    margin-top: 20px; /* Decrease top margin for smaller screens */
   }
 
   .nav {
-    flex-direction: row; 
-    justify-content: space-between;
+    flex-direction: column; /* Stack navigation items vertically */
+    align-items: center; /* Center align navigation items */
   }
 
   button {
     margin: 5px;
-    font-size: 10px;
-    padding: 5px 30px;
+    font-size: 14px; /* Increase font size for better readability */
+    padding: 5px 15px; /* Adjust button padding for smaller screens */
+    margin-left: 0; /* Remove left margin for buttons */
   }
 
   .content-column {
-    padding-right: 0; /* Remove right padding */
+    padding: 0; /* Remove padding for content column */
   }
 
   .image-column {
-    display: none; /* Hide image column in mobile view */
+    display: block; /* Show image column in mobile view */
   }
 
   .about-pic,
   .hist-pic {
     width: 100%;
     height: auto;
-    max-height: 300px;
+    max-width: 100%; /* Ensure images don't exceed their container */
+    margin-top: 10px; /* Add some space between images */
   }
 
   .divider,
   .aboutcontent-below-divider,
+  .justify,
   .content-below-divider {
     margin-top: 10px;
+    font-size: 14px; /* Adjust font size for smaller screens */
   }
 
   .title-heading {
-    font-size: 30px;
-    margin-top: 30px;
+    font-size: 18px; /* Reduce title font size for smaller screens */
+    margin-top: 20px;
   }
 
   .content-text {
-    font-size: 25px;
+    font-size: 14px;
   }
 
   .two-columns {
-    flex-direction: column;
+    flex-direction: column; /* Stack columns vertically */
+  }
+
+  .col-content {
+    font-size: 14px;
   }
 
   .column {
     margin: 10px 0;
   }
+
+  .placeholder {
+    width: 20px; /* Reduce width of placeholder for smaller screens */
+  }
 }
+
 
 </style>
