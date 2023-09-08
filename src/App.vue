@@ -1,22 +1,14 @@
 <template>
   <div id="app">
-    <Projects/>
-
-    <Location/>
+    <AboutPage></AboutPage>
+    <ServicesPage></ServicesPage>
+    <ProjectsPage></ProjectsPage>
+    <LocationPage></LocationPage>
   </div>
 </template>
 
 <script>
-import Projects from './components/ProjectsPage.vue';
-import Location from './components/LocationPage.vue';
-
-
 export default {
-  components: {
-    Projects,
-    Location
- 
-  }
 };
 </script>
 

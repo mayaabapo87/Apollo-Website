@@ -56,7 +56,7 @@ export default {
   align-items: center;
   background-color: #f7f7f7;
   width: 100vw;
-  height: 700px;
+  height: auto;
   margin: 0;
   position: relative; 
   left: 50%; 

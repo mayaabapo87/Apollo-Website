@@ -1,11 +1,11 @@
 <template>
   <div>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <nav class="navbar">
       <div class="mx-auto"> <!-- Center align the buttons -->
         <button
           v-for="(tab, index) in tabs"
           :key="tab"
-          :class="['btn', 'btn-outline-danger', { active: currentTab === tab }]"
+          :class="['btn', 'btn-custom', { active: currentTab === tab }]"
           @click="currentTab = tab"
           :style="{ marginRight: index < tabs.length - 1 ? '14px' : '0' }" 
         >
@@ -24,15 +24,15 @@
             </p>
             <ul class="bullets">
               <li style="font-size: 1.25rem;">
-                <img src="@/assets/placeholder.png" class="about-placeholder" style="max-width: 20px; max-height: 20px;" />
+                <img src="@/assets/placeholder.png" class="about-placeholder" style="margin-top: 5px; max-width: 25px; max-height: 15px;" />
                 Software Services
               </li>
               <li style="font-size: 1.25rem;">
-                <img src="@/assets/placeholder.png" class="about-placeholder" style="max-width: 20px; max-height: 20px;" />
+                <img src="@/assets/placeholder.png" class="about-placeholder" style="margin-top: 5px; max-width: 25px; max-height: 15px;" />
                 IT and Network Infrastructure and Services
               </li>
               <li style="font-size: 1.25rem;">
-                <img src="@/assets/placeholder.png" class="about-placeholder" style="max-width: 20px; max-height: 20px;" />
+                <img src="@/assets/placeholder.png" class="about-placeholder" style="margin-top: 5px; max-width: 25px; max-height: 15px;" />
                 Software Services
               </li>
             </ul>
@@ -42,19 +42,19 @@
             </p>
             <ul class="bullets">
               <li style="font-size: 1.25rem;">
-                <img src="@/assets/placeholder.png" class="about-placeholder" style="max-width: 20px; max-height: 20px;" />
+                <img src="@/assets/placeholder.png" class="about-placeholder" style="margin-top: 5px; max-width: 25px; max-height: 15px;" />
                 Supply Chain Management
               </li>
               <li style="font-size: 1.25rem;">
-                <img src="@/assets/placeholder.png" class="about-placeholder" style="max-width: 20px; max-height: 20px;" />
+                <img src="@/assets/placeholder.png" class="about-placeholder" style="margin-top: 5px; max-width: 25px; max-height: 15px;" />
                 Fintech in Banks and non-Bank environments
               </li>
               <li style="font-size: 1.25rem;">
-                <img src="@/assets/placeholder.png" class="about-placeholder" style="max-width: 20px; max-height: 20px;" />
+                <img src="@/assets/placeholder.png" class="about-placeholder" style="margin-top: 5px; max-width: 25px; max-height: 15px;" />
                 e-Government Systems
               </li>
               <li style="font-size: 1.25rem;">
-                <img src="@/assets/placeholder.png" class="about-placeholder" style="max-width: 20px; max-height: 20px;" />
+                <img src="@/assets/placeholder.png" class="about-placeholder" style="margin-top: 5px; max-width: 25px; max-height: 15px;" />
                 eInformation Technology Infrastructure
               </li>
             </ul>
@@ -90,19 +90,19 @@
             <h3 class="content-text">Mission</h3>
             <ul class="bullets">
               <li style="font-size: 1.25rem;">
-                <img src="@/assets/placeholder.png" class="about-placeholder" style="max-width: 20px; max-height: 20px;" />
+                <img src="@/assets/placeholder.png" class="about-placeholder" style="margin-top: 5px; max-width: 25px; max-height: 15px;" />
                 We deliver high-quality cost-effective ICT-enabled solutions designed for emerging markets through the use of open standards
               </li>
               <li style="font-size: 1.25rem;">
-                <img src="@/assets/placeholder.png" class="about-placeholder" style="max-width: 20px; max-height: 20px;" />
+                <img src="@/assets/placeholder.png" class="about-placeholder" style="margin-top: 5px; max-width: 25px; max-height: 15px;" />
                 We nurture creative and passionate individuals and teams ready to build disruptive technologies
               </li>
               <li style="font-size: 1.25rem;">
-                <img src="@/assets/placeholder.png" class="about-placeholder" style="max-width: 20px; max-height: 20px;" />
+                <img src="@/assets/placeholder.png" class="about-placeholder" style="margin-top: 5px; max-width: 25px; max-height: 15px;" />
                 We build partnerships among kindred spirits to enable us to accelerate time to market
               </li>
               <li style="font-size: 1.25rem;">
-                <img src="@/assets/placeholder.png" class="about-placeholder" style="max-width: 20px; max-height: 20px;" />
+                <img src="@/assets/placeholder.png" class="about-placeholder" style="margin-top: 5px; max-width: 25px; max-height: 15px;" />
                 We conduct ourselves in the highest ethical standards
               </li>
               <!-- Add more mission items here -->
@@ -112,15 +112,15 @@
             <h3 class="content-text">Values</h3>
             <ul class="bullets">
               <li style="font-size: 1.25rem;">
-                <img src="@/assets/placeholder.png" class="about-placeholder" style="max-width: 20px; max-height: 20px;" />
+                <img src="@/assets/placeholder.png" class="about-placeholder" style="margin-top: 5px; max-width: 25px; max-height: 15px;" />
                 Integrity - We believe in doing the right thing, in all circumstances, even if no one is watching us.
               </li>
               <li style="font-size: 1.25rem;">
-                <img src="@/assets/placeholder.png" class="about-placeholder" style="max-width: 20px; max-height: 20px;" />
+                <img src="@/assets/placeholder.png" class="about-placeholder" style="margin-top: 5px; max-width: 25px; max-height: 15px;" />
                 Competence - We can only contribute something if we are knowledgeable in what is expected of us. We act professionally at all times so we can add value to our team and our clients.
               </li>
               <li style="font-size: 1.25rem;">
-                <img src="@/assets/placeholder.png" class="about-placeholder" style="max-width: 20px; max-height: 20px;" />
+                <img src="@/assets/placeholder.png" class="about-placeholder" style="margin-top: 5px; max-width: 25px; max-height: 15px;" />
                 Teamwork - We are accountable to all our other stakeholders. We can only build something significant if we are able to work together as a team, nurture each other, and be accountable to each other.
               </li>
               <!-- Add more values items here -->
@@ -218,6 +218,28 @@ onMounted(() => {
   margin-top: 40px;
   font-weight: bold;
 }
+.navbar{
+  background-color:#ac0c0c;
+  position: relative;
+  left: 50%;
+  right: 50%;
+  margin-left: -50vw;
+  margin-right: -50vw;
+  width: 100vw;
 
+}
+.btn-custom {
+  background-color: white; /* Replace 'your-button-color' with your desired button color */
+  color: #fff; /* Text color for the buttons */
+  padding: 10px 20px; /* Adjust padding as needed */
+  margin: 5px; /* Adjust margin as needed */
+  border-radius: px; /* Remove button border radius if not needed */
+  color: black;
+  font-size: 20px;
+}
 
+.btn-custom.active {
+  background-color: #ac0c0c; /* Replace 'your-active-button-color' with the color for the active button */
+  color: white;
+}
 </style>
