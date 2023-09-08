@@ -1,127 +1,134 @@
 <template>
   <div>
-    <nav>
-      <button v-for="tab in tabs" :key="tab" :class="{ active: currentTab === tab }" @click="currentTab = tab">
-        {{ tab }}
-      </button>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <div class="mx-auto"> <!-- Center align the buttons -->
+        <button
+          v-for="(tab, index) in tabs"
+          :key="tab"
+          :class="['btn', 'btn-outline-danger', { active: currentTab === tab }]"
+          @click="currentTab = tab"
+          :style="{ marginRight: index < tabs.length - 1 ? '14px' : '0' }" 
+        >
+          {{ tab }}
+        </button>
+      </div>
     </nav>
-    <main>
+    <main class="container mt-4">
+      <div class="col-md-9 mx-auto">
       <div v-if="currentTab === 'ABOUT'">
         <h2 class="title-heading"> ABOUT US</h2>
         <hr class="divider" />
-        <div class="aboutcontent-below-divider">
-          <div class="content-column">
-            <p>Apollo Technologies is an Information and Communication Technology Services organisation that leads a group
-              of companies engaged in the delivery of:</p>
-            <div class="service">
-              <img src="@/assets/placeholder.png" class="about-placeholder" />
-              <span>Software Services</span>
-            </div>
-            <div class="service">
-              <img src="@/assets/placeholder.png" class="about-placeholder" />
-              <span>IT and Network Infrastructure and Services</span>
-            </div>
-            <br> <!-- line break -->
-            <p>
-              Apollo Technologies Inc. develops and operates innovative and mission-critical systems in various sectors,
-              mainly in:
+        <div class="row">
+            <p class="text-justify paragraph">
+              Apollo Technologies is an Information and Communication Technology Services organization that leads a group of companies engaged in the delivery of:
             </p>
-            <div class="service">
-              <img src="@/assets/placeholder.png" class="about-placeholder" />
-              <span>Supply Chain Management</span>
-            </div>
-            <div class="service">
-              <img src="@/assets/placeholder.png" class="about-placeholder" />
-              <span>Fintech in Banks and non-Bank environments</span>
-            </div>
-            <div class="service">
-              <img src="@/assets/placeholder.png" class="about-placeholder" />
-              <span>e-Government Systems</span>
-            </div>
-            <div class="service">
-              <img src="@/assets/placeholder.png" class="about-placeholder" />
-              <span>Information Technology Infrastructure</span>
-            </div>
-          </div>
-          <div class="image-column">
-            <img src="@/assets/aboutus.png" class="about-pic" />
+            <ul class="bullets">
+              <li style="font-size: 1.25rem;">
+                <img src="@/assets/placeholder.png" class="about-placeholder" style="max-width: 20px; max-height: 20px;" />
+                Software Services
+              </li>
+              <li style="font-size: 1.25rem;">
+                <img src="@/assets/placeholder.png" class="about-placeholder" style="max-width: 20px; max-height: 20px;" />
+                IT and Network Infrastructure and Services
+              </li>
+              <li style="font-size: 1.25rem;">
+                <img src="@/assets/placeholder.png" class="about-placeholder" style="max-width: 20px; max-height: 20px;" />
+                Software Services
+              </li>
+            </ul>
+            <br>
+            <p class="text-justify paragraph">
+              Apollo Technologies is an Information and Communication Technology Services organization that leads a group of companies engaged in the delivery of:
+            </p>
+            <ul class="bullets">
+              <li style="font-size: 1.25rem;">
+                <img src="@/assets/placeholder.png" class="about-placeholder" style="max-width: 20px; max-height: 20px;" />
+                Supply Chain Management
+              </li>
+              <li style="font-size: 1.25rem;">
+                <img src="@/assets/placeholder.png" class="about-placeholder" style="max-width: 20px; max-height: 20px;" />
+                Fintech in Banks and non-Bank environments
+              </li>
+              <li style="font-size: 1.25rem;">
+                <img src="@/assets/placeholder.png" class="about-placeholder" style="max-width: 20px; max-height: 20px;" />
+                e-Government Systems
+              </li>
+              <li style="font-size: 1.25rem;">
+                <img src="@/assets/placeholder.png" class="about-placeholder" style="max-width: 20px; max-height: 20px;" />
+                eInformation Technology Infrastructure
+              </li>
+            </ul>
           </div>
         </div>
       </div>
-
+      
+      <div class="col-md-9 mx-auto">
       <div v-if="currentTab === 'HISTORY'">
         <h2 class="title-heading">HISTORY</h2>
         <hr class="divider" />
-          <p class="justify">At its founding in 2002, Apollo Technologies Inc. set out to exploit the use of open global standards, open-source technologies, and the extensive use of Internet technology to build innovative Information and Communication Technology (ICT) solutions. It aligned the seismic technological changes at that time (the Web
-            browser, Internet technologies, the emergence of open-source software) with its vision of empowering change in
-            the emerging market through the creation of innovative Information and Communication Technology solutions.</p>
-          <p class="justify"> The company believed that by adopting open standards rather than proprietary standards and sticking to
-            global standards and open-source software, it would facilitate the transformative power of ICT to aid
-            Philippine entities to compete in the global space. It focused its efforts on creating innovative technologies
-            suited for the emerging market where IT infrastructure is weak or non-existent, IT budgets are limited, and IT
-            skills within organizations are scarce.</p>
-          <p class="justify">The use of open standards and open-source software allowed the company to offer its solution as a low-cost
-            “software as a service” way back in 2002 when it wasn’t a buzzword yet. The world was still on licensed
-            software and locked in vendor-based proprietary technologies. By building a strong engineering culture, the
-            company built solutions for both large and small companies. It offered a “subscription type, pay-per-use”
-            model allowing easy adoption by its targeted clients with a low-cost usage model. The trailblazing effort
-            paved the way for a business model that enables the company to partner with companies/Government institutions
-            and offer its software technology and engineering expertise to build innovative ICT solutions geared for the
-            emerging market.</p>
-        <img src="@/assets/history-pic.png" class="hist-pic" />
+        <p class="text-justify paragraph">
+          At its founding in 2002, Apollo Technologies Inc. set out to exploit the use of open global standards, open-source technologies, and the extensive use of Internet technology to build innovative Information and Communication Technology (ICT) solutions. It aligned the seismic technological changes at that time (the Web browser, Internet technologies, the emergence of open-source software) with its vision of empowering change in the emerging market through the creation of innovative Information and Communication Technology solutions.
+        </p>
+        <p class="text-justify paragraph">
+          The company believed that by adopting open standards rather than proprietary standards and sticking to global standards and open-source software, it would facilitate the transformative power of ICT to aid Philippine entities compete in the global space. It focused its efforts on creating innovative technologies suited for the emerging market where IT infrastructure is weak or non-existent, IT budgets are limited, and IT skills within organizations are scarce.
+        </p>
+        <p class="text-justify paragraph">
+          The use of open standards and open-source software allowed the company to offer its solution as a low-cost “software as a service” way back in 2002 when it wasn’t a buzzword yet. The world was still on licensed software and locked in vendor-based proprietary technologies. By building a strong engineering culture, the company built solutions for both large and small companies. It offered a “subscription type, pay-per-use” model allowing easy adoption by its targeted clients with a low-cost usage model. The trailblazing effort paved the way to a business model that enables the company to partner with companies/Government institutions and offer its software technology and engineering expertise to build innovative ICT solutions geared for the emerging market.
+        </p>
+        <img src="@/assets/history-pic.png" class="hist-pic img-fluid" />
+      </div>
       </div>
 
+      <div class="col-md-9 mx-auto">
       <div v-if="currentTab === 'PURPOSE'">
         <h2 class="title-heading">OUR PURPOSE</h2>
         <hr class="divider" />
         <h2 class="content-text">VISION</h2>
-        <p class="content-below-divider">We empower change in the emerging market through innovative Information and
-          Communication Technology solutions.
-        </p>
-        <div class="two-columns">
-          <div class="column">
+        <p  style="font-size: 1.25rem;">We empower change in the emerging market through innovative Information and Communication Technology solutions.</p>
+        <div class="row">
+          <div class="col-md-6 border">
             <h3 class="content-text">Mission</h3>
-            <div class="bullets">
-              <img src="@/assets/placeholder.png" class="placeholder" />
-              <p class="col-content">We nurture creative and passionate individuals and teams ready to build disruptive
-                technologies</p>
-            </div>
-            <div class="bullets">
-              <img src="@/assets/placeholder.png" class="placeholder" />
-              <p class="col-content">We deliver high-quality cost-effective ICT-enabled solutions designed for emerging
-                markets through the use of open standards</p>
-            </div>
-            <div class="bullets">
-              <img src="@/assets/placeholder.png" class="placeholder" />
-              <p class="col-content">We build partnerships among kindred spirits to enable us to accelerate time to market
-              </p>
-            </div>
-            <div class="bullets">
-              <img src="@/assets/placeholder.png" class="placeholder" />
-              <p class="col-content">We conduct ourselves in the highest ethical standards</p>
-            </div>
+            <ul class="bullets">
+              <li style="font-size: 1.25rem;">
+                <img src="@/assets/placeholder.png" class="about-placeholder" style="max-width: 20px; max-height: 20px;" />
+                We deliver high-quality cost-effective ICT-enabled solutions designed for emerging markets through the use of open standards
+              </li>
+              <li style="font-size: 1.25rem;">
+                <img src="@/assets/placeholder.png" class="about-placeholder" style="max-width: 20px; max-height: 20px;" />
+                We nurture creative and passionate individuals and teams ready to build disruptive technologies
+              </li>
+              <li style="font-size: 1.25rem;">
+                <img src="@/assets/placeholder.png" class="about-placeholder" style="max-width: 20px; max-height: 20px;" />
+                We build partnerships among kindred spirits to enable us to accelerate time to market
+              </li>
+              <li style="font-size: 1.25rem;">
+                <img src="@/assets/placeholder.png" class="about-placeholder" style="max-width: 20px; max-height: 20px;" />
+                We conduct ourselves in the highest ethical standards
+              </li>
+              <!-- Add more mission items here -->
+            </ul>
           </div>
-          <div class="column">
+          <div class="col-md-6 border">
             <h3 class="content-text">Values</h3>
-            <div class="bullets">
-              <img src="@/assets/placeholder.png" class="placeholder" />
-              <p class="col-content">Integrity - We believe in doing the right thing, in all circumstances, even if no one
-                is watching us.</p>
-            </div>
-            <div class="bullets">
-              <img src="@/assets/placeholder.png" class="placeholder" />
-              <p class="col-content">Competence - We can only contribute something if we are knowledgeable in what is
-                expected of us. We act professionally at all times so we can add value to our team and our clients.</p>
-            </div>
-            <div class="bullets">
-              <img src="@/assets/placeholder.png" class="placeholder" />
-              <p class="col-content">Teamwork - We are accountable to all our other stakeholders. We can only build
-                something significant if we are able to work together as a team, nurture each other, and be accountable to
-                each other.</p>
-            </div>
+            <ul class="bullets">
+              <li style="font-size: 1.25rem;">
+                <img src="@/assets/placeholder.png" class="about-placeholder" style="max-width: 20px; max-height: 20px;" />
+                Integrity - We believe in doing the right thing, in all circumstances, even if no one is watching us.
+              </li>
+              <li style="font-size: 1.25rem;">
+                <img src="@/assets/placeholder.png" class="about-placeholder" style="max-width: 20px; max-height: 20px;" />
+                Competence - We can only contribute something if we are knowledgeable in what is expected of us. We act professionally at all times so we can add value to our team and our clients.
+              </li>
+              <li style="font-size: 1.25rem;">
+                <img src="@/assets/placeholder.png" class="about-placeholder" style="max-width: 20px; max-height: 20px;" />
+                Teamwork - We are accountable to all our other stakeholders. We can only build something significant if we are able to work together as a team, nurture each other, and be accountable to each other.
+              </li>
+              <!-- Add more values items here -->
+            </ul>
           </div>
         </div>
       </div>
+    </div>
     </main>
   </div>
 </template>
@@ -141,7 +148,7 @@ const nextTab = () => {
   }
 };
 
-// Function to navigate to the previous tab for  keys
+// Function to navigate to the previous tab for keys
 const prevTab = () => {
   const currentIndex = tabs.indexOf(currentTab.value);
   if (currentIndex > 0) {
@@ -160,252 +167,56 @@ onMounted(() => {
   });
 });
 </script>
-<style>
 
-nav {
-  display: flex;
-  justify-content: center;
-  margin-top: 20px;
+<style scoped>
+.paragraph {
+  font-size: 1.25rem;
+  text-align: justify;
+  margin-bottom: 1rem;
 }
 
-button {
-  margin: 0 30px;
-  margin-bottom: 40px;
-  margin-left: 60px;
-  padding: 10px 30px;
-  font-size: 25px;
-  border: 3px solid #ac0c0c;
-  background-color: white;
-  color: #ac0c0c;
-  cursor: pointer;
-  transition: background-color 0.3s ease-in-out;
-  border-radius: 15px;
-  justify-content: center;
-}
-
-
-button.active {
-  background-color: #ac0c0c;
-  color: white;
-  border-color: #ac0c0c;
-}
-
-main {
-  margin-top: 20px;
-  text-align: center;
-  margin: 0 auto;
-  max-width: 1100px;
+.title-heading {
+  margin-top: 1rem;
+  font-size: 2rem;
+  font-weight: bold;
+  color: #444444;
 }
 
 .divider {
   border-top: 1.5px solid black;
-  margin-top: 50px;
+  margin-top: 2rem;
 }
 
-.content-below-divider {
-  margin-top: 20px;
+.service-text {
   font-size: 1.25rem;
-  font-weight: 300;
-  line-height: 2.0;
-
 }
 
-.aboutcontent-below-divider {
-  margin-top: 20px;
-  font-size: 1.25rem;
-  font-weight: 300;
-  line-height: 2.0;
-  display: flex;
-  margin-bottom: 100px;
-}
 
-div.content-below-divider p {
-  text-align: left;
-  margin: 10px 0;
-}
-
-div.aboutcontent-below-divider p {
-  text-align: left;
-  margin: 10px 0;
-}
-
-.justify{
-  text-align: justify;
-  margin-top: 20px;
-  font-size: 1.25rem;
-  font-weight: 300;
-  line-height: 2.0;
-
-}
-
-.service {
-  display: flex;
-  align-items: flex-start;
-  margin-top: 10px;
-  text-align: left;
-}
-
-.service img {
-  margin-right: 10px;
+.about-placeholder {
+  max-width: 40px;
   max-height: 40px;
 }
 
-.title-heading {
-  margin-top: 60px;
-  font-size: 40px;
-  font-weight: bold;
-  color:
-    #444444;
+.hist-pic {
+  max-width: 100%;
+  height: auto;
 }
 
-.two-columns {
+.bullets li {
+  list-style: none; /* Remove default list style */
   display: flex;
-  justify-content: center;
-  margin-top: 20px;
+  align-items: left;
+  text-align: justify;;
+  margin-bottom: 10px; /* Adjust spacing between list items */
 }
 
-.column {
-  flex: 1;
-  padding: 20px;
-  border: 1px solid #ccc;
-  margin: 10px;
-  margin-bottom: 90px;
-}
-
-.bullets {
-  display: flex;
-  align-items: flex-start;
-  margin-top: 10px;
-  font-size: 20px;
-  line-height: 2.0;
-  font-size: 1.25rem;
-  justify-content: left;
+.bullets li img {
+  margin-right: 10px; /* Add spacing between the placeholder icon and text */
   
 }
-
-.col-content {
-  text-align: left;
-  text-align: justify;
-}
-
-.placeholder {
-  margin-right: 30px;
+.content-text{
   margin-top: 40px;
-}
-
-.about-placeholder {
-  margin-right: 30px;
-  margin-top: 5px;
-}
-
-.content-text {
-  font-size: 35px;
   font-weight: bold;
-  color:
-    #444444;
-}
-
-.image-column {
-  flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-top: -200px;
-}
-
-.content-column {
-  flex: 1;
-  padding-right: 20px;
-}
-
-.about-pic {
-  width: 300;
-  height: 550px;
-  margin-top: 170px;
-  border-radius: 10px;
-}
-
-.hist-pic {
-  margin-top: 50px;
-  width: 100%;
-  height: 300px;
-  margin-bottom: 90px;
-}
-
-.bordered-box {
-  border: 1px solid #000;
-  padding: 20px;
-  margin-top: 20px;
-  border-radius: 10px;
-}
-
-/* Mobile view */
-@media (max-width: 780px) {
-  .container {
-    padding: 5px; /* Decrease padding for smaller screens */
-    margin-top: 20px; /* Decrease top margin for smaller screens */
-  }
-
-  .nav {
-    flex-direction: column; /* Stack navigation items vertically */
-    align-items: center; /* Center align navigation items */
-  }
-
-  button {
-    margin: 5px;
-    font-size: 14px; /* Increase font size for better readability */
-    padding: 5px 15px; /* Adjust button padding for smaller screens */
-    margin-left: 0; /* Remove left margin for buttons */
-  }
-
-  .content-column {
-    padding: 0; /* Remove padding for content column */
-  }
-
-  .image-column {
-    display: block; /* Show image column in mobile view */
-  }
-
-  .about-pic,
-  .hist-pic {
-    width: 100%;
-    height: auto;
-    max-width: 100%; /* Ensure images don't exceed their container */
-    margin-top: 10px; /* Add some space between images */
-  }
-
-  .divider,
-  .aboutcontent-below-divider,
-  .justify,
-  .content-below-divider {
-    margin-top: 10px;
-    font-size: 14px; /* Adjust font size for smaller screens */
-  }
-
-  .title-heading {
-    font-size: 18px; /* Reduce title font size for smaller screens */
-    margin-top: 20px;
-  }
-
-  .content-text {
-    font-size: 14px;
-  }
-
-  .two-columns {
-    flex-direction: column; /* Stack columns vertically */
-  }
-
-  .col-content {
-    font-size: 14px;
-  }
-
-  .column {
-    margin: 10px 0;
-  }
-
-  .placeholder {
-    width: 20px; /* Reduce width of placeholder for smaller screens */
-  }
 }
 
 

@@ -1,16 +1,20 @@
 <template>
-  <div class="services-container">
-    <h1 class="services-title">Discover Our Services</h1>
-    <div class="services-box">
-      <div v-for="(service, index) in services" :key="index" class="service-item">
-        <div class="service-content">
-          <img :src="service.image" :alt="'Service ' + (index + 1)" class="service-image" />
+  <main class="container mt-5">
+    <div class="services-container">
+      <h1 class="services-title">Discover Our Services</h1>
+    <div class="container mt-5">
+     <div class="row">
+      <div v-for="(service, index) in services" :key="index" class="col-md-6">
+        <div class="service-item">
+          <img :src="service.image" :alt="'Service ' + (index + 1)" class="service-image img-fluid" />
           <h3 class="service-description">{{ service.title }}</h3>
           <p class="service-details">{{ service.details }}</p>
         </div>
       </div>
+    </div>  
+    </div>  
     </div>
-  </div>
+  </main>
 </template>
 
 <script>
@@ -57,6 +61,7 @@ export default {
   position: relative; 
   left: 50%; 
   transform: translateX(-50%); 
+ 
 }
 
 .services-title {
@@ -70,75 +75,46 @@ export default {
   margin-bottom: 50px;
   background-color: #ac0c0c;
   width: 100%;
-  margin-top: -1px;
 }
-
-.services-box {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 20px;
-  max-width: 900px;
-  justify-content: center;
-}
-
 .service-item {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
   align-items: center;
+  text-align: center; /* Center text horizontally */
   border: 2px solid #ddd;
   border-radius: 10px;
   background-color: #b7b7b7;
   padding: 20px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
-
-.service-content {
-  text-align: center;
+  height: 100%; /* Expand to fill the available height within the wrapper */
+  width: 100%
 }
 
 .service-image {
   max-width: 100%;
   height: auto;
   border-radius: 5px;
+  
 }
 
 .service-description {
-  font-size: 20px;
+  font-size: 24px; /* Increase the font size for the title */
   margin-top: 15px;
-  color:white;
+  color: black;
+  font-weight: bold;
+  
 }
 
 .service-details {
+  font-size: 1.4rem; /* Increase the font size for the details */
   margin-top: 10px;
-  color: white;
+  color: black;
 }
 
-@media screen and (max-width: 780px) {
+@media screen and (max-width: 767px) {
   .services-title {
-    font-size: 18px; /* Adjust the title font size for smaller screens */
-    margin-top: 0; /* Remove negative top margin */
-    margin-bottom: 10px; /* Reduce bottom margin */
-  }
-
-  .services-box {
-    display: flex;
-    width: 100%; /* Make the boxes full-width on smaller screens */
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .service-item {
-    margin-bottom: 10px; /* Reduce margin between service items */
-  }
-
-  .service-description {
-    font-size: 16px; /* Adjust font size for service descriptions */
-    margin-top: 5px; /* Adjust top margin for better spacing */
-  }
-
-  .service-details {
-    font-size: 14px; /* Adjust font size for service details */
+    font-size: 24px;
+    margin-top: 0;
+    margin-bottom: 20px;
   }
 }
-
 </style>
