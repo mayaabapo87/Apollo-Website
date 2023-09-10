@@ -1,4 +1,5 @@
 <template>
+  <main class="container mt-5">
   <div class="full-width-background">
     <div class="container">
       <h1 class="projects-title">OUR PROJECTS</h1>
@@ -62,6 +63,7 @@
       </div>
     </div>
   </div>
+  </main>
 </template>
 
 
@@ -181,7 +183,6 @@ export default {
 <style scoped>
 .full-width-background {
   background-color: #ccc;
-  /* Change to the background color you want */
   position: relative;
   left: 50%;
   right: 50%;
@@ -192,7 +193,6 @@ export default {
 
 .projects-title {
   background-color: #ac0c0c;
-  /* Change to the background color you want */
   position: relative;
   left: 50%;
   right: 50%;
@@ -214,31 +214,25 @@ export default {
   max-width: 100%;
   margin: 0 auto;
   padding: 20px;
-  /* Add padding for better readability */
 }
 
 .project {
   display: flex;
   flex-direction: column;
-  /* Change to a column layout to center-align the project card */
   align-items: center;
   margin: 20px 0;
 }
 
 .project-card {
   border: 2px solid gray;
-  /* Reduce border size */
   padding: 10px;
-  /* Reduce padding */
   box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.2);
   text-align: center;
   display: flex;
   flex-direction: column;
   align-items: center;
   width: 100%;
-  /* Use a percentage width to maintain responsiveness */
   max-width: 500px;
-  /* Set a maximum width for the smaller card */
 }
 
 .project-card-container {
@@ -260,15 +254,18 @@ export default {
 
 .project-image {
   width: 150px;
-  /* Set a fixed width of 100% to maintain responsiveness */
-  height: auto;
-  /* Set a fixed height for all project images */
-
+  height: 60px; 
+  padding: 10px; 
+  background-color: #ccc; 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+ 
 }
+
 
 .project-image img {
   max-width: 100%;
-  /* Make the image responsive */
   height: auto;
 }
 
@@ -327,17 +324,13 @@ export default {
 
 .modal-details {
   max-height: 60vh;
-  /* Adjust the maximum height as needed */
   overflow-y: auto;
-  /* Enable vertical scrolling when content exceeds the max height */
 }
 
 
 .details-content {
   padding: 10px;
-  /* Add padding for better readability */
   line-height: 1.5;
-  /* Adjust the line height for better readability */
   font-size: 1.0rem;
   margin-bottom: 20px;
   text-align: left;
@@ -346,14 +339,12 @@ export default {
 .modal-image {
   width: 10%;
   max-width: 30%;
-  /* Adjust the max-width as needed to control the image size */
   margin: 0 auto;
 }
 
 .allprojectmodal-image {
   width: 50%;
   max-width: 60%;
-  /* Adjust the max-width as needed to control the image size */
   margin: 0 auto;
 }
 
@@ -365,33 +356,25 @@ export default {
 
 .all-projects-modal h2 {
   font-size: 20px;
-  /* Adjust the font size as needed */
 }
 
 .all-projects-content {
   max-height: 80vh;
-  /* Set a maximum height for the modal content */
   overflow-y: auto;
-  /* Enable vertical scrolling when content overflows */
   width: 100%;
-  /* Set the width of the content */
   max-width: 700px;
-  /* Limit the maximum width on larger screens */
   margin: 0 auto;
 }
 
 .project-card.project-small {
   border: 2px solid gray;
-  /* Reduce border size */
   padding: 10px;
-  /* Reduce padding */
   box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.2);
   text-align: center;
   display: flex;
   flex-direction: column;
   align-items: center;
   max-width: 200px;
-  /* Set a maximum width for the smaller card */
 }
 
 .know-more-button {

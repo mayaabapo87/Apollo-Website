@@ -50,20 +50,17 @@ export default {
 </script>
 
 <style scoped>
-.services-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  background-color: #f7f7f7;
-  width: 100vw;
-  height: auto;
-  margin: 0;
-  position: relative; 
-  left: 50%; 
-  transform: translateX(-50%); 
- 
-}
 
+.services-container {
+  background-color: white;
+  position: relative;
+  left: 50%;
+  right: 50%;
+  margin-left: -50vw;
+  margin-right: -50vw;
+  width: 100vw;
+
+}
 .services-title {
   font-family: 'Arial', sans-serif;
   font-size: 36px;
@@ -74,18 +71,19 @@ export default {
   padding: 20px;
   margin-bottom: 50px;
   background-color: #ac0c0c;
-  width: 100%;
+  width: 100vw;
 }
 .service-item {
   display: flex;
   flex-direction: column;
   align-items: center;
-  text-align: center; /* Center text horizontally */
-  border: 2px solid #ddd;
+  text-align: center; 
+  border: 5px solid #f7f7f7;
   border-radius: 10px;
-  background-color: #b7b7b7;
+  background-color: #ccc;
+   box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
   padding: 20px;
-  height: 100%; /* Expand to fill the available height within the wrapper */
+  height: 100%;
   width: 100%
 }
 
@@ -97,7 +95,7 @@ export default {
 }
 
 .service-description {
-  font-size: 24px; /* Increase the font size for the title */
+  font-size: 24px; 
   margin-top: 15px;
   color: black;
   font-weight: bold;

@@ -1,9 +1,10 @@
 <template>
   <div class="full-width-background">
-  <div class="location-page">
     <h1 class="location-title">Explore Our Locations</h1>
+  <div class="location-page">
+   
 
-    <!-- Center the dropdown menu -->
+    <!-- this is for the dropdown menu -->
     <div class="text-center">
       <label for="locationSelect">Select a Location:</label>
       <select id="locationSelect" v-model="selectedLocation" class="form-control fixed-dropdown mx-auto">
@@ -13,9 +14,9 @@
       </select>
     </div>
 
-    <!-- Container for location details -->
+    <!-- Container for location details/information -->
     <div class="row location-container">
-      <!-- Left column for location info -->
+      <!-- place it at left column for location details/information -->
       <div class="col-md-6 location-info">
         <div v-if="selectedLocation === 'location1'">
           <h2 class="title">Apollo Makati</h2>
@@ -74,7 +75,7 @@
 export default {
   data() {
     return {
-      selectedLocation: 'location1', // Default selected location
+      selectedLocation: 'location1', // set Apollo Makati as default location
     };
   },
   methods: {
@@ -96,35 +97,31 @@ export default {
 <style scoped>
 
 .full-width-background {
-  background-color: #ccc; /* Change to the background color you want */
+  background-color: #ccc; 
   position: relative;
   left: 50%;
   right: 50%;
   margin-left: -50vw;
   margin-right: -50vw;
   width: 100vw;
-  margin-top: 5%;
+  margin-top: 0%;
 }
 .title {
   color: #ac0c0c;
 }
 
 .location-title {
-background-color: #ac0c0c; /* Change to the background color you want */
-  position: relative;
-  left: 50%;
-  right: 50%;
-  margin-left: -50vw;
-  margin-right: -50vw;
-  width: 100vw;
   font-family: 'Arial', sans-serif;
   font-size: 36px;
   color: white;
   text-transform: uppercase;
   letter-spacing: 2px;
+  border-bottom: 2px solid #999;
   padding: 20px;
-  margin-top: -20px;
   margin-bottom: 50px;
+  background-color: #ac0c0c;
+  width: 100vw;
+  
 }
 
 .location-page {
@@ -168,40 +165,4 @@ background-color: #ac0c0c; /* Change to the background color you want */
   background-color: white;
 }
 
-@media (max-width: 768px) {
-  .title-header {
-    font-size: 24px;
-    margin-top: 20px;
-  }
-
-  .location-info {
-    width: 100%;
-    border: 2px solid white;
-    border-radius: 10px;
-    border-right: none;
-    background-color: white;
-  }
-
-  .location-page {
-    margin-top: 20px;
-  }
-
-  .fixed-dropdown {
-    max-width: 100%;
-  }
-
-  .location-container {
-    flex-direction: column;
-  }
-
-  .location-map {
-    width: 100%;
-    border: 2px solid white;
-  }
-
-  .location-map-container {
-    width: 100%;
-    margin-left: 0;
-  }
-}
 </style>

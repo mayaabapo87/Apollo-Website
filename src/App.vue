@@ -16,6 +16,7 @@ export default {
 #app {
   font-family: Arial, Helvetica, sans-serif;
   text-align: center;
-  padding: 20px;
+  overflow-x: hidden; /* Hide horizontal scroll if needed */
+  overflow-y: auto; /* Enable vertical scrolling if content exceeds viewport height */
 }
 </style>

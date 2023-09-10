@@ -1,7 +1,7 @@
 <template>
   <div>
     <nav class="navbar">
-      <div class="mx-auto"> <!-- Center align the buttons -->
+      <div class="mx-auto"> 
         <button
           v-for="(tab, index) in tabs"
           :key="tab"
@@ -86,7 +86,7 @@
         <h2 class="content-text">VISION</h2>
         <p  style="font-size: 1.25rem;">We empower change in the emerging market through innovative Information and Communication Technology solutions.</p>
         <div class="row">
-          <div class="col-md-6 border">
+          <div class="col-md-6 mb-4 mb-md-0 border">
             <h3 class="content-text">Mission</h3>
             <ul class="bullets">
               <li style="font-size: 1.25rem;">
@@ -105,7 +105,7 @@
                 <img src="@/assets/placeholder.png" class="about-placeholder" style="margin-top: 5px; max-width: 25px; max-height: 15px;" />
                 We conduct ourselves in the highest ethical standards
               </li>
-              <!-- Add more mission items here -->
+              <!-- add more mission here :) -->
             </ul>
           </div>
           <div class="col-md-6 border">
@@ -123,7 +123,7 @@
                 <img src="@/assets/placeholder.png" class="about-placeholder" style="margin-top: 5px; max-width: 25px; max-height: 15px;" />
                 Teamwork - We are accountable to all our other stakeholders. We can only build something significant if we are able to work together as a team, nurture each other, and be accountable to each other.
               </li>
-              <!-- Add more values items here -->
+              <!-- add more values here :)-->
             </ul>
           </div>
         </div>
@@ -134,38 +134,11 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref } from 'vue';
 
-//function to click tab
 const currentTab = ref('ABOUT');
 const tabs = ['ABOUT', 'HISTORY', 'PURPOSE'];
 
-// Function to navigate to the next tab for keys
-const nextTab = () => {
-  const currentIndex = tabs.indexOf(currentTab.value);
-  if (currentIndex !== -1 && currentIndex < tabs.length - 1) {
-    currentTab.value = tabs[currentIndex + 1];
-  }
-};
-
-// Function to navigate to the previous tab for keys
-const prevTab = () => {
-  const currentIndex = tabs.indexOf(currentTab.value);
-  if (currentIndex > 0) {
-    currentTab.value = tabs[currentIndex - 1];
-  }
-};
-
-// Add event listeners for arrow key presses
-onMounted(() => {
-  document.addEventListener('keydown', (event) => {
-    if (event.key === 'ArrowRight') {
-      nextTab();
-    } else if (event.key === 'ArrowLeft') {
-      prevTab();
-    }
-  });
-});
 </script>
 
 <style scoped>
@@ -187,11 +160,6 @@ onMounted(() => {
   margin-top: 2rem;
 }
 
-.service-text {
-  font-size: 1.25rem;
-}
-
-
 .about-placeholder {
   max-width: 40px;
   max-height: 40px;
@@ -203,15 +171,15 @@ onMounted(() => {
 }
 
 .bullets li {
-  list-style: none; /* Remove default list style */
+  list-style: none; 
   display: flex;
   align-items: left;
   text-align: justify;;
-  margin-bottom: 10px; /* Adjust spacing between list items */
+  margin-bottom: 10px; 
 }
 
 .bullets li img {
-  margin-right: 10px; /* Add spacing between the placeholder icon and text */
+  margin-right: 10px; 
   
 }
 .content-text{
@@ -226,20 +194,19 @@ onMounted(() => {
   margin-left: -50vw;
   margin-right: -50vw;
   width: 100vw;
-
 }
 .btn-custom {
-  background-color: white; /* Replace 'your-button-color' with your desired button color */
-  color: #fff; /* Text color for the buttons */
-  padding: 10px 20px; /* Adjust padding as needed */
-  margin: 5px; /* Adjust margin as needed */
-  border-radius: px; /* Remove button border radius if not needed */
+  background-color: white; 
+  color: #fff; 
+  padding: 10px 20px;
+  margin: 5px; 
+  border-radius: px; 
   color: black;
   font-size: 20px;
 }
 
 .btn-custom.active {
-  background-color: #ac0c0c; /* Replace 'your-active-button-color' with the color for the active button */
+  background-color: #ac0c0c; 
   color: white;
 }
 </style>
