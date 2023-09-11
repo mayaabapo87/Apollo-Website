@@ -1,4 +1,5 @@
 <template>
+
   <div class="full-width-background">
     <h1 class="location-title">Explore Our Locations</h1>
   <div class="location-page">
@@ -104,7 +105,8 @@ export default {
   margin-left: -50vw;
   margin-right: -50vw;
   width: 100vw;
-  margin-top: 0%;
+  height: 80vh;
+
 }
 .title {
   color: #ac0c0c;
@@ -121,7 +123,7 @@ export default {
   margin-bottom: 50px;
   background-color: #ac0c0c;
   width: 100vw;
-  
+
 }
 
 .location-page {

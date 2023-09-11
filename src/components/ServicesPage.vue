@@ -107,12 +107,4 @@ export default {
   margin-top: 10px;
   color: black;
 }
-
-@media screen and (max-width: 767px) {
-  .services-title {
-    font-size: 24px;
-    margin-top: 0;
-    margin-bottom: 20px;
-  }
-}
 </style>

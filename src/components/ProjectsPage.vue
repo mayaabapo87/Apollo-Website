@@ -25,7 +25,7 @@
     <!-- Modal for single project -->
     <div class="modal" :class="{ 'modal-open': isModalOpen }">
       <div class="modal-content">
-        <span class="modal-close" @click="closeModal">&#10006;</span>
+        <span class="single-modal-close" @click="closeModal">&#10006;</span>
         <img :src="projects[currentProjectIndex].image" alt="Project Image" class="modal-image">
         <h2>{{ projects[currentProjectIndex].title }}</h2>
         <div class="modal-details">
@@ -37,7 +37,7 @@
     <!-- Modal for all projects -->
     <div class="modal all-projects-modal" :class="{ 'modal-open': isAllProjectsModalOpen }">
       <div class="allprojectmodal-content">
-        <span class="modal-close" @click="closeAllProjectsModal">&#10006;</span>
+        <span class="allproject-modal-close" @click="closeAllProjectsModal">&#10006;</span>
         <!-- Add a class for responsive styling -->
         <h2 class="allprojects-space"></h2>
         <div class="project-grid all-projects-content">
@@ -45,18 +45,18 @@
             <img :src="project.image" alt="Project Image" class="allprojectmodal-image">
             <h2>{{ project.title }}</h2>
             <p>{{ project.shortDescription }}</p>
-            <button class="know-more-button" @click="openDetailsModal(index)">Know More</button>
+            <button class="know-more-button" @click="openDetailsModal(index)">Learn More</button>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- Modal for individual project details -->
+    <!-- Modal for more project details-->
     <div class="modal" :class="{ 'modal-open': isDetailsModalOpen }">
       <div class="modal-content">
-        <span class="modal-close" @click="closeDetailsModal">&#10006;</span>
+        <span class="single-modal-close" @click="closeDetailsModal">&#10006;</span>
         <img :src="projects[detailsModalIndex].image" alt="Project Image" class="modal-image">
-        <h2>{{ projects[detailsModalIndex].title }}</h2>
+        <h4 projects-modal-title>{{ projects[detailsModalIndex].title }}</h4>
         <div class="modal-details">
           <div class="details-content" v-html="projects[detailsModalIndex].details"></div>
         </div>
@@ -159,15 +159,19 @@ export default {
     },
     openModal() {
       this.isModalOpen = true;
+      document.body.style.overflow = 'hidden';
     },
     closeModal() {
       this.isModalOpen = false;
+      document.body.style.overflow = 'auto';
     },
     openAllProjectsModal() {
       this.isAllProjectsModalOpen = true;
+      document.body.style.overflow = 'hidden';
     },
     closeAllProjectsModal() {
       this.isAllProjectsModalOpen = false;
+      document.body.style.overflow = 'auto';
     },
     openDetailsModal(index) {
       this.detailsModalIndex = index;
@@ -233,12 +237,14 @@ export default {
   align-items: center;
   width: 100%;
   max-width: 500px;
+  background-color: #e0e0e0;
 }
 
 .project-card-container {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  
 }
 
 .allproject-card {
@@ -256,7 +262,7 @@ export default {
   width: 150px;
   height: 60px; 
   padding: 10px; 
-  background-color: #ccc; 
+  background-color: #e0e0e0;; 
   display: flex;
   align-items: center;
   justify-content: center;
@@ -314,14 +320,20 @@ export default {
   display: flex;
 }
 
-.modal-close {
+.single-modal-close {
   position: absolute;
   top: 10px;
   right: 10px;
   cursor: pointer;
   font-size: 24px;
 }
-
+.allproject-modal-close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
+  font-size: 24px;
+}
 .modal-details {
   max-height: 60vh;
   overflow-y: auto;
@@ -396,6 +408,40 @@ export default {
 }
 .allprojects-space{
   height: 10px;
+}
+.view-all-button:hover {
+  background-color: #e3242b;
+  color: white;
+}
+.know-more-button:hover {
+  background-color: #777777;
+  color: white;
+}
+
+@media screen and (width: 320px) {
+  .allproject-modal-close {
+    font-size: 1.4em; 
+    top: 1%;
+    right: 5%; 
+  }
+}
+
+@media screen and (width: 280px) {
+  .allproject-modal-close {
+    font-size: 1.4em; 
+    top: 1%;
+    right: 12%; 
+  }
+  .arrow{
+    font-size: 30px;
+  }
+}
+@media screen and (width: 240px) {
+  .allproject-modal-close {
+    font-size: 1.4em; 
+    top: 1%;
+    right: 15%; 
+  }
 }
 
 </style>
