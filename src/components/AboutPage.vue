@@ -209,4 +209,12 @@ const tabs = ['ABOUT', 'HISTORY', 'PURPOSE'];
   background-color: #ac0c0c; 
   color: white;
 }
+@media screen and (max-width: 412px){
+  .btn-custom {
+    padding: 5px 10px;
+    margin: 5px; 
+    font-size: 10px;
+  }
+  
+}
 </style>
