@@ -1,4 +1,5 @@
 <template>
+  <main class="container mt-0">
   <div>
     <nav class="navbar">
       <div class="mx-auto"> 
@@ -131,6 +132,7 @@
     </div>
     </main>
   </div>
+</main>
 </template>
 
 <script setup>

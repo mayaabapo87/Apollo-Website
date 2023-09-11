@@ -105,7 +105,6 @@ export default {
   margin-left: -50vw;
   margin-right: -50vw;
   width: 100vw;
-  height: 80vh;
 
 }
 .title {
@@ -166,5 +165,9 @@ export default {
   border-radius: 10px;
   background-color: white;
 }
-
+@media screen and (max-width: 500px){
+  .location-title {
+    font-size: 30px;
+  }
+}
 </style>

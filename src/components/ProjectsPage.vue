@@ -443,5 +443,9 @@ export default {
     right: 15%; 
   }
 }
-
+@media screen and (max-width: 500px){
+  .projects-title {
+    font-size: 30px;
+  }
+}
 </style>

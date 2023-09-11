@@ -103,8 +103,17 @@ export default {
 }
 
 .service-details {
-  font-size: 1.4rem; /* Increase the font size for the details */
+  font-size: 1.4rem;
   margin-top: 10px;
   color: black;
+}
+
+@media screen and (max-width: 500px){
+  .services-title {
+    
+    font-size: 30px;
+    
+  }
+  
 }
 </style>
