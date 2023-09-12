@@ -63,11 +63,9 @@ export default {
 }
 .services-title {
   font-family: 'Arial', sans-serif;
-  font-size: 36px;
+  font-size: 2.5rem;
   color: white;
   text-transform: uppercase;
-  letter-spacing: 2px;
-  border-bottom: 2px solid #999;
   padding: 20px;
   margin-bottom: 50px;
   background-color: #ac0c0c;
@@ -108,12 +106,9 @@ export default {
   color: black;
 }
 
-@media screen and (max-width: 500px){
+@media screen and (max-width: 800px){
   .services-title {
-    
     font-size: 30px;
-    
   }
-  
 }
 </style>

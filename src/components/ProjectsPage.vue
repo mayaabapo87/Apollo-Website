@@ -1,8 +1,9 @@
 <template>
-  <main class="container mt-5">
+ 
   <div class="full-width-background">
+     <main class="container mt-5">
     <div class="container">
-      <h1 class="projects-title">OUR PROJECTS</h1>
+      <h1 class="title">OUR PROJECTS</h1>
 
       <div class="project">
         <div class="project-card-container">
@@ -11,8 +12,8 @@
             <div class="project-image">
               <img :src="projects[currentProjectIndex].image" alt="Project Image" class="img-responsive">
             </div>
-            <h2>{{ projects[currentProjectIndex].title }}</h2>
-            <p>{{ projects[currentProjectIndex].shortDescription }}</p>
+            <h2 class="project-title">{{ projects[currentProjectIndex].title }}</h2>
+            <p style="font-size: 1.1rem;">{{ projects[currentProjectIndex].shortDescription }}</p>
             <button class="know-more-button" @click="openModal">Learn More</button>
           </div>
           <span class="arrow arrow-right" @click="nextProject">&#8594;</span>
@@ -22,48 +23,48 @@
       <!-- "View All" button -->
       <button class="view-all-button" @click="openAllProjectsModal">View All</button>
     </div>
+  </main>
     <!-- Modal for single project -->
     <div class="modal" :class="{ 'modal-open': isModalOpen }">
       <div class="modal-content">
         <span class="single-modal-close" @click="closeModal">&#10006;</span>
         <img :src="projects[currentProjectIndex].image" alt="Project Image" class="modal-image">
-        <h2>{{ projects[currentProjectIndex].title }}</h2>
+        <h2 class="allprojects-modal-title">{{ projects[currentProjectIndex].title }}</h2>
         <div class="modal-details">
           <div class="details-content" v-html="projects[currentProjectIndex].details"></div>
         </div>
       </div>
     </div>
 
-    <!-- Modal for all projects -->
-    <div class="modal all-projects-modal" :class="{ 'modal-open': isAllProjectsModalOpen }">
-      <div class="allprojectmodal-content">
-        <span class="allproject-modal-close" @click="closeAllProjectsModal">&#10006;</span>
-        <!-- Add a class for responsive styling -->
-        <h2 class="allprojects-space"></h2>
-        <div class="project-grid all-projects-content">
-          <div v-for="(project, index) in projects" :key="project.title" class="allproject-card">
-            <img :src="project.image" alt="Project Image" class="allprojectmodal-image">
-            <h2>{{ project.title }}</h2>
-            <p>{{ project.shortDescription }}</p>
-            <button class="know-more-button" @click="openDetailsModal(index)">Learn More</button>
-          </div>
-        </div>
+<!-- Modal for all projects -->
+<div class="modal all-projects-modal" :class="{ 'modal-open': isAllProjectsModalOpen }">
+  <div class="allprojectmodal-content">
+    <span class="allproject-modal-close" @click="closeAllProjectsModal">&#10006;</span>
+    <!-- Add a class for responsive styling -->
+    <h2 class="allprojects-space"></h2>
+    <div class="project-grid all-projects-content">
+      <div v-for="(project, index) in projects" :key="project.title" class="allproject-card">
+        <img :src="project.image" alt="Project Image" class="allprojectmodal-image">
+        <h2>{{ project.title }}</h2>
+        <p>{{ project.shortDescription }}</p>
+        <button class="know-more-button" @click="openDetailsModal(index)">Learn More</button>
       </div>
     </div>
+  </div>
+</div>
 
     <!-- Modal for more project details-->
     <div class="modal" :class="{ 'modal-open': isDetailsModalOpen }">
       <div class="modal-content">
         <span class="single-modal-close" @click="closeDetailsModal">&#10006;</span>
         <img :src="projects[detailsModalIndex].image" alt="Project Image" class="modal-image">
-        <h4 projects-modal-title>{{ projects[detailsModalIndex].title }}</h4>
+        <div class="allprojects-modal-title">{{ projects[detailsModalIndex].title }}</div>
         <div class="modal-details">
           <div class="details-content" v-html="projects[detailsModalIndex].details"></div>
         </div>
       </div>
     </div>
   </div>
-  </main>
 </template>
 
 
@@ -195,7 +196,7 @@ export default {
   width: 100vw;
 }
 
-.projects-title {
+.title {
   background-color: #ac0c0c;
   position: relative;
   left: 50%;
@@ -204,16 +205,17 @@ export default {
   margin-right: -50vw;
   width: 100vw;
   font-family: 'Arial', sans-serif;
-  font-size: 36px;
+  font-size: 2.5rem;
   color: white;
   text-transform: uppercase;
-  letter-spacing: 2px;
   padding: 20px;
-  margin-top: -20px;
+  margin-top: -40px;
   margin-bottom: 50px;
 
 }
-
+.project-title{
+  font-size: 1.9rem;
+}
 .container {
   max-width: 100%;
   margin: 0 auto;
@@ -226,6 +228,11 @@ export default {
   align-items: center;
   margin: 20px 0;
 }
+.allproject-card h2 {
+  margin-top: 14px; 
+  font-weight: bold;
+}
+
 
 .project-card {
   border: 2px solid gray;
@@ -407,26 +414,21 @@ export default {
   cursor: pointer;
 }
 .allprojects-space{
-  height: 10px;
+  height: 14px;
 }
 .view-all-button:hover {
   background-color: #e3242b;
   color: white;
 }
 .know-more-button:hover {
-  background-color: #777777;
+  background-color: #ac0c0c;
   color: white;
 }
-
-@media screen and (width: 320px) {
-  .allproject-modal-close {
-    font-size: 1.4em; 
-    top: 1%;
-    right: 5%; 
-  }
+.allprojects-modal-title{
+  font-size:2rem;
 }
 
-@media screen and (width: 280px) {
+@media screen and (max-width: 290px) {
   .allproject-modal-close {
     font-size: 1.4em; 
     top: 1%;
@@ -435,16 +437,102 @@ export default {
   .arrow{
     font-size: 30px;
   }
+  .allprojects-modal-title{
+    font-size: 10px;
+    margin-top: 2%;
+  }
+ 
+  .modal-image {
+    width: 30%;
+    margin: 0 auto;
+  }
+  
 }
-@media screen and (width: 240px) {
+
+@media screen and (min-width: 290px) and (max-width: 300px){
   .allproject-modal-close {
     font-size: 1.4em; 
     top: 1%;
-    right: 15%; 
+    right: 8%; 
+  }
+  .arrow{
+    font-size: 30px;
+  }
+  .allprojects-modal-title{
+    font-weight: bold;
+    font-size: 20px;
+  }
+  .modal-image {
+    width: 30%;
+    margin: 0 auto;
   }
 }
-@media screen and (max-width: 500px){
-  .projects-title {
+
+@media screen and (min-width: 300px) and (max-width: 310px){
+  .allproject-modal-close {
+    font-size: 1.4em; 
+    top: 1%;
+    right: 8%; 
+  }
+  .arrow{
+    font-size: 30px;
+  }
+  .allprojects-modal-title{
+    font-weight: bold;
+    font-size: 20px;
+  }
+  .modal-image {
+    width: 30%;
+    margin: 0 auto;
+  }
+}
+
+@media screen and (min-width: 310px) and (max-width: 320px){
+  .allproject-modal-close {
+    font-size: 1.4em; 
+    top: 1%;
+    right: 6%; 
+  }
+  .arrow{
+    font-size: 30px;
+  }
+  .allprojects-modal-title{
+    font-size: 10px;
+    margin-top: 2%;
+  }
+  .modal-image {
+    width: 30%;
+    margin: 0 auto;
+  }
+}
+@media screen and (max-width: 350px){
+  .allprojects-modal-title{
+    font-size: 15px;
+  }
+  .modal-image {
+    width: 30%;
+    margin: 0 auto;
+  }
+
+  .allprojectmodal-image {
+    width: 100%;
+    height: auto;
+    margin: 0 auto;
+  }
+  
+}
+
+@media screen and (max-width: 800px){
+ 
+  .allprojects-modal-title{
+    font-size: 30px;
+    margin-top: 3%;
+  }
+  .modal-image {
+    width: 20%;
+    margin: 0 auto;
+  }
+  .title {
     font-size: 30px;
   }
 }

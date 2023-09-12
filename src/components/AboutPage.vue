@@ -1,5 +1,4 @@
 <template>
-  <main class="container mt-0">
   <div>
     <nav class="navbar">
       <div class="mx-auto"> 
@@ -65,7 +64,7 @@
       
       <div class="col-md-9 mx-auto">
       <div v-if="currentTab === 'HISTORY'">
-        <h2 class="title-heading">HISTORY</h2>
+        <h2 class="title-heading">OUR HISTORY</h2>
         <hr class="divider" />
         <p class="text-justify paragraph">
           At its founding in 2002, Apollo Technologies Inc. set out to exploit the use of open global standards, open-source technologies, and the extensive use of Internet technology to build innovative Information and Communication Technology (ICT) solutions. It aligned the seismic technological changes at that time (the Web browser, Internet technologies, the emergence of open-source software) with its vision of empowering change in the emerging market through the creation of innovative Information and Communication Technology solutions.
@@ -89,7 +88,7 @@
         <div class="row">
           <div class="col-md-6 mb-4 mb-md-0 border">
             <h3 class="content-text">Mission</h3>
-            <ul class="bullets">
+            <ul class="purpose-bullets">
               <li style="font-size: 1.25rem;">
                 <img src="@/assets/placeholder.png" class="about-placeholder" style="margin-top: 5px; max-width: 25px; max-height: 15px;" />
                 We deliver high-quality cost-effective ICT-enabled solutions designed for emerging markets through the use of open standards
@@ -111,7 +110,7 @@
           </div>
           <div class="col-md-6 border">
             <h3 class="content-text">Values</h3>
-            <ul class="bullets">
+            <ul class="purpose-bullets">
               <li style="font-size: 1.25rem;">
                 <img src="@/assets/placeholder.png" class="about-placeholder" style="margin-top: 5px; max-width: 25px; max-height: 15px;" />
                 Integrity - We believe in doing the right thing, in all circumstances, even if no one is watching us.
@@ -132,7 +131,6 @@
     </div>
     </main>
   </div>
-</main>
 </template>
 
 <script setup>
@@ -176,13 +174,25 @@ const tabs = ['ABOUT', 'HISTORY', 'PURPOSE'];
   list-style: none; 
   display: flex;
   align-items: left;
-  text-align: justify;;
+  text-align: left;;
   margin-bottom: 10px; 
 }
 
 .bullets li img {
   margin-right: 10px; 
   
+}
+
+.purpose-bullets li {
+  list-style: none; 
+  display: flex;
+  align-items: left;
+  text-align: justify;
+  margin-bottom: 10px; 
+}
+
+.purpose-bullets li img {
+  margin-right: 10px; 
 }
 .content-text{
   margin-top: 40px;
@@ -198,24 +208,23 @@ const tabs = ['ABOUT', 'HISTORY', 'PURPOSE'];
   width: 100vw;
 }
 .btn-custom {
-  background-color: white; 
-  color: #fff; 
   padding: 10px 20px;
   margin: 5px; 
-  border-radius: px; 
-  color: black;
+  border-radius: 9px; 
+  color: white;
   font-size: 20px;
 }
 
 .btn-custom.active {
   background-color: #ac0c0c; 
   color: white;
+  font-weight: bold;
 }
 @media screen and (max-width: 412px){
   .btn-custom {
-    padding: 5px 10px;
+    padding: 10px 15px;
     margin: 5px; 
-    font-size: 10px;
+    font-size: 15px;
   }
   
 }
