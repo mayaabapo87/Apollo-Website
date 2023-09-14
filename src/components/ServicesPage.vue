@@ -7,8 +7,8 @@
       <div v-for="(service, index) in services" :key="index" class="col-md-6">
         <div class="service-item">
           <img :src="service.image" :alt="'Service ' + (index + 1)" class="service-image img-fluid" />
-          <h3 class="service-description">{{ service.title }}</h3>
-          <p class="service-details">{{ service.details }}</p>
+          <h3 class="service-title">{{ service.title }}</h3>
+          <p style = "text-align: justify" class="service-details">{{ service.details }}</p>
         </div>
       </div>
     </div>  
@@ -92,7 +92,7 @@ export default {
   
 }
 
-.service-description {
+.service-title {
   font-size: 24px; 
   margin-top: 15px;
   color: black;

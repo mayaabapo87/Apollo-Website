@@ -61,7 +61,7 @@
           class="location-map-container"
           :src="getMapUrl(selectedLocation)"
           width="100%"
-          height="300"
+          height="350"
           style="border: 0;"
           allowfullscreen=""
           loading="lazy"

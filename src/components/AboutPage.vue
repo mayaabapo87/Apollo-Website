@@ -228,4 +228,11 @@ const tabs = ['ABOUT', 'HISTORY', 'PURPOSE'];
   }
   
 }
+
+@media screen and (max-width: 335px) {
+  .btn-custom {
+    padding: 6px 13px;
+    font-size: 15px;
+  }
+}
 </style>

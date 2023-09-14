@@ -1,10 +1,10 @@
 <template>
   <div id="app">
-    <LandingPage></LandingPage>
     <AboutPage></AboutPage>
     <ServicesPage></ServicesPage>
     <ProjectsPage></ProjectsPage>
     <LocationPage></LocationPage>
+    
   </div>
 </template>
 

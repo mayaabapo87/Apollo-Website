@@ -1,154 +1,102 @@
 <template>
- 
   <div class="full-width-background">
-     <main class="container mt-5">
-    <div class="container">
-      <h1 class="title">OUR PROJECTS</h1>
+  <div class="container mt-5">
+    <h1 class="title">OUR PROJECTS</h1>
 
-      <div class="project">
-        <div class="project-card-container">
-          <span class="arrow arrow-left" @click="prevProject">&#8592;</span>
-          <div class="project-card">
-            <div class="project-image">
-              <img :src="projects[currentProjectIndex].image" alt="Project Image" class="img-responsive">
-            </div>
-            <h2 class="project-title">{{ projects[currentProjectIndex].title }}</h2>
-            <p style="font-size: 1.1rem;">{{ projects[currentProjectIndex].shortDescription }}</p>
-            <button class="know-more-button" @click="openModal">Learn More</button>
+    <div class="project">
+      <div class="project-card-container">
+        <span class="arrow arrow-left" @click="prevProject">&#x27A4;</span>
+        <div class="project-card">
+          <div class="project-image">
+            <img :src="projects[currentProjectIndex].image" alt="Project Image" class="img-responsive">
           </div>
-          <span class="arrow arrow-right" @click="nextProject">&#8594;</span>
+          <h2 class="project-title">{{ projects[currentProjectIndex].title }}</h2>
+          <br>
+          <p style="text-align:justify; font-size: 1.4rem;">{{ projects[currentProjectIndex].shortDescription }}</p>
+          <br>
+          <button class="button-62" @click="openModal">Discover More</button>
         </div>
-      </div>
-
-      <!-- "View All" button -->
-      <button class="view-all-button" @click="openAllProjectsModal">View All</button>
-    </div>
-  </main>
-    <!-- Modal for single project -->
-    <div class="modal" :class="{ 'modal-open': isModalOpen }">
-      <div class="modal-content">
-        <span class="single-modal-close" @click="closeModal">&#10006;</span>
-        <img :src="projects[currentProjectIndex].image" alt="Project Image" class="modal-image">
-        <h2 class="allprojects-modal-title">{{ projects[currentProjectIndex].title }}</h2>
-        <div class="modal-details">
-          <div class="details-content" v-html="projects[currentProjectIndex].details"></div>
-        </div>
+        <span class="arrow arrow-right" @click="nextProject">&#x27A4;</span>
       </div>
     </div>
-
-<!-- Modal for all projects -->
-<div class="modal all-projects-modal" :class="{ 'modal-open': isAllProjectsModalOpen }">
-  <div class="allprojectmodal-content">
-    <span class="allproject-modal-close" @click="closeAllProjectsModal">&#10006;</span>
-    <!-- Add a class for responsive styling -->
-    <h2 class="allprojects-space"></h2>
-    <div class="project-grid all-projects-content">
-      <div v-for="(project, index) in projects" :key="project.title" class="allproject-card">
-        <img :src="project.image" alt="Project Image" class="allprojectmodal-image">
-        <h2>{{ project.title }}</h2>
-        <p>{{ project.shortDescription }}</p>
-        <button class="know-more-button" @click="openDetailsModal(index)">Learn More</button>
+  </div>
+     
+      <!-- "View All" Button -->
+      <button class="button-77" @click="openAllProjectsModal">View All</button>
+      
+    
+ <!-- Modal for displaying all projects -->
+<div class="modal" ref="allProjectsModal" tabindex="-1" role="dialog" aria-labelledby="allProjectsModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-horizontal modal-dialog-scrollable">
+    <div class="modal-content modern-modal">
+      <div class="modal-header">
+        <h5 class="modal-title" id="allProjectsModalLabel">All Projects</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" @click="closeAllProjectsModal">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <!-- Iterate through projects to display them -->
+        <div class="projects-container">
+          <div v-for="(project, index) in projects" :key="index" class="allproject-card">
+            <div class="project-image">
+              <img :src="project.image" alt="Project Image" class="img-responsive">
+            </div>
+            <h2 class="project-title">{{ project.title }}</h2>
+            <br>
+            <p style="text-align: justify; font-size: 1.4rem;">{{ project.shortDescription }}</p>
+            <br>
+            <button class="button-62" @click="openModal"> Learn More</button>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" @click="closeAllProjectsModal">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x" viewBox="0 0 16 16">
+            <path d="M5.354 8L0 3.293 1.293 2 8 8.707 14.707 2 16 3.293 10.646 8 16 12.707 14.707 14 8 9.293 1.293 16 0 14.707 5.354 8 0 2.293 1.293 1 8 6.707 14.707 1 16 2.293 10.646 8z"/>
+          </svg>
+          Close
+        </button>
       </div>
     </div>
   </div>
 </div>
 
-    <!-- Modal for more project details-->
-    <div class="modal" :class="{ 'modal-open': isDetailsModalOpen }">
-      <div class="modal-content">
-        <span class="single-modal-close" @click="closeDetailsModal">&#10006;</span>
-        <img :src="projects[detailsModalIndex].image" alt="Project Image" class="modal-image">
-        <div class="allprojects-modal-title">{{ projects[detailsModalIndex].title }}</div>
-        <div class="modal-details">
-          <div class="details-content" v-html="projects[detailsModalIndex].details"></div>
+    <!-- Modal for project details -->
+    <div class="modal" ref="projectDetailsModal" tabindex="-1" role="dialog" aria-labelledby="projectDetailsModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered modal-dialog-horizontal modal-dialog-scrollable">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5  style="text-align: left; font-weight: bold" class="modal-title" id="projectDetailsModalLabel">{{ projects[currentProjectIndex].title }}</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close" @click="closeModal">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div style="font-size: 1.2rem; text-align: justify" class="modal-body" v-html="projects[currentProjectIndex].details"></div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-danger" @click="closeModal">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x" viewBox="0 0 16 16">
+                <path d="M5.354 8L0 3.293 1.293 2 8 8.707 14.707 2 16 3.293 10.646 8 16 12.707 14.707 14 8 9.293 1.293 16 0 14.707 5.354 8 0 2.293 1.293 1 8 6.707 14.707 1 16 2.293 10.646 8z"/>
+              </svg>
+              Close
+            </button>
+          </div>
         </div>
+        
       </div>
     </div>
   </div>
+  
 </template>
 
-
-
 <script>
+import { projects } from '@/assets/data/projects.js';
+
 export default {
   data() {
     return {
       currentProjectIndex: 0,
-      isModalOpen: false,
-      isAllProjectsModalOpen: false,
-      isDetailsModalOpen: false,
-      detailsModalIndex: 0,
-      projects: [
-        {
-          image: require('@/assets/project1.png'),
-          title: 'iConnect Messaging',
-          shortDescription: 'iCONNECT Messaging is a secure messaging platform for business-to-business (B2B) interactions between buyers and sellers. It allows customers to manage a single, security-rich, highly reliable connection between you and your B2B partners.',
-          details: 'iConnect Messaging provides industry standards on Electronic Data Interchange (EDI) based on GS1 (www.gs1.org), the global standard for business product identification and communication. EDI document templates include Orders, Dispatch Advice, Receive Advice, Returns, Sales, inventory, Invoices, Credit Memos, Request for payment settlement and many more. iConnect Messaging has been the gateway for Retailers and Suppliers in the Fast Moving Consumer Goods sector and other consumer goods for over 18 years and is the market leader. It is the gateway for thousands of trusted brands/firms in the Philippines as they exchange business documents using global standards. It serves as the lifeblood of most retailers of essential goods during the Covid-19 pandemic lockdown. It is increasingly sought after by retailers as they transition to full digital transactions with their suppliers. Over the past year, iConnect has been enhanced to support e-commerce further. It is integrated with Apollo Technologies Retail Plus POS/Store System software product to provide an omnichannel system for retailers/suppliers.'
-        },
-        {
-          image: require('@/assets/project2.png'),
-          title: '7-Connect',
-          shortDescription: '7-Connect is a platform that is owned and operated by Apollo Technologies. A bank-grade payment switch built as a payment gateway system that leverages an "offline to online" model. It recognizes that many Filipinos are unbanked and may not have access to sophisticated smartphones (well at least in 2012).',
-          details: `7-CONNECT, a 7-Eleven branding of Apollo Technologies PAYCONNECT service, is a platform that is owned and operated by Apollo Technologies. PAYCONNECT is a bank-grade payment switch built as a payment gateway system that leverages an "offline to online" model. It recognizes that many Filipinos are unbanked and may not have access to sophisticated smartphones (well at least in 2012). Designed to bridge a gap where one could buy an airline ticket or a digital voucher for a "group buy" deal site even if one doesn't have a bank credit/debit card. 7-Eleven and 7-Connect bridged that gap by pioneering a service allowing customers to purchase online and pay at any 7-Eleven store with cash. The digital product is sent electronically as payment is made in real-time similar to credit cards.<br><br>
-
-          The pioneering service eventually revolutionized how bills and e-commerce can be simplified for those using cash as the process was made simpler with the introduction of kiosks, mobile app, and mobile app integration. Customers can pay for online purchases, topping up e-wallets, or do anything online and pay at a 7-Eleven store using a simple barcode generated through the 7-CONNECT system. It now has been extended to accept bank deposits with real-time crediting. This service now processes over 17 Billion Pesos a month and growing rapidly, a significant milestone that started as an idea only seven years ago.<br><br>
-
-          7-CONNECT is also the platform for 7-Eleven CliQQ Reward and CliQQ Wallet, allowing real-time redemption of rewards and making cashless payment at 7-Eleven stores.<br><br>
-
-          7-CONNECT features the following:
-          <ul>
-            <li>24/7 secure cash payment at all 7-Eleven stores</li>
-            <li>Real-time posting at bank/e-wallet/merchant accounts</li>
-            <li>Easier and faster than bank deposits</li>
-            <li>Solution for those without bank accounts or credit/debit cards</li>
-            <li>Alternative payment for those hesitant to use bank accounts online</li>
-            <li>Zero risks of fraud and chargebacks</li>
-            <li>Real-time notification of payment</li>
-          </ul>`
-
-        },
-        {
-          image: require('@/assets/project3.png'),
-          title: '7-Eleven Cliqq App',
-          shortDescription: 'Apollo Technologies developed and owns the platform for the CLiQQ app that allows 7-Eleven customers to earn points every time you buy at 7-Eleven. It features wifi, mobile payment, earning points and wining prizes, sending and receiving cliqq credits, adding credits to cliqq wallet, paying bills, etc.',
-          details: `7-Eleven Cliqq App-Apollo Technologies developed and owns the platform for the CLiQQ app that allows 7-Eleven customers to earn points every time you buy at 7-Eleven. It features wifi, mobile payment, earning points and wining prizes, sending and receiving cliqq credits, adding credits to cliqq wallet, paying bills, etc.
-          <br><br>
-          Features include:
-          <ul>
-            <li>WiFi - App is used as an authentication tool to use the CliQQ wifi service at store. Users can also convert reward points into CliQQ Wifi data credits.</li>
-            <li>Mobile payment at 7-Eleven stores - Top up your CLiQQ wallet and use it as payment for in-store and CLiQQ Shop purchases.</li>
-            <li>Earn points every time you spend - Earn points for every purchase. The more customers pay with CLiQQ wallet, the more points you earn.</li>
-            <li>Win exciting prizes - Platform for collecting eStamps and raffle entries from participating brands to get the chance to win awesome freebies.</li>
-            <li>Send and request CLiQQ Wallet credits - Share the convenience of mobile payment with your friends.</li>
-            <li>Add credits to your CLiQQ wallet through loans - select from our secured loan partners and get verified.</li>
-            <li>Pay bills, hassle-free - Choose from more than 250 billers and settle charges on electricity, internet airfares and more.</li>
-            <li>Buy Load - You can purchase prepaid load through the app or at the kiosk.</li>
-            <li>Add e-Money - Use CLiQQ app to add funds to your mobile wallet.</li>
-            <li>Pera Padala - Send money to your loved ones quickly and conveniently.</li>
-          </ul>`
-        },
-        {
-          image: require('@/assets/project4.png'),
-          title: 'Cargo Data Exchange Center, Inc.',
-          shortDescription: 'Primary provider of cross-border trade facilitation solutions. CDEC has been developing end to end trade and e-commerce solutions linking Government agencies, shipping lines, airlines, freight forwarders, logistics service providers, Customs brokers, financial institutions, importers, manufacturers, exporters.',
-          details: `Primary provider of cross-border trade facilitation solutions. CDEC has been developing end to end trade and e-commerce solutions linking Government agencies, shipping lines, airlines, freight forwarders, logistics service providers, Customs brokers, financial institutions, importers, manufacturers, exporters.<br><br>
-
-          Cargo Data Exchange Center, Inc (CDEC) was established in 1995 as a pioneer in Electronic Data Exchange, providing shipping lines and freight forwarders, a gateway to submit cargo manifests to the Bureau of Customs. Since then, CDEC has been developing end to end trade and e-commerce solutions linking Government agencies, shipping lines, airlines, freight forwarders, logistics service providers, Customs brokers, financial institutions, importers, manufacturers, exporters. Our goal is to push the Philippines towards becoming a world-class trading hub.<br><br>
-
-          In 2011, Apollo Technologies partnered with CDEC to integrate its system for the Philippine Export Zone Authority (PEZA) with CDEC’s Customs system. The aim was to offer integrated trade facilitation services for all importers and exporters in the Philippines. Apollo then embarked on re-developing CDEC’s system while adding its PEZA system, making it a more secure and scalable system, catapulting CDEC to become the market leader in less than 6 years.
-
-          Over the last 25 Years, CDEC demonstrated its capability to innovate. With Apollo as its technology partner, CDEC provides innovative and reliable technology solutions to the trade and logistics community. Together with Apollo’s supply chain solutions, CDEC is currently pioneering a push to offer a cross-border e-commerce system that facilitates efficiency and productivity in trade and logistics.
-
-          7-CONNECT is also the platform for 7-Eleven CliQQ Reward and CliQQ Wallet, allowing real-time redemption of rewards and making cashless payment at 7-Eleven stores.<br><br>
-
-          CDEC is an accredited Value Added Service Provider (VASP) of the Bureau of Customs, Philippine Export Zone Authority, and Clark Development Corporation (Clark Ecozone).
-          <ul>
-            <li>ETRADE - A secure and reliable technology platform for e-Transactions with Customs, PEZA, and CDC.</li>
-            <li>GOFAST - Web commerce solution for the shipping community, providing a system for container reservation and data connectivity to port terminals’ e-commerce platforms.</li>
-            <li>PEZA ELINK - PEZA officers and registered enterprises online portal for cargo permits and reports.</li>
-          </ul>`
-        },
-      ],
+      projects: projects,
     };
   },
   methods: {
@@ -159,33 +107,36 @@ export default {
       this.currentProjectIndex = (this.currentProjectIndex - 1 + this.projects.length) % this.projects.length;
     },
     openModal() {
-      this.isModalOpen = true;
+      this.$refs.projectDetailsModal.classList.add('show');
+      this.$refs.projectDetailsModal.style.display = 'block';
+      document.body.classList.add('modal-open');
       document.body.style.overflow = 'hidden';
     },
     closeModal() {
-      this.isModalOpen = false;
-      document.body.style.overflow = 'auto';
+      this.$refs.projectDetailsModal.classList.remove('show');
+      this.$refs.projectDetailsModal.style.display = 'none';
+      document.body.classList.remove('modal-open');
+  
     },
-    openAllProjectsModal() {
-      this.isAllProjectsModalOpen = true;
+      openAllProjectsModal() {
+      this.$refs.allProjectsModal.classList.add('show');
+      this.$refs.allProjectsModal.style.display = 'block';
+      document.body.classList.add('modal-open');
       document.body.style.overflow = 'hidden';
     },
+
     closeAllProjectsModal() {
-      this.isAllProjectsModalOpen = false;
+      this.$refs.allProjectsModal.classList.remove('show');
+      this.$refs.allProjectsModal.style.display = 'none';
+      document.body.classList.remove('modal-open');
       document.body.style.overflow = 'auto';
-    },
-    openDetailsModal(index) {
-      this.detailsModalIndex = index;
-      this.isDetailsModalOpen = true;
-    },
-    closeDetailsModal() {
-      this.isDetailsModalOpen = false;
     },
   },
 };
 </script>
 
 <style scoped>
+
 .full-width-background {
   background-color: #ccc;
   position: relative;
@@ -213,327 +164,288 @@ export default {
   margin-bottom: 50px;
 
 }
-.project-title{
-  font-size: 1.9rem;
-}
-.container {
-  max-width: 100%;
-  margin: 0 auto;
-  padding: 20px;
-}
-
-.project {
+.project-card-container {
   display: flex;
-  flex-direction: column;
+  justify-content: center;
   align-items: center;
-  margin: 20px 0;
 }
-.allproject-card h2 {
-  margin-top: 14px; 
-  font-weight: bold;
-}
-
 
 .project-card {
   border: 2px solid gray;
-  padding: 10px;
-  box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.2);
+  background-color: white;
+  padding: 15px; 
   text-align: center;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  height: 100%; 
   width: 100%;
-  max-width: 500px;
-  background-color: #e0e0e0;
-}
-
-.project-card-container {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  
-}
-
-.allproject-card {
-  border: 1px solid #ccc;
-  padding: 20px;
-  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
-  text-align: center;
-  display: flex;
   flex-direction: column;
-  align-items: center;
-  width: 90%;
+  justify-content: space-between;
 }
-
-.project-image {
-  width: 150px;
-  height: 60px; 
-  padding: 10px; 
-  background-color: #e0e0e0;; 
-  display: flex;
-  align-items: center;
-  justify-content: center;
- 
+.allproject-card {
+  border: 2px solid gray;
+  padding: 15px; 
+  text-align: center;
+  height: 100%; 
+  width: auto;
+  flex-direction: column;
+  justify-content: space-between;
+  margin: 2%;
+  border-radius: 10px;
 }
-
-
-.project-image img {
-  max-width: 100%;
+.img-responsive{
+  width: 15%;
   height: auto;
 }
-
-.project-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 20px;
-}
-
 .arrow {
-  font-size: 40px;
-  color: #ac0c0c;
+  font-size: 2.5rem;
   cursor: pointer;
+  position: relative;
+  color: #333; /* Default color */
+  margin: 0 10px; /* Add margin to arrows */
+  transition: color 0.3s ease, transform 0.3s ease; /* Smooth color and size transition */
 }
 
 .arrow-left {
-  margin-right: 20px;
+  cursor: pointer;
+  transform: scaleX(-1); /* Flip the character horizontally to face left */
+  display: inline-block;
 }
 
 .arrow-right {
-  margin-left: 20px;
+  right: 0;
 }
 
-.modal {
-  display: none;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.7);
-  justify-content: center;
-  align-items: center;
-  z-index: 999;
+/* Hover effects */
+.arrow:hover {
+  color: #ac0c0c; /* Color on hover */
+  transform: scale(1.2); /* Increase size on hover */
 }
 
-.allprojectmodal-content {
-  background-color: white;
-  padding: 20px;
-  text-align: center;
+/* Additional hover transformation for left arrow */
+.arrow-left:hover {
+  transform: scaleX(-1) scale(1.2); /* Flip and increase size on hover */
+}
+
+
+
+.modal-dialog-horizontal {
+  max-width: 90%;
+  margin: auto;
+}
+
+.modal-dialog-scrollable {
+  max-height: calc(100% - 60px); /* Adjust as needed */
+  overflow-y: auto;
+}
+
+/* Add a dark overlay when the modal is open */
+.modal.show {
+  background-color: rgba(0, 0, 0, 0.5); 
+}
+
+
+/* CSS */
+.close {
   position: relative;
-  width: fit-content;
-}
-
-.modal-open {
-  display: flex;
-}
-
-.single-modal-close {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  cursor: pointer;
-  font-size: 24px;
-}
-.allproject-modal-close {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  cursor: pointer;
-  font-size: 24px;
-}
-.modal-details {
-  max-height: 60vh;
-  overflow-y: auto;
-}
-
-
-.details-content {
-  padding: 10px;
-  line-height: 1.5;
-  font-size: 1.0rem;
-  margin-bottom: 20px;
-  text-align: left;
-}
-
-.modal-image {
-  width: 10%;
-  max-width: 30%;
-  margin: 0 auto;
-}
-
-.allprojectmodal-image {
-  width: 50%;
-  max-width: 60%;
-  margin: 0 auto;
-}
-
-.all-projects-modal {
-  max-width: 100%;
-  max-height: 100%;
-
-}
-
-.all-projects-modal h2 {
-  font-size: 20px;
-}
-
-.all-projects-content {
-  max-height: 80vh;
-  overflow-y: auto;
-  width: 100%;
-  max-width: 700px;
-  margin: 0 auto;
-}
-
-.project-card.project-small {
-  border: 2px solid gray;
-  padding: 10px;
-  box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.2);
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  max-width: 200px;
-}
-
-.know-more-button {
-  background-color: white;
-  padding: 5px 10px;
-  margin-top: 4%;
-  color: inherit;
-}
-
-.view-all-button {
-  display: block;
-  margin: 25px auto;
-  padding: 10px 20px;
-  background-color: #ac0c0c;
-  color: white;
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  background: radial-gradient(circle, #ff5733, #ac0c0c); /* Gradient background */
+  border-radius: 50%; /* Circular padding */
   border: none;
-  border-radius: 8px;
   cursor: pointer;
+  transition: transform 0.2s ease-in-out;
 }
-.allprojects-space{
-  height: 14px;
+
+.close::before,
+.close::after {
+  content: '';
+  position: absolute;
+  width: 2px;
+  height: 24px;
+  top: 3px;
+  left: 14px;
+  background-color: #fff; /* Color of the close icon */
 }
-.view-all-button:hover {
-  background-color: #e3242b;
-  color: white;
+
+.close::before {
+  transform: rotate(45deg);
 }
-.know-more-button:hover {
-  background-color: #ac0c0c;
-  color: white;
+
+.close::after {
+  transform: rotate(-45deg);
 }
-.allprojects-modal-title{
-  font-size:2rem;
+
+.close:hover {
+  transform: scale(1.2); /* Add a hover effect to make it slightly larger on hover */
+}
+
+/* CSS */
+.button-62 {
+  background: linear-gradient(to bottom right, #EF4765, #ac0c0c);
+  border: 0;
+  border-radius: 12px;
+  color: #FFFFFF;
+  cursor: pointer;
+  display: inline-block;
+  font-family: -apple-system,system-ui,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  font-size: 20px;
+  font-weight: 500;
+ 
+  outline: transparent;
+  padding: 10px 30px;
+  text-align: center;
+  text-decoration: none;
+  transition: box-shadow .2s ease-in-out;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  white-space: nowrap;
+}
+
+.button-62:not([disabled]):focus {
+  box-shadow: 0 0 .25rem rgba(0, 0, 0, 0.5), -.125rem -.125rem 1rem rgba(239, 71, 101, 0.5), .125rem .125rem 1rem rgba(255, 154, 90, 0.5);
+}
+
+.button-62:not([disabled]):hover {
+  box-shadow: 0 0 .25rem rgba(0, 0, 0, 0.5), -.125rem -.125rem 1rem rgba(239, 71, 101, 0.5), .125rem .125rem 1rem rgba(255, 154, 90, 0.5);
+}
+
+/* CSS */
+.button-77 {
+  
+  align-items: center;
+  appearance: none;
+  background-clip: padding-box;
+  background-color: initial;
+  background-image: none;
+  border-style: none;
+  box-sizing: border-box;
+  color: #fff;
+  cursor: pointer;
+  display: inline-block;
+  flex-direction: row;
+  flex-shrink: 0;
+  font-family: Eina01,sans-serif;
+  font-size: 16px;
+  font-weight: 800;
+  justify-content: center;
+  line-height: 24px;
+  margin: 0;
+  min-height: 64px;
+  outline: none;
+  overflow: visible;
+  padding: 19px 26px;
+  margin-bottom: 2%;
+  pointer-events: auto;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  text-transform: none;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  vertical-align: middle;
+  width: auto;
+  word-break: keep-all;
+  z-index: 0;
+  margin-top: 2%;
+}
+
+@media (min-width: 768px) {
+  .button-77 {
+    padding: 19px 32px;
+  }
+}
+
+.button-77:before,
+.button-77:after {
+  border-radius: 80px;
+}
+
+.button-77:before {
+  background-color: rgb(249, 58, 19, .32);
+  content: "";
+  display: block;
+  height: 100%;
+  left: 0;
+  overflow: hidden;
+  position: absolute;
+  top: 0;
+  width: 100%;
+  z-index: -2;
+}
+
+.button-77:after {
+  background-color: initial;
+  background-image: linear-gradient(92.83deg, #ff4040 0, #ac0c0c  100%);
+  bottom: 4px;
+  content: "";
+  display: block;
+  left: 4px;
+  overflow: hidden;
+  position: absolute;
+  right: 4px;
+  top: 4px;
+  transition: all 100ms ease-out;
+  z-index: -1;
+}
+
+.button-77:hover:not(:disabled):after {
+  bottom: 0;
+  left: 0;
+  right: 0;
+  top: 0;
+  transition-timing-function: ease-in;
+}
+
+.button-77:active:not(:disabled) {
+  color: #ccc;
+}
+
+.button-77:active:not(:disabled):after {
+  background-image: linear-gradient(0deg, rgba(0, 0, 0, .2), rgba(0, 0, 0, .2)), linear-gradient(92.83deg, #ff7426 0, #f93a13 100%);
+  bottom: 4px;
+  left: 4px;
+  right: 4px;
+  top: 4px;
+}
+
+.button-77:disabled {
+  cursor: default;
+  opacity: .24;
+}
+@media (max-width:600px) {
+  .img-responsive {
+    width: 50%;
+  }
+}
+
+@media screen and (min-width:600px)  and (max-width: 768px) {
+  .img-responsive {
+    width: 50%;
+  }
+}
+
+@media screen and (min-width:767px)  and (max-width: 992px) {
+  .img-responsive {
+    width: 30%;
+  }
 }
 
 @media screen and (max-width: 290px) {
-  .allproject-modal-close {
-    font-size: 1.4em; 
-    top: 1%;
-    right: 12%; 
-  }
   .arrow{
-    font-size: 30px;
-  }
-  .allprojects-modal-title{
-    font-size: 10px;
-    margin-top: 2%;
-  }
- 
-  .modal-image {
-    width: 30%;
-    margin: 0 auto;
-  }
-  
-}
-
-@media screen and (min-width: 290px) and (max-width: 300px){
-  .allproject-modal-close {
-    font-size: 1.4em; 
-    top: 1%;
-    right: 8%; 
-  }
-  .arrow{
-    font-size: 30px;
-  }
-  .allprojects-modal-title{
-    font-weight: bold;
     font-size: 20px;
   }
-  .modal-image {
-    width: 30%;
-    margin: 0 auto;
+  .project-card{
+    width:200px;
+  }
+  .button-62{
+    font-size:15px;
   }
 }
-
-@media screen and (min-width: 300px) and (max-width: 310px){
-  .allproject-modal-close {
-    font-size: 1.4em; 
-    top: 1%;
-    right: 8%; 
-  }
-  .arrow{
-    font-size: 30px;
-  }
-  .allprojects-modal-title{
-    font-weight: bold;
-    font-size: 20px;
-  }
-  .modal-image {
-    width: 30%;
-    margin: 0 auto;
-  }
-}
-
-@media screen and (min-width: 310px) and (max-width: 320px){
-  .allproject-modal-close {
-    font-size: 1.4em; 
-    top: 1%;
-    right: 6%; 
-  }
-  .arrow{
-    font-size: 30px;
-  }
-  .allprojects-modal-title{
-    font-size: 10px;
-    margin-top: 2%;
-  }
-  .modal-image {
-    width: 30%;
-    margin: 0 auto;
-  }
-}
-@media screen and (max-width: 350px){
-  .allprojects-modal-title{
-    font-size: 15px;
-  }
-  .modal-image {
-    width: 30%;
-    margin: 0 auto;
-  }
-
-  .allprojectmodal-image {
-    width: 100%;
-    height: auto;
-    margin: 0 auto;
-  }
-  
-}
-
-@media screen and (max-width: 800px){
- 
-  .allprojects-modal-title{
-    font-size: 30px;
-    margin-top: 3%;
-  }
-  .modal-image {
-    width: 20%;
-    margin: 0 auto;
-  }
-  .title {
-    font-size: 30px;
-  }
+  @media screen and (min-width: 290px) and (max-width: 340px) {
+    .arrow{
+      font-size: 25px;
+    }
 }
 </style>
