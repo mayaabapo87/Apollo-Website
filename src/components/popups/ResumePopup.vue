@@ -37,11 +37,22 @@
                                 </label>
                                 <input class="form-control" id="formFileLg" type="file">
                             </div>
+ 
+
                         </form>
+
+                        
+                            <div>
+                                <form @submit.prevent="uploadFile">
+                                <input type="file" ref="fileInput" accept=".jpg, .jpeg, .png, .pdf" />
+                                <button type="submit">Upload</button>
+                                </form>
+                            </div>
                     </div>
                 </div>
                 <div class="modal-footer">
                     <button class="btn btn-outline-maroon" data-bs-target="#" data-bs-toggle="modal">Send</button>
+                    <button class="btn btn-outline-maroon" data-bs-target="#career-details" data-bs-toggle="modal">Back</button>
                     <button class="btn btn-maroon" data-bs-dismiss="modal" aria-label="Close">Close</button>
                 </div>
             </div>
@@ -50,5 +61,26 @@
 </template>
 
 <script>
+import axios from 'axios';
 
+export default {
+  methods: {
+    async uploadFile() {
+      const fileInput = this.$refs.fileInput;
+      const formData = new FormData();
+      formData.append('file', fileInput.files[0]);
+
+      try {
+        const response = await axios.post('http://192.168.11.144:5001/upload', formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        });
+        console.log('File uploaded successfully:', response.data);
+      } catch (error) {
+        console.error('Error uploading file:', error);
+      }
+    },
+  },
+};
 </script>

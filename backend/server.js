@@ -24,3 +24,42 @@ app.get("/", (req, res) => {
 })
 
 app.use('/api', careerRoutes);
+
+//test
+const multer = require('multer');
+
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    // Specify the directory where uploaded files will be stored
+    cb(null, 'uploads/');
+  },
+  filename: (req, file, cb) => {
+    // Rename the uploaded file (optional)
+    cb(null, Date.now() + '-' + file.originalname);
+  },
+});
+
+const upload = multer({ storage: storage });
+
+// Route for uploading files
+app.post('/upload', upload.single('file'), (req, res) => {
+  try {
+    // Check if no file was uploaded
+    if (!req.file) {
+      return res.status(400).send('No file uploaded.');
+    }
+
+    // Handle the uploaded file as needed (e.g., save it to a database, process it, etc.)
+    // You can access file information like req.file.originalname, req.file.filename, etc.
+
+    // Respond with a success message
+    res.send('File uploaded successfully.');
+  } catch (error) {
+    // Handle any errors that occur during file upload or processing
+    console.error('Error uploading file:', error);
+    res.status(500).send('Internal Server Error');
+  }
+});
+
+    //route
+//test
