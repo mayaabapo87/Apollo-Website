@@ -8,50 +8,42 @@
                 </div>
                 <div class="modal-body">
                     <div class="container">
-                        <form class="w-75 mx-auto">
+                        <form  @submit.prevent="uploadFile" class="w-75 mx-auto">
 
                             <div class="input-group mb-3">
                                 <span class="input-group-text" id="basic-addon1">
                                     <img width="40" height="40" src="../../assets/icons/person.svg" class="card-img-top" alt="...">
                                 </span>
-                                <input type="text" class="form-control" placeholder="Full Name" aria-label="Username" aria-describedby="basic-addon1">
+                                <input id="fullName" type="text" class="form-control" placeholder="Full Name" aria-label="Username" aria-describedby="basic-addon1">
                             </div>
 
                             <div class="input-group mb-3">
                                 <span class="input-group-text" id="basic-addon1">
                                     <img width="40" height="40" src="../../assets/icons/envelope.svg" class="card-img-top" alt="...">
                                 </span>
-                                <input type="text" class="form-control" placeholder="Email" aria-label="Username" aria-describedby="basic-addon1">
+                                <input id="email" type="text" class="form-control" placeholder="Email" aria-label="Username" aria-describedby="basic-addon1">
                             </div>
 
                             <div class="input-group mb-3">
                                 <span class="input-group-text" id="basic-addon1">
                                     <img width="40" height="40" src="../../assets/icons/telephone.svg" class="card-img-top" alt="...">
                                 </span>
-                                <input type="text" class="form-control" placeholder="09xxxxxxxx" aria-label="Username" aria-describedby="basic-addon1">
+                                <input id="phoneNumber" type="text" class="form-control" placeholder="09xxxxxxxx" aria-label="Username" aria-describedby="basic-addon1">
                             </div>
 
                             <div class="container allign-items-center text-center justify-items-center border rounded py-2">
                                 <label for="formFileLg" class="form-label">
                                     <img width="50" height="50" src="../../assets/icons/upload.svg" class="card-img-top" alt="...">
                                 </label>
-                                <input class="form-control" id="formFileLg" type="file">
+                                <input type="file" ref="fileInput" accept=".jpg, .jpeg, .png, .pdf" />
                             </div>
  
+                            <button class="btn btn-outline-maroon" type="submit">Submit</button>
 
                         </form>
-
-                        
-                            <div>
-                                <form @submit.prevent="uploadFile">
-                                <input type="file" ref="fileInput" accept=".jpg, .jpeg, .png, .pdf" />
-                                <button type="submit">Upload</button>
-                                </form>
-                            </div>
-                    </div>
+                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button class="btn btn-outline-maroon" data-bs-target="#" data-bs-toggle="modal">Send</button>
                     <button class="btn btn-outline-maroon" data-bs-target="#career-details" data-bs-toggle="modal">Back</button>
                     <button class="btn btn-maroon" data-bs-dismiss="modal" aria-label="Close">Close</button>
                 </div>
@@ -64,23 +56,32 @@
 import axios from 'axios';
 
 export default {
-  methods: {
-    async uploadFile() {
-      const fileInput = this.$refs.fileInput;
-      const formData = new FormData();
-      formData.append('file', fileInput.files[0]);
+    methods: {
+        async uploadFile() {
+        const fileInput = this.$refs.fileInput;
+        const formData = new FormData();
 
-      try {
-        const response = await axios.post('http://192.168.11.144:5001/upload', formData, {
-          headers: {
-            'Content-Type': 'multipart/form-data',
-          },
-        });
-        console.log('File uploaded successfully:', response.data);
-      } catch (error) {
-        console.error('Error uploading file:', error);
-      }
+        const name = document.querySelector('#fullName').value;
+        const email = document.querySelector('#email').value;
+        const number = document.querySelector('#phoneNumber').value;
+
+        formData.append('name', name);
+        formData.append('email', email);
+        formData.append('number', number);
+
+        formData.append('file', fileInput.files[0]);
+
+        try {
+            const response = await axios.post('http://192.168.11.144:5001/api/resumes', formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data',
+            },
+            });
+            console.log('File uploaded successfully:', response.data);
+        } catch (error) {
+            console.error('Error uploading file:', error);
+        }
+        },
     },
-  },
 };
 </script>

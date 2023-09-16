@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>My EJS App</title>
+
+        <!-- Bootstrap CSS -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+
+        <!--  Bootstrap JavaScript -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.8.335/pdf.js"></script>
+       
+        
+    </head>
+    <body>
+        <div class="container">
+            <h1 class="fw-bold text-center">Test Resumes</h1>
+            <p class="fs-4 text-center">Manage all resumes here.</p>
+            <div class="container">
+                <h2 class="text-center">List of Resumes</h2>
+                <ul>
+                    <% resumes.forEach(function(resume) { %>
+                        <li>
+                            <%= resume.id %> |
+                            <%= resume.name %> |
+                            <%= resume.email %> |
+                            <%= resume.number %> |
+
+                            <a href="/pdfs/<%= resume.file %>" class="btn btn-outline-dark text-truncate" target="_blank">
+                                <%= resume.file %>
+                            </a>
+                        </li>
+                     <% }); %>
+                </ul>
+            </div>
+        </div>
+
+    <!-- Modals for PDFs -->
+    <% resumes.forEach(function(resume) { %>
+        <div class="modal fade" id="pdfModal<%= resume.id %>" tabindex="-1" aria-labelledby="pdfModalLabel<%= resume.id %>" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="pdfModalLabel<%= resume.id %>">Resume PDF</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <!-- Embed the PDF here -->
+                        <embed src="<%= resume.file %>" type="application/pdf" width="100%" height="500px" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    <% }); %>
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+
+    </body>
+</html>
+
+ 
