@@ -34,21 +34,15 @@ app.use("/pdfs/src/resumes/uploads/", express.static(path.join(__dirname, "src",
 
 app.get("/", async (req, res) => {
     try {
-        // Query the database to get all resumes
         const queryResult = await pool.query(queries.getResumes);
-
-        // Extract the resume data from the query result
         const resumes = queryResult.rows;
 
-        // Render the EJS template and pass the resumes data
         res.render('home', { resumes });
     } catch (error) {
         console.error('Error fetching resumes:', error);
         res.status(500).send('Internal Server Error');
     }
 });
-
-
 
 app.use('/api', apolloRoutes);
 app.use('/api', resumeRoutes);

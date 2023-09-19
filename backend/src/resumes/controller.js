@@ -38,10 +38,12 @@ const addResume = async (req, res) => {
     }
 
     const { filename, path } = req.file;
-    const { name, email, number } = req.body;
+    const { name, email, number, position } = req.body;
+    const currentDate = new Date();
+    const date = `${currentDate.toLocaleString('default', { month: 'short' })} ${currentDate.getDate()} ${currentDate.getFullYear()}`;
 
-    const insertQuery = 'INSERT INTO resumes (name, email, number, file) VALUES ($1, $2, $3, $4) RETURNING id';
-    const result = await pool.query(insertQuery, [name, email, number, path]);
+    const insertQuery = 'INSERT INTO resumes (name, email, number, file, position, date) VALUES ($1, $2, $3, $4, $5, $6) RETURNING id';
+    const result = await pool.query(insertQuery, [name, email, number, path, position, date]);
 
     if (result.rowCount === 1) {
       res.status(201).send('Your resume was sent and location stored successfully.');

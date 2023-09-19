@@ -22,8 +22,10 @@
                                 </div>
                                 <div class="position-absolute top-100 start-50 translate-middle mt-1">
  
-                                    <CareerDetailsPopup :careerId="detail.id" />
- 
+                                    <button class="btn btn-maroon" :data-bs-target="'#career-details-'+detail.id" data-bs-toggle="modal">
+                                        Details
+                                    </button>
+  
                                 </div>
                             </div>
                         </div>
@@ -52,7 +54,6 @@
 </template>
 
 <script>
-import CareerDetailsPopup from './popups/CareerDetailsPopup.vue'
 import axios from 'axios'
 
 export default {
@@ -66,10 +67,6 @@ export default {
         axios.get('http://192.168.11.144:5001/api/careers')
             .then(response => this.careers = response.data)
     },
-
-    components:{
-        CareerDetailsPopup,
-     },
 
     computed: {
       careerSets() {

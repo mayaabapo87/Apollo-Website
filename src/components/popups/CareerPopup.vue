@@ -40,8 +40,10 @@
                                         <h5 class="card-title">{{ detail.name }}</h5>
                                         <p class="card-text">{{ detail.location }}</p>
                                     </div>
-                                    
-                                    <CareerDetailsPopup :careerId="detail.id" />
+
+                                    <button class="btn btn-maroon" :data-bs-target="'#career-details-'+detail.id" data-bs-toggle="modal">
+                                        Details
+                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -57,13 +59,9 @@
 
 <script>
 import axios from 'axios'
-import CareerDetailsPopup from "./CareerDetailsPopup.vue";
  
 export default {
-    components:{
-        CareerDetailsPopup
-    },
-
+  
     name: "CareerPopup",
     props: [
         'careerId'
@@ -97,17 +95,17 @@ export default {
             searched.from(detail.id)
         });
         return Array.from(searched);
-    },
+    },  
 
-        filteredCareers() {
-            return this.careers.filter((detail) => {
-            const locationMatch = this.selectedLocation === "1" || detail.location === this.selectedLocation;
-            const searchMatch = 
-                (detail.name.toLowerCase().includes(this.searchQuery.toLowerCase()) &&
-                detail.location.toLowerCase().includes(this.selectedLocation.toLowerCase())) || detail.name.toLowerCase().includes(this.searchQuery.toLowerCase());
-            return locationMatch && searchMatch;
-            });
-        },
+    filteredCareers() {
+        return this.careers.filter((detail) => {
+        const locationMatch = this.selectedLocation === "1" || detail.location === this.selectedLocation;
+        const searchMatch = 
+            (detail.name.toLowerCase().includes(this.searchQuery.toLowerCase()) &&
+            detail.location.toLowerCase().includes(this.selectedLocation.toLowerCase())) || detail.name.toLowerCase().includes(this.searchQuery.toLowerCase());
+        return locationMatch && searchMatch;
+        });
+    },
 
     },
 };

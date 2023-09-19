@@ -3,7 +3,7 @@
         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-xl">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-2 fw-bold" id="resume-formLabel">Resume</h1>
+                    <h1 class="modal-title fs-2 fw-bold" id="resume-job"> {{ $store.state.positionName }} </h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -35,16 +35,16 @@
                                 <label for="formFileLg" class="form-label">
                                     <img width="50" height="50" src="../../assets/icons/upload.svg" class="card-img-top" alt="...">
                                 </label>
-                                <input type="file" ref="fileInput" accept=".jpg, .jpeg, .png, .pdf" />
+                                <input type="file" ref="fileInput" accept=".pdf" />
                             </div>
  
-                            <button class="btn btn-outline-maroon" type="submit">Submit</button>
+                            <button class="btn btn-outline-maroon" data-bs-dismiss="modal" type="submit">Submit</button>
 
                         </form>
                      </div>
                 </div>
                 <div class="modal-footer">
-                    <button class="btn btn-outline-maroon" data-bs-target="#career-details" data-bs-toggle="modal">Back</button>
+                    <button class="btn btn-outline-maroon" :data-bs-target="'#career-details-'+$store.state.positionId" data-bs-toggle="modal">Back</button>
                     <button class="btn btn-maroon" data-bs-dismiss="modal" aria-label="Close">Close</button>
                 </div>
             </div>
@@ -54,8 +54,16 @@
 
 <script>
 import axios from 'axios';
-
+import { mapState } from 'vuex';
+ 
 export default {
+    computed: {
+    ...mapState({
+      positionName: (state) => state.positionName,
+      positionId: (state) => state.positionId,
+    }),
+  },
+  
     methods: {
         async uploadFile() {
         const fileInput = this.$refs.fileInput;
@@ -64,11 +72,10 @@ export default {
         const name = document.querySelector('#fullName').value;
         const email = document.querySelector('#email').value;
         const number = document.querySelector('#phoneNumber').value;
-
-        formData.append('name', name);
+        const position = this.$store.state.positionName;         formData.append('name', name);
         formData.append('email', email);
         formData.append('number', number);
-
+        formData.append('position', position);
         formData.append('file', fileInput.files[0]);
 
         try {

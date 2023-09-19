@@ -1,17 +1,17 @@
 <template>
-<PartnersPopup />
-<ContactForm />
-<CareerDetailsPopup />
-<ResumePopup />
-<CareerPopup />
-<StoriesPopup />
-  <nav>
-    <Navbar />
-    <Landing />
-    <Partners />
-    <Careers />
-  </nav>
-<router-view/>
+  <PartnersPopup />
+  <ResumePopup />
+  <ContactForm />
+  <CareerDetailsPopup />
+  <CareerPopup />
+  <StoriesPopup />
+    <nav>
+      <Navbar />
+      <Landing />
+      <Partners />
+      <Careers />
+    </nav>
+  <router-view/>
 </template>
 
 <script>
