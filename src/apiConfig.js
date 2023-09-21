@@ -1,0 +1,1 @@
+export const BACKEND_API_URL = 'http://192.168.11.144:5001';

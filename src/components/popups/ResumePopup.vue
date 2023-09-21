@@ -55,7 +55,8 @@
 <script>
 import axios from 'axios';
 import { mapState } from 'vuex';
- 
+import { BACKEND_API_URL } from '../../apiConfig';
+
 export default {
     computed: {
     ...mapState({
@@ -79,7 +80,7 @@ export default {
         formData.append('file', fileInput.files[0]);
 
         try {
-            const response = await axios.post('http://192.168.11.144:5001/api/resumes', formData, {
+            const response = await axios.post(`${BACKEND_API_URL}/api/resumes`, formData, {
             headers: {
                 'Content-Type': 'multipart/form-data',
             },

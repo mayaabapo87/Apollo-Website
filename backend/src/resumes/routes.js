@@ -5,10 +5,10 @@ const router = Router();
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, 'src/resumes/uploads/'); // Specify the directory where uploaded files will be stored
+    cb(null, 'src/resumes/uploads/');
   },
   filename: (req, file, cb) => {
-    cb(null, Date.now() + '-' + file.originalname); // Rename the uploaded file (optional)
+    cb(null, Date.now() + '-' + file.originalname);
   },
 });
 

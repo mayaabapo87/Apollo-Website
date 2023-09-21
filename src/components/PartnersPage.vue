@@ -145,8 +145,7 @@
 
 <script>
 import axios from 'axios'
-
-
+import { BACKEND_API_URL } from '../apiConfig';
 export default {
     components:{
     },
@@ -160,15 +159,16 @@ export default {
 
 
     async mounted() {
+ 
         try {
-            axios.get('http://192.168.11.144:5001/api/partners').
+            axios.get(`${BACKEND_API_URL}/api/partners`).
             then(response => this.partnerData = response.data)
         } catch (error) {
             console.error('Error fetching partner data:', error);
         }
 
         try {
-            axios.get('http://192.168.11.144:5001/api/stories')
+            axios.get(`${BACKEND_API_URL}/api/stories`)
             .then(response => this.storiesData = response.data)
         } catch (error) {
         console.error('Error fetching story data:', error);

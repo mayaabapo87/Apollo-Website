@@ -59,7 +59,8 @@
 
 <script>
 import axios from 'axios'
- 
+import { BACKEND_API_URL } from '../../apiConfig';
+
 export default {
   
     name: "CareerPopup",
@@ -76,37 +77,36 @@ export default {
     },
 
     mounted(){
-        axios.get('http://192.168.11.144:5001/api/careers')
+        axios.get(`${BACKEND_API_URL}/api/careers`)
             .then(response => this.careers = response.data)
     },
 
     computed: {
-    workLocations() {
-        const uniqueSet = new Set();
-        this.careers.forEach((detail) => {
-            uniqueSet.add(detail.location);
-        });
-        return Array.from(uniqueSet);
-    },
+        workLocations() {
+            const uniqueSet = new Set();
+            this.careers.forEach((detail) => {
+                uniqueSet.add(detail.location);
+            });
+            return Array.from(uniqueSet);
+        },
 
-    searchFunction(){
-        const searched = new Set();
-        this.searched.forEach((detail) => {
-            searched.from(detail.id)
-        });
-        return Array.from(searched);
-    },  
+        searchFunction(){
+            const searched = new Set();
+            this.searched.forEach((detail) => {
+                searched.from(detail.id)
+            });
+            return Array.from(searched);
+        },  
 
-    filteredCareers() {
-        return this.careers.filter((detail) => {
-        const locationMatch = this.selectedLocation === "1" || detail.location === this.selectedLocation;
-        const searchMatch = 
-            (detail.name.toLowerCase().includes(this.searchQuery.toLowerCase()) &&
-            detail.location.toLowerCase().includes(this.selectedLocation.toLowerCase())) || detail.name.toLowerCase().includes(this.searchQuery.toLowerCase());
-        return locationMatch && searchMatch;
-        });
-    },
-
+        filteredCareers() {
+            return this.careers.filter((detail) => {
+            const locationMatch = this.selectedLocation === "1" || detail.location === this.selectedLocation;
+            const searchMatch = 
+                (detail.name.toLowerCase().includes(this.searchQuery.toLowerCase()) &&
+                detail.location.toLowerCase().includes(this.selectedLocation.toLowerCase())) || detail.name.toLowerCase().includes(this.searchQuery.toLowerCase());
+            return locationMatch && searchMatch;
+            });
+        }
     },
 };
 </script>

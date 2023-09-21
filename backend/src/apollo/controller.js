@@ -29,6 +29,58 @@ const getCareerById = (req, res) => {
       res.status(200).json(results.rows);
     });
 };
+const fs = require('fs');
+
+const addCareer = async (req, res) => {
+  let icon = "default"; 
+
+  if (req.file) {
+    icon = req.file.filename;  
+  }
+
+  const { name, location, summary, qualifications } = req.body;
+ 
+  try {
+    const result = await pool.query(queries.addCareer, [name, location, summary, qualifications, icon]);
+
+    if (result.rowCount === 1) {
+      res.status(201).send('Career Added.');
+    } else {
+      res.status(500).send('Failed to add career.');
+    }
+  } catch (error) {
+    console.error('Error adding career:', error);
+    res.status(500).send('Internal Server Error');
+  }
+};
+
+const editCareer = async (req, res) => {
+  const id = parseInt(req.params.id);
+  const { name, location, summary, qualifications } = req.body;
+
+  try {
+    const result = await pool.query(queries.editCareer, [name, location, summary, qualifications, id]);
+    if (result.rowCount === 1) {
+      res.status(201).send('Career Edit.');
+    } else {
+      res.status(500).send('Failed to edit career.');
+    }
+  } catch (error) {
+    console.error('Error editing career:', error);
+    res.status(500).send('Internal Server Error');
+  }
+
+
+};
+
+const removeCareer = (req, res) => {
+  const id = parseInt(req.params.id);
+  pool.query(queries.removeCareer, [id])
+   
+    res.status(200).send("Career deleted successfully.");
+};
+
+
   
 const getPartners = (req, res) => {
   pool.query(queries.getPartners, (error, results) => {
@@ -93,6 +145,9 @@ pool.query(queries.getStoryById, [id], (error, results) => {
 module.exports = {
   getCareers,
   getCareerById,
+  addCareer,
+  editCareer,
+  removeCareer,
   getPartners,
   getPartnerById,
   getStories,

@@ -31,6 +31,7 @@
 
 <script>
 import axios from 'axios'
+import { BACKEND_API_URL } from '../../apiConfig';
 
 export default{
     data() {
@@ -43,7 +44,7 @@ export default{
     async mounted() {
 
         try {
-            axios.get('http://192.168.11.144:5001/api/stories')
+            axios.get(`${BACKEND_API_URL}/api/stories`)
             .then(response => this.stories = response.data)
         } catch (error) {
         console.error('Error fetching story data:', error);

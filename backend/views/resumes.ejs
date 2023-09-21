@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Resumes</title>
+
+        <!-- Bootstrap CSS -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" 
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+
+        <!--  Bootstrap JavaScript -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" 
+            integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous">
+        </script>
+
+        <script 
+            src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.8.335/pdf.js">
+        </script>
+    </head>
+
+    <body>
+
+        <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
+            <div class="container">
+                <div class="collapse navbar-collapse show" id="navbarDark">
+                    <ul class="navbar-nav me-auto mb-2 mb-xl-0">
+                        <li class="nav-item">
+                            <a class="nav-link active" href="/" type="button" id="careerGotoButton" name="careerGotoButton">
+                                Resumes
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/career" type="button" id="careerGotoButton" name="careerGotoButton">
+                                Careers
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/partners" type="button" id="partnersGotoButton" name="partnersGotoButton">
+                                Partners
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/stories" type="button" id="storiesGotoButton" name="storiesGotoButton">
+                                Stories
+                            </a>
+                        </li>
+                    </ul>
+
+                    <form class="d-flex" action="/" method="GET">
+                        <input class="form-control mx-1" type="search" placeholder="Search" aria-label="Search" id="searchInput" name="search">
+                        <button class="btn btn-outline-light mx-1" type="submit">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                                <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 
+                                1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+                            </svg>
+                        </button>
+                        <a class="btn btn-danger mx-1" href="/" type="button" id="resetSearchButton2" name="resetSearch">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-circle" viewBox="0 0 16 16">
+                                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                                <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
+                              </svg>
+                        </a>
+                    </form>
+                </div>
+            </div>
+        </nav>
+
+        <div class="container mt-3">
+            <table class="table table-hover">
+               
+                <thead>
+                    <tr class="table-dark">
+                        <th scope="col">Name</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Number</th>
+                        <th scope="col">Position</th>
+                        <th scope="col">Date</th>
+                        <th scope="col" class="text-center">Resume</th>
+                        <th scope="col" class="text-center">Delete</th>
+                    </tr>
+                </thead>    
+
+                <% resumes.forEach(function(resume) { %>
+                    <tbody id="row-<%= resume.id %>">
+                        <tr id="resume-row-<%= resume.id %>">
+                            <td><%= resume.name %></td>
+                            <td><%= resume.email %></td>
+                            <td><%= resume.number %></td>
+                            <td><%= resume.position %></td>
+                            <td><%= resume.date.getFullYear() %>-<%= (resume.date.getMonth() + 1) %>-<%= resume.date.getDate() %></td>
+                            <td class="text-center">   
+                                <button class="btn btn-outline-dark" data-bs-target="#pdfModal<%= resume.id %>" data-bs-toggle="modal">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" 
+                                    class="bi bi-file-earmark-person" viewBox="0 0 16 16">
+                                        <path d="M11 8a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
+                                        <path d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2zM9.5 3A1.5 1.5 0 0 0 
+                                        11 4.5h2v9.255S12 12 8 12s-5 1.755-5 1.755V2a1 1 0 0 1 1-1h5.5v2z"/>
+                                    </svg>
+                                </button>
+                            </td>
+                            <td class="text-center">
+                                <button class="btn btn-outline-danger" type="button" data-resume-id="<%= resume.id %>">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+                                        <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 
+                                        0V6a.5.5 0 0 1 .5-.5Zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6Z"/>
+                                        <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 
+                                        1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1ZM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 
+                                        4H4.118ZM2.5 3h11V2h-11v1Z"/>
+                                    </svg>
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                <% }); %>
+            </table>  
+
+
+            <nav aria-label="Page navigation">
+                <ul class="pagination justify-content-center">
+                    <li class="page-item <%= currentPage === 1 ? 'disabled' : '' %>">
+                        <a class="page-link" href="?page=<%= currentPage - 1 %>&search=<%= search %>">«</a>
+                    </li>
+            
+                    <li class="page-item <%= currentPage === 1 ? 'active' : '' %>">
+                        <a class="page-link" href="?page=1&search=<%= search %>">1</a>
+                    </li>
+            
+                    <% if (totalPages > 2) { %>
+                        <li class="page-item disabled"><a class="page-link" href="#">...</a></li>
+                    <% } %>
+            
+                    <% for (let i = currentPage - 1; i <= currentPage + 1; i++) { %>
+                        <% if (i > 1 && i < totalPages) { %>
+                            <li class="page-item <%= i === currentPage ? 'active' : '' %>">
+                                <a class="page-link" href="?page=<%= i %>&search=<%= search %>"><%= i %></a>
+                            </li>
+                        <% } %>
+                    <% } %>
+            
+                    <% if (totalPages > 2) { %>
+                        <li class="page-item disabled"><a class="page-link" href="#">...</a></li>
+                    <% } %>
+            
+                    <% if (totalPages >= 2) { %>
+                    <li class="page-item <%= currentPage === totalPages ? 'active' : '' %>">
+                        <a class="page-link" href="?page=<%= totalPages %>&search=<%= search %>"><%= totalPages %></a>
+                    </li>
+                    <% } %>
+
+                    <li class="page-item <%= currentPage === totalPages ? 'disabled' : '' %>">
+                        <a class="page-link" href="?page=<%= currentPage + 1 %>&search=<%= search %>">»</a>
+                    </li>
+                </ul>
+            </nav>
+
+
+        </div>
+
+        <!-- Modals for PDFs -->
+        <% resumes.forEach(function(resume) { %>
+            <div class="modal fade" id="pdfModal<%= resume.id %>" tabindex="-1" aria-labelledby="pdfModalLabel<%= resume.id %>" aria-hidden="true">
+                <div class="modal-dialog modal-fullscreen">
+                    <div class="modal-content">
+                        <div class="modal-header m-0">
+                            <h6><%= resume.name %></h6>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <embed src="/pdfs/<%= resume.file %>" type="application/pdf" width="100%" height="100%" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <% }); %>
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" 
+        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous">
+        </script>
+
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                const deleteButtons = document.querySelectorAll('.btn-outline-danger');
+                
+                deleteButtons.forEach(button => {
+                    button.addEventListener('click', function () {
+                        const resumeId = this.getAttribute('data-resume-id');
+                        deleteResume(resumeId);
+                    });
+                });
+            });
+        </script>
+
+        <script>
+            function deleteResume(resumeId) {
+                if (confirm("Are you sure you want to delete this resume?")) {
+                    fetch(`/api/resumes/${resumeId}`, {
+                        method: "DELETE"
+                    })
+                    .then(response => {
+                        if (response.ok) {
+                            const rowToRemove = document.getElementById(`row-${resumeId}`);
+                            if (rowToRemove) {
+                                rowToRemove.remove();
+                            }
+
+                            window.location.reload();
+                        } else {
+                            console.error("Failed to delete resume.");
+                        }
+                    })
+                    .catch(error => {
+                        console.error("Error deleting resume:", error);
+                    });
+                }
+            }
+        </script>
+    </body>
+</html>
+
+<style>
+    .page-item.active .page-link {
+        background-color: #212529; 
+        color: white; 
+    }
+
+    .page-link {
+        background-color: #E9ECEF; 
+        color: #212529; 
+    }
+
+    .page-link:hover {
+        background-color: #212529; 
+        color: white;  
+    }
+</style>

@@ -29,7 +29,6 @@ const getResumeById = (req, res) => {
       res.status(200).json(results.rows);
     });
 };
-
   
 const addResume = async (req, res) => {
   try {
@@ -50,10 +49,10 @@ const addResume = async (req, res) => {
     } else {
       res.status(500).send('Failed to store file location.');
     }
-  } catch (error) {
-    console.error('Error uploading file or storing data:', error);
-    res.status(500).send('Internal Server Error');
-  }
+    } catch (error) {
+      console.error('Error uploading file or storing data:', error);
+      res.status(500).send('Internal Server Error');
+    }
 };
 
 const removeResume = (req, res) => {

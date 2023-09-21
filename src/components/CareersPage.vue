@@ -55,6 +55,7 @@
 
 <script>
 import axios from 'axios'
+import { BACKEND_API_URL } from '../apiConfig';
 
 export default {
     data() {
@@ -64,7 +65,7 @@ export default {
     },
 
     mounted(){
-        axios.get('http://192.168.11.144:5001/api/careers')
+        axios.get(`${BACKEND_API_URL}/api/careers`)
             .then(response => this.careers = response.data)
     },
 
