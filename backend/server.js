@@ -139,3 +139,5 @@ const transporter = nodemailer.createTransport({
       }
     });
   });
+
+  app.use('/icons', express.static(path.join(__dirname, 'src', 'icons')));

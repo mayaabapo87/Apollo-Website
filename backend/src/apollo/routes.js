@@ -16,8 +16,8 @@ const storage = multer.diskStorage({
 
 router.get('/careers', controller.getCareers);
 router.get('/careers/:id', controller.getCareerById);
-router.post('/career', upload.single('file'), controller.addCareer);
-router.put('/career/:id', upload.single('file'), controller.editCareer);
+router.post('/careers', upload.single('file'), controller.addCareer);
+router.put('/careers/:id', upload.single('file'), controller.editCareer);
 router.delete('/careers/:id', controller.removeCareer);
 
 
