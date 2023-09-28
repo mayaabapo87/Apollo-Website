@@ -1,5 +1,8 @@
 # apollo_website
 
+## DB setup
+npx sequelize-cli db:migrate
+
 ## Project setup
 ```
 npm install
