@@ -1,12 +1,25 @@
 # apollo_website
 
-## DB setup
-npx sequelize-cli db:migrate
-
 ## Project setup
 ```
+cd into root directory
 npm install
 ```
+
+```
+cd backend
+npm install
+
+in "backend/config/db.js and config.json" input your database information
+
+after installing input in the terminal "npx sequelize-cli db:migrate"
+to run backend input in the terminal "node server.js"
+
+in "root/src/apiConfig.js" input the ip of the backend at export const BACKEND_API_URL = 'http://localhost:5000';
+
+```
+
+
 
 ### Compiles and hot-reloads for development
 ```
