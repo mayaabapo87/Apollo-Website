@@ -13,8 +13,8 @@
                             <div class="card">
                                 <div class="card-body">
                                     <div class="text-center">
-                                        <h4>{{ set.title }}</h4>
-                                        <p class="text-dark">{{ set.story }}</p>
+                                        <h4>{{ set.name }}</h4>
+                                        <p class="text-dark">{{ set.description }}</p>
                                     </div>
                                 </div>
                             </div>
@@ -37,6 +37,7 @@ export default{
     data() {
         return {
             stories: [],
+            urlBackend: BACKEND_API_URL,
         };
     },
 
@@ -44,8 +45,8 @@ export default{
     async mounted() {
 
         try {
-            axios.get(`${BACKEND_API_URL}/api/stories`)
-            .then(response => this.stories = response.data)
+            axios.get(`${BACKEND_API_URL}/api/story/all`)
+            .then(response => this.stories = response.data.stories.stories)
         } catch (error) {
         console.error('Error fetching story data:', error);
         }

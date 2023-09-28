@@ -22,7 +22,7 @@
                                     <div class="d-flex justify-content-center">
                                         <div class="card border-0  w-75">
                                             <div class="card-body">
-                                                <img width="150" height="150" :src="require(`../assets/logos/${set.logo}.svg`)" class="card-img-top" alt="..."/>
+                                                <img width="150" height="150" :src="`${urlBackend}/files/icons/${set.iconPath.split('\\').pop()}`" class="card-img-top" alt="...">
                                                 <div class="text-center">
                                                     <h2 class="text-maroon">{{ set.name }}</h2>
                                                     <p class=" text-dark text-truncate">{{ set.description }}</p>
@@ -36,7 +36,7 @@
                                 <div class="d-none d-sm-block d-xl-none d-xxl-none h-100 w-100  justify-content-center">
                                     <div class="card border-0 h-100 w-75 mx-auto">
                                         <div class="card-body">
-                                            <img width="150" height="150" :src="require(`../assets/logos/${set.logo}.svg`)" class="card-img-top" alt="..."/>
+                                            <img width="150" height="150" :src="`${urlBackend}/files/icons/${set.iconPath.split('\\').pop()}`" class="card-img-top" alt="...">
                                             <div class="text-center">
                                                 <h2 class="text-maroon">{{ set.name }}</h2>
                                                 <div class="container">
@@ -52,11 +52,11 @@
                                     <div class="d-flex justify-content-center align-items-center">
                                         <div class="card border-0" style="height: 300px;">
                                             <div class="card-body">
-                                                <img width="100" height="100" :src="require(`../assets/logos/${set.logo}.svg`)" class="card-img-top" alt="..."/>
+                                                <img width="150" height="150" :src="`${urlBackend}/files/icons/${set.iconPath.split('\\').pop()}`" class="card-img-top" alt="...">
                                                 <div class="text-center">
                                                     <h2 class="text-maroon ">{{ set.name }}</h2>
                                                     <p class="text-truncate">{{ set.description }}</p>
-                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -86,7 +86,7 @@
                                     <div class="d-none d-xl-block">
                                         <div class="d-flex justify-content-center align-items-center">
                                             <div class="text-center text-dark w-75" style="height: auto;">
-                                                <p>{{ set.story }}</p>
+                                                <p>{{ set.description }}</p>
                                             </div>
                                         </div>
                                     </div>
@@ -97,7 +97,7 @@
                                             <div class="card border-0 border" style="width: 100%;">
                                                 <div class="card-body">
                                                 <div class="text-center">
-                                                    <p class="text-dark">{{ set.story }}</p>
+                                                    <p class="text-dark">{{ set.description }}</p>
                                                 </div>
                                                 </div>
                                             </div>
@@ -110,7 +110,7 @@
                                             <div class="card border-0 border" style="width: 100%;">
                                                 <div class="card-body">
                                                 <div class="text-center">
-                                                    <p class="text-dark">{{ set.story }}</p>
+                                                    <p class="text-dark">{{ set.description }}</p>
                                                 </div>
                                                 </div>
                                             </div>
@@ -152,24 +152,22 @@ export default {
     data() {
         return {
             partnerData: [],
-            storiesData: [], 
-
+            storiesData: [],
+            urlBackend: BACKEND_API_URL,
         };
     },
 
-
     async mounted() {
- 
         try {
-            axios.get(`${BACKEND_API_URL}/api/partners`).
-            then(response => this.partnerData = response.data)
+            axios.get(`${BACKEND_API_URL}/api/partner/all`).
+            then(response => this.partnerData = response.data.partners.partners)
         } catch (error) {
             console.error('Error fetching partner data:', error);
         }
 
         try {
-            axios.get(`${BACKEND_API_URL}/api/stories`)
-            .then(response => this.storiesData = response.data)
+            axios.get(`${BACKEND_API_URL}/api/story/all`)
+            .then(response => this.storiesData = response.data.stories.stories)
         } catch (error) {
         console.error('Error fetching story data:', error);
         }

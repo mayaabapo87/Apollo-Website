@@ -11,7 +11,7 @@
                             <div class="container">
                                 <div class="row justify-content-center allign-items-center">
                                     <div class="col-auto p-0 d-none d-sm-block">
-                                        <img src="../assets/icons/join.svg" alt="..."/>
+                                    <img width="100" height="100" :src="`${urlBackend}/files/icons/${detail.iconPath.split('\\').pop()}`" class="card-img-top" alt="...">
                                     </div>
                                     <div class="col px-0">
                                         <div class="card-body allign-text-start px-0">
@@ -60,13 +60,14 @@ import { BACKEND_API_URL } from '../apiConfig';
 export default {
     data() {
         return {
-            careers: []
+            careers: [],
+            urlBackend: BACKEND_API_URL,
         }
     },
 
     mounted(){
-        axios.get(`${BACKEND_API_URL}/api/careers`)
-            .then(response => this.careers = response.data)
+        axios.get(`${BACKEND_API_URL}/api/career/all`)
+            .then(response => this.careers = response.data.careers.careers)
     },
 
     computed: {
@@ -84,7 +85,3 @@ export default {
 
 }
 </script>
-
-<style scoped>
-  
-</style>

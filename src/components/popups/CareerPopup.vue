@@ -35,7 +35,7 @@
                         <div class="row"> 
                             <div v-for="detail in filteredCareers" :key="detail.id" class="col-lg-4 my-1">   
                                 <div class="card border-maroon border-2 h-100" style="width: auto;">
-                                    <img width="150" height="150" src="../../assets/icons/join.svg" class="card-img-top" alt="...">
+                                    <img width="100" height="100" :src="`${urlBackend}/files/icons/${detail.iconPath.split('\\').pop()}`" class="card-img-top" alt="...">
                                     <div class="card-body">
                                         <h5 class="card-title">{{ detail.name }}</h5>
                                         <p class="card-text">{{ detail.location }}</p>
@@ -72,13 +72,14 @@ export default {
         return {
             careers: [],
             selectedLocation: "1",
-            searchQuery: ""
+            searchQuery: "",
+            urlBackend: BACKEND_API_URL,
         }
     },
 
     mounted(){
-        axios.get(`${BACKEND_API_URL}/api/careers`)
-            .then(response => this.careers = response.data)
+        axios.get(`${BACKEND_API_URL}/api/career/all`)
+            .then(response => this.careers = response.data.careers.careers)
     },
 
     computed: {

@@ -73,14 +73,15 @@ export default {
         const name = document.querySelector('#fullName').value;
         const email = document.querySelector('#email').value;
         const number = document.querySelector('#phoneNumber').value;
-        const position = this.$store.state.positionName;         formData.append('name', name);
+        const position = this.$store.state.positionName; 
+        formData.append('name', name);
         formData.append('email', email);
         formData.append('number', number);
         formData.append('position', position);
-        formData.append('file', fileInput.files[0]);
+        formData.append('fileInput', fileInput.files[0]);
 
         try {
-            const response = await axios.post(`${BACKEND_API_URL}/api/resumes`, formData, {
+            const response = await axios.post(`${BACKEND_API_URL}/api/resume/create`, formData, {
             headers: {
                 'Content-Type': 'multipart/form-data',
             },

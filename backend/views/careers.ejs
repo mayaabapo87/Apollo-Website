@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Stories</title>
+        <title>Careers</title>
 
         <!-- Bootstrap CSS -->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
@@ -29,7 +29,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="/career">
+                            <a class="nav-link active" href="/career">
                                 Careers
                             </a>
                         </li>
@@ -39,11 +39,12 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link active" href="/story">
+                            <a class="nav-link" href="/story">
                                 Stories
                             </a>
                         </li>
                     </ul>
+
                     <form class="d-flex" id="searchForm">
                         <input class="form-control mx-1" type="search" placeholder="Search" aria-label="Search"
                             id="searchInput" name="search">
@@ -69,8 +70,8 @@
 
         <div class="container mt-3">
             <table class="table table-hover caption-top">
-                <div class="caption my-1" id="storyCaption">
-                    <button class="btn btn-outline-success add-button" data-bs-target="#storyModal" data-bs-toggle="modal">
+                <div class="caption my-1" id="careerCaption">
+                    <button class="btn btn-outline-success add-button" data-bs-target="#careerModal" data-bs-toggle="modal">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-database-add" viewBox="0 0 16 16">
                             <path d="M12.5 16a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Zm.5-5v1h1a.5.5 0 
                             0 1 0 1h-1v1a.5.5 0 0 1-1 0v-1h-1a.5.5 0 0 1 0-1h1v-1a.5.5 0 0 1 1 0Z"/>
@@ -91,15 +92,17 @@
                 </div>
                 <thead>
                     <tr class="table-dark">
-                        <th scope="col">Title</th>
-                        <th scope="col">Description</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Location</th>
+                        <th scope="col">Summary</th>
+                        <th scope="col">Qualifications</th>
                         <th scope="col">Date</th>
                         <th scope="col" class="text-center">Edit</th>
                         <th scope="col" class="text-center">Delete</th>
                     </tr>
                 </thead>
-                <tbody id="story-table-body">
-                    <!-- Story Data -->
+                <tbody id="career-table-body">
+                    <!-- Career Data -->
                 </tbody>
             </table>
             <nav aria-label="Page navigation">
@@ -109,11 +112,11 @@
             </nav>
         </div>
 
-        <!-- Modal for Add/Edit Storeis -->
-        <div class="modal fade" id="storyModal" tabindex="-1" aria-labelledby="storyModalLabel" aria-hidden="true">
+        <!-- Modal for Add/Edit Careers -->
+        <div class="modal fade" id="careerModal" tabindex="-1" aria-labelledby="careerModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-xl">
                 <div class="modal-content">
-                    <div class="modal-header" id="storyModalHeader">
+                    <div class="modal-header" id="careerModalHeader">
                         <!-- Insert -->
                     </div>
                     <div class="modal-body" id="insertInModalBody">
@@ -134,41 +137,51 @@
             const itemsPerPage = 10;
 
             $(document).ready(function () {
-                function fetchStoryData() {
+                function fetchCareerData() {
                     const urlParams = new URLSearchParams(window.location.search);
 
                     currentPage = parseInt(urlParams.get('page')) || currentPage;
                     searchTerm = urlParams.get('search') || searchTerm;
                     $('#searchInput').val(searchTerm);
 
-                    $.get(`<%= BACKEND_URL %>/api/story/all?search=${searchTerm}&page=${currentPage}&itemsPerPage=${itemsPerPage}`, function (data) {
-                        const stories = data.stories.stories;
+                    $.get(`<%= BACKEND_URL %>/api/career/all?search=${searchTerm}&page=${currentPage}&itemsPerPage=${itemsPerPage}`, function (data) {
+                        const careers = data.careers.careers;
                         const totalPages = data.totalPages;
-                        const totalItems = data.stories.totalCount;
+                        const totalItems = data.careers.totalCount;
 
-                        const tableBody = document.getElementById('story-table-body');
+                        const tableBody = document.getElementById('career-table-body');
                         tableBody.innerHTML = '';
 
-                        stories.forEach(function (story) {
-                            const createdAt = new Date(story.createdAt);
+                        careers.forEach(function (career) {
+                            const createdAt = new Date(career.createdAt);
                             const year = createdAt.getFullYear();
                             const month = (createdAt.getMonth() + 1).toString().padStart(2, '0');
                             const day = createdAt.getDate().toString().padStart(2, '0');
                             const formattedDate = `${year}-${month}-${day}`;
+                            let fileName = null;
+
+                            if (career.iconPath !== null) {
+                                fileName = career.iconPath.split('\\').pop();
+                            }
 
                             const row = document.createElement('tr');
                             row.innerHTML = `
-                                <td>${story.name}</td>
-                                <td class="text-truncate"  style="max-width: 150px;">${story.description}</td>
+                                <td>${career.name}</td>
+                                <td>${career.location}</td>
+                                <td class="text-truncate"  style="max-width: 150px;">${career.summary}</td>
+                                <td class="text-truncate"  style="max-width: 150px;">${career.qualifications}</td>
                                 <td>${formattedDate}</td>
                                 <td class="text-center">
                                     <button class="btn btn-outline-success edit-button"
-                                        data-id="${story.id}"
-                                        data-name="${story.name}"
-                                        data-description="${story.description}"
+                                        data-id="${career.id}"
+                                        data-name="${career.name}"
+                                        data-location="${career.location}"
+                                        data-summary="${career.summary}"
+                                        data-qualifications="${career.qualifications}"
 
                                         data-bs-toggle="modal"
-                                        data-bs-target="#storyModal">
+                                        data-bs-target="#careerModal"
+                                        data-icon-url="/files/icons/${fileName}">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" 
                                         class="bi bi-pencil-square" viewBox="0 0 16 16">
                                             <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 
@@ -183,7 +196,7 @@
                                 <td class="text-center">
                                     <button class="btn btn-outline-danger delete-button" 
                                         type="button" 
-                                        data-id="${story.id}">
+                                        data-id="${career.id}">
                                         Delete
                                     </button>
                                 </td>
@@ -202,14 +215,19 @@
                     history.pushState({}, '', `${window.location.pathname}?${urlParams}`);
                 }
 
-                $('#story-table-body').on('click', '.edit-button', function () {
-                    let storyId = $(this).data('id');
-                    let storyName = $(this).data('name');
-                    let storyDescription = $(this).data('description');
+                $('#career-table-body').on('click', '.edit-button', function () {
+                    const iconUrl = $(this).data('icon-url');
+                    const fileName = iconUrl;
 
-                    const insertInModalHeader = document.getElementById('storyModalHeader');
+                    let careerId = $(this).data('id');
+                    let careerName = $(this).data('name');
+                    let careerLocation = $(this).data('location');
+                    let careerSummary = $(this).data('summary');
+                    let careerQualifications = $(this).data('qualifications');
+
+                    const insertInModalHeader = document.getElementById('careerModalHeader');
                     insertInModalHeader.innerHTML = `
-                        <h3>Edit Story</h3>
+                        <h3>Edit Career</h3>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     `;
 
@@ -217,8 +235,7 @@
                     insertInModalBody.innerHTML = `
                         <div class="container">
                             <div class="row">
-                                <div class="col d-flex flex-column">
-                                    <label for="floatingTextarea">Name</label>
+                                <div class="col">
                                     <div class="input-group my-1">
                                         <span class="input-group-text">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" 
@@ -229,22 +246,48 @@
                                                 2 0 0 0-2-2H2Z"/>
                                             </svg>
                                         </span>
-                                        <input id="inputAddStory" type="text" class="form-control" placeholder="Story" 
-                                        aria-label="Story" aria-describedby="input-group-left">
+                                        <input id="inputAddCareer" type="text" class="form-control" placeholder="Career" 
+                                        aria-label="Career" aria-describedby="input-group-left">
                                     </div>
-                                    <label for="floatingTextarea">Description</label>
-                                    <div style="height: 300px;">
-                                        <textarea id="inputAddDescription" class="form-control h-100" placeholder="Write a description"></textarea>
-                                    <div>
+                                    <div class="input-group my-1">
+                                        <span class="input-group-text">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" 
+                                            class="bi bi-geo-alt" viewBox="0 0 16 16">
+                                                <path d="M12.166 8.94c-.524 1.062-1.234 2.12-1.96 3.07A31.493 31.493 0 0 1 8 
+                                                14.58a31.481 31.481 0 0 1-2.206-2.57c-.726-.95-1.436-2.008-1.96-3.07C3.304 7.867 
+                                                3 6.862 3 6a5 5 0 0 1 10 0c0 .862-.305 1.867-.834 2.94zM8 16s6-5.686 6-10A6 6 0 0 
+                                                0 2 6c0 4.314 6 10 6 10z"/>
+                                                <path d="M8 8a2 2 0 1 1 0-4 2 2 0 0 1 0 4zm0 1a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
+                                            </svg>
+                                        </span>
+                                        <input id="inputAddLocation" type="text" class="form-control" placeholder="Location" 
+                                        aria-label="Location" aria-describedby="input-group-left">
+                                    </div>
+                                </div>
+                                <div class="col-4 mt-1">
+                                    <div class="card">
+                                        <img id="selectedImage" src="${iconUrl}" alt="No Icon Found" class="card-img-top" width="100" height="100">
+                                        <div class="card-body text-center">
+                                            <label for="iconFile" class="btn btn-outline-dark" style="";>
+                                                Upload an Icon
+                                            </label>
+                                            <input class="form-control" type="file" id="iconFile">                                            
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
+                            <label for="floatingTextarea">Summary</label>
+                            <textarea id="inputAddSummary" class="form-control" placeholder="Write a summary" style="height: 200px"></textarea>
+                            <label for="floatingTextarea">Qualifications</label>
+                            <textarea id="inputAddQualifications" class="form-control" placeholder="Write a summary" 
+                            id="qualificationsTextarea" style="height: 200px"></textarea>
                         </div>
                     `;
 
                     const insertInModalFooter = document.getElementById('insertInModalFooter');
                     insertInModalFooter.innerHTML = '';
                     insertInModalFooter.innerHTML = `   
-                        <button type="submit" class="btn btn-success story-edit-button">
+                        <button type="submit" class="btn btn-success career-edit-button">
                             Confirm
                         </button>
                         <button class="btn btn-outline-danger" data-bs-dismiss="modal">
@@ -252,47 +295,78 @@
                         </button>
                     `;
 
-                    $('.story-edit-button').data('story-id', storyId);
-                    $('#inputAddStory').val(storyName);
-                    $('#inputAddDescription').val(storyDescription);
+                    const iconFile = document.getElementById("iconFile");
+                    const selectedImage = document.getElementById("selectedImage");
+
+                    iconFile.addEventListener("change", function () {
+                        const file = iconFile.files[0];
+
+                        if (file) {
+                            if (file.type.startsWith("image/")) {
+                                const reader = new FileReader();
+                                reader.onload = function (e) {
+                                    selectedImage.src = e.target.result;
+                                };
+
+                                reader.readAsDataURL(file);
+                            } else {
+                                alert("Please select an image file.");
+                                iconFile.value = "";
+                            }
+                        }
+                    });
+
+                    $('.career-edit-button').data('career-id', careerId);
+                    $('#inputAddCareer').val(careerName);
+                    $('#inputAddLocation').val(careerLocation);
+                    $('#inputAddSummary').val(careerSummary);
+                    $('#inputAddQualifications').val(careerQualifications);
 
                 });
 
-                $('#insertInModalFooter').on('click', '.story-edit-button', function () {
-                    const storyId = $('.story-edit-button').data('story-id');
-                    const name = $('#inputAddStory').val();
-                    const description = $('#inputAddDescription').val();
+                $('#insertInModalFooter').on('click', '.career-edit-button', function () {
+                    const careerId = $('.career-edit-button').data('career-id');
+                    const name = $('#inputAddCareer').val();
+                    const location = $('#inputAddLocation').val();
+                    const summary = $('#inputAddSummary').val();
+                    const qualifications = $('#inputAddQualifications').val();
+
+                    const fileInput = document.getElementById('iconFile');
+                    const file = fileInput.files[0];
 
                     const formData = new FormData();
                     formData.append('name', name);
-                    formData.append('description', description);
+                    formData.append('location', location);
+                    formData.append('summary', summary);
+                    formData.append('qualifications', qualifications);
+                    formData.append('fileInput', file);
 
-                    const formDataJSON = {};
+                     const formDataJSON = {};
                     formData.forEach((value, key) => {
                     formDataJSON[key] = value;
                     });
 
                     $.ajax({
-                        url: `<%= BACKEND_URL %>/api/story/update/${storyId}`,
+                        url: `<%= BACKEND_URL %>/api/career/update/${careerId}`,
                         type: 'PUT',
                         data: formData,
                         processData: false, 
                         contentType: false, 
                         success: function (response) {
-                            console.log('Story updated successfully:', response);
-                            $('#storyModal').modal('hide');
-                            fetchStoryData();
+                            console.log('Career updated successfully:', response);
+                            $('#careerModal').modal('hide');
+                            fetchCareerData();
                         },
                         error: function (error) {
-                            console.error('Error updating story:', error);
+                            console.error('Error updating career:', error);
                         }
                     });
                 });
 
-                $('#storyCaption').on('click', '.add-button', function () {
-                    const insertInModalHeader = document.getElementById('storyModalHeader');
+                $('#careerCaption').on('click', '.add-button', function () {
+                    const insertInModalHeader = document.getElementById('careerModalHeader');
                     insertInModalHeader.innerHTML = `
-                        <h3>Add Story</h3>
+                        <h3>Add Career</h3>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     `;
 
@@ -300,32 +374,60 @@
                     insertInModalBody.innerHTML = `
                         <div class="container">
                             <div class="row">
-                                <div class="col d-flex flex-column">
-                                    <label for="floatingTextarea">Name</label>
+                                <div class="col">
                                     <div class="input-group my-1">
                                         <span class="input-group-text">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-workspace" viewBox="0 0 16 16">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" 
+                                            class="bi bi-person-workspace" viewBox="0 0 16 16">
                                                 <path d="M4 16s-1 0-1-1 1-4 5-4 5 3 5 4-1 1-1 1H4Zm4-5.95a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Z"/>
                                                 <path d="M2 1a2 2 0 0 0-2 2v9.5A1.5 1.5 0 0 0 1.5 14h.653a5.373 5.373 0 0 1 1.066-2H1V3a1 1 
                                                 0 0 1 1-1h12a1 1 0 0 1 1 1v9h-2.219c.554.654.89 1.373 1.066 2h.653a1.5 1.5 0 0 0 1.5-1.5V3a2 
                                                 2 0 0 0-2-2H2Z"/>
                                             </svg>
                                         </span>
-                                        <input id="inputAddStory" type="text" class="form-control" placeholder="Write a name" aria-label="Story" aria-describedby="input-group-left">
+                                        <input id="inputAddCareer" type="text" class="form-control" placeholder="Career" 
+                                        aria-label="Career" aria-describedby="input-group-left">
                                     </div>
-                                    <label for="floatingTextarea">Description</label>
-                                    <div style="height: 300px;">
-                                        <textarea id="inputAddDescription" class="form-control h-100" placeholder="Write a description"></textarea>
-                                    <div>
+                                    <div class="input-group my-1">
+                                        <span class="input-group-text">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" 
+                                            class="bi bi-geo-alt" viewBox="0 0 16 16">
+                                                <path d="M12.166 8.94c-.524 1.062-1.234 2.12-1.96 3.07A31.493 31.493 0 0 1 8 
+                                                14.58a31.481 31.481 0 0 1-2.206-2.57c-.726-.95-1.436-2.008-1.96-3.07C3.304 7.867 
+                                                3 6.862 3 6a5 5 0 0 1 10 0c0 .862-.305 1.867-.834 2.94zM8 16s6-5.686 6-10A6 6 0 0 
+                                                0 2 6c0 4.314 6 10 6 10z"/>
+                                                <path d="M8 8a2 2 0 1 1 0-4 2 2 0 0 1 0 4zm0 1a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
+                                            </svg>
+                                        </span>
+                                        <input id="inputAddLocation" type="text" class="form-control" placeholder="Location" 
+                                        aria-label="Location" aria-describedby="input-group-left">
+                                    </div>
+                                </div>
+                                <div class="col-4 mt-1">
+                                    <div class="card">
+                                        <img id="selectedImage" src="<%= BACKEND_URL %>/assets/upload.svg" class="card-img-top" width="100" height="100">
+                                        <div class="card-body text-center">
+                                            <label for="iconFile" class="btn btn-outline-dark" style="";>
+                                                Upload an Icon
+                                            </label>
+                                            <input class="form-control" type="file" id="iconFile">                                            
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
+                            <label for="floatingTextarea">Summary</label>
+                            <textarea id="inputAddSummary" class="form-control" placeholder="Write a summary" style="height: 200px"></textarea>
+
+                            <label for="floatingTextarea">Qualifications</label>
+                            <textarea id="inputAddQualifications" class="form-control" placeholder="Write a summary" 
+                            id="qualificationsTextarea" style="height: 200px"></textarea>
                         </div>
                     `;
 
                     const insertInModalFooter = document.getElementById('insertInModalFooter');
                     insertInModalFooter.innerHTML = '';
                     insertInModalFooter.innerHTML = `
-                        <button type="submit" class="btn btn-success story-add-button">
+                        <button type="submit" class="btn btn-success career-add-button">
                             Confirm
                         </button>
                         <button class="btn btn-outline-danger" data-bs-dismiss="modal">
@@ -333,29 +435,58 @@
                         </button>
                     `;
 
+                    const iconFile = document.getElementById("iconFile");
+                    const selectedImage = document.getElementById("selectedImage");
+
+                    iconFile.addEventListener("change", function () {
+                        const file = iconFile.files[0];
+
+                        if (file) {
+                            if (file.type.startsWith("image/")) {
+                                const reader = new FileReader();
+                                reader.onload = function (e) {
+                                    selectedImage.src = e.target.result;
+                                };
+                                reader.readAsDataURL(file);
+                            } else {
+                                alert("Please select an image file.");
+                                iconFile.value = "";
+                            }
+                        }
+                    });
                 });
 
-                $('#insertInModalFooter').on('click', '.story-add-button', function () {
-                    const name = $('#inputAddStory').val();
-                    const description = $('#inputAddDescription').val();
+                $('#insertInModalFooter').on('click', '.career-add-button', function () {
+                    const name = $('#inputAddCareer').val();
+                    const location = $('#inputAddLocation').val();
+                    const summary = $('#inputAddSummary').val();
+                    const qualifications = $('#inputAddQualifications').val();
+
+                    const fileInput = document.getElementById('iconFile');
+                    const file = fileInput.files[0];
 
                     const formData = new FormData();
                     formData.append('name', name);
-                    formData.append('description', description);
+                    formData.append('location', location);
+                    formData.append('summary', summary);
+                    formData.append('qualifications', qualifications);
+                    formData.append('fileInput', file);
 
                     $.ajax({
-                        url: '<%= BACKEND_URL %>/api/story/create',
+                        url: '<%= BACKEND_URL %>/api/career/create',
                         type: 'POST',
                         data: formData,
                         processData: false, 
                         contentType: false, 
                         success: function (response) {
-                            console.log('Story added successfully:', response);
-                            $('#storyModal').modal('hide');
-                            fetchStoryData();
+                            console.log('Career added successfully:', response);
+                            $('#careerModal').modal('hide');
+
+                            fetchCareerData();
+
                         },
                         error: function (error) {
-                            console.error('Error adding story:', error);
+                            console.error('Error adding career:', error);
                         }
                     });
                 });
@@ -365,7 +496,7 @@
                     searchTerm = $('#searchInput').val();
                     currentPage = 1;
                     updateURL();
-                    fetchStoryData();
+                    fetchCareerData();
                 });
 
                 $('#resetSearchButton').click(function () {
@@ -373,7 +504,7 @@
                     searchTerm = $('#searchInput').val();
                     currentPage = 1;
                     updateURL();
-                    fetchStoryData();
+                    fetchCareerData();
                 });
 
                 function changePage(page) {
@@ -382,7 +513,7 @@
                     urlParams.set('page', page);
                     const newURL = `${window.location.pathname}?${urlParams}`;
                     window.history.pushState({ path: newURL }, '', newURL);
-                    fetchStoryData(page, searchTerm);
+                    fetchCareerData(page, searchTerm);
                 }
 
                 function updatePagination(totalPages) {
@@ -422,31 +553,31 @@
                     pagination.appendChild(nextItem);
                 }
 
-                $('#story-table-body').on('click', '.delete-button', function () {
-                    const storyId = $(this).data('id');
-                    const rowCount = $('#story-table-body tr').length;
+                $('#career-table-body').on('click', '.delete-button', function () {
+                    const careerId = $(this).data('id');
+                    const rowCount = $('#career-table-body tr').length;
 
                     $.ajax({
-                        url: `<%= BACKEND_URL %>/api/story/delete/${storyId}`,
+                        url: `<%= BACKEND_URL %>/api/career/delete/${careerId}`,
                         type: 'DELETE',
                         success: function () {
-                            fetchStoryData();
+                            fetchCareerData();
 
-                            if ($('#story-table-body tr').length === 0) {
+                            if ($('#career-table-body tr').length === 0) {
                                 updateURL();
-                                fetchStoryData();
+                                fetchCareerData();
                             }
                             if (rowCount === 1 && currentPage!==1) {
                                 changePage(currentPage - 1);
                             }
                         },
                         error: function (error) {
-                            console.error('Error deleting story:', error);
+                            console.error('Error deleting career:', error);
                         },
                     });
                 });
 
-                fetchStoryData();
+                fetchCareerData();
             });
         </script>
 
@@ -467,6 +598,12 @@
     .page-link:hover {
         background-color: #212529;
         color: white;
+    }
+
+  
+
+    #iconFile {
+        display: none;
     }
 
 </style>

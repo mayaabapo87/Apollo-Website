@@ -51,13 +51,12 @@ export default {
         return {
             careers: [],
             career: {},
-            urlBackend: BACKEND_API_URL,
         };
     },
 
     mounted(){
-        axios.get(`${BACKEND_API_URL}/api/career/all`)
-            .then(response => this.careers = response.data.careers.careers)
+        axios.get(`${BACKEND_API_URL}/api/career/create`)
+            .then(response => this.careers = response.data)
     },
 
     methods: {

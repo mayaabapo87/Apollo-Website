@@ -1,4 +1,5 @@
 /node_modules
 .env
 
-/src/resumes/uploads
+/src/files/resumes
+/src/files/icons
