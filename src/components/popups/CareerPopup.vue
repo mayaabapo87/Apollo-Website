@@ -9,7 +9,7 @@
                             <label class="visually-hidden" for="searchInput">Search</label>
                             <div class="input-group">
                                 <div class="input-group-text">
-                                    <img width="30" height="30" src="@/assets/icons/search.svg" alt="...">
+                                    <img width="30" height="30" src="../../assets/icons/search.svg" alt="...">
                                 </div>
                                 <input v-model="searchQuery" type="text" class="form-control" id="searchInput" placeholder="Search...">
                             </div>
@@ -18,7 +18,7 @@
                             <label class="visually-hidden" for="inlineFormSelectPref">Preference</label>
                             <div class="input-group">
                                 <div class="input-group-text">
-                                    <img width="30" height="30" src="@/assets/icons/location.svg" alt="...">
+                                    <img width="30" height="30" src="../../assets/icons/location.svg" alt="...">
                                 </div>
                                 <select v-model="selectedLocation" class="form-select" id="career-location">
                                     <option value="1">All</option>
@@ -35,12 +35,15 @@
                         <div class="row"> 
                             <div v-for="detail in filteredCareers" :key="detail.id" class="col-lg-4 my-1">   
                                 <div class="card border-maroon border-2 h-100" style="width: auto;">
-                                    <img width="150" height="150" src="@/assets/icons/join.svg" class="card-img-top" alt="...">
+                                    <img width="100" height="100" :src="`${urlBackend}/files/icons/${detail.iconPath.split('\\').pop()}`" class="card-img-top" alt="...">
                                     <div class="card-body">
-                                        <h5 class="card-title">{{ detail.jobname }}</h5>
+                                        <h5 class="card-title">{{ detail.name }}</h5>
                                         <p class="card-text">{{ detail.location }}</p>
                                     </div>
-                                    <CareerDetailsPopup :name="detail.id" />
+
+                                    <button class="btn btn-maroon" :data-bs-target="'#career-details-'+detail.id" data-bs-toggle="modal">
+                                        Details
+                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -55,65 +58,56 @@
 </template>
 
 <script>
-import careerData from "../../assets/data/careers.json"
-import CareerDetailsPopup from "./CareerDetailsPopup.vue";
-import { ref } from 'vue'
-
-const careerID = ref(0)
+import axios from 'axios'
+import { BACKEND_API_URL } from '../../apiConfig';
 
 export default {
-    components:{
-        CareerDetailsPopup
-    },
-
+  
     name: "CareerPopup",
     props: [
-        'name'
+        'careerId'
     ],
 
     data() {
         return {
-            careerID,
-            careers: careerData,
+            careers: [],
             selectedLocation: "1",
-            searchQuery: ""
-        };
+            searchQuery: "",
+            urlBackend: BACKEND_API_URL,
+        }
     },
 
-    methods: {
- 
-
+    mounted(){
+        axios.get(`${BACKEND_API_URL}/api/career/all`)
+            .then(response => this.careers = response.data.careers.careers)
     },
 
     computed: {
-    workLocations() {
-        const uniqueSet = new Set();
-        this.careers.forEach((detail) => {
-            uniqueSet.add(detail.location);
-        });
-        return Array.from(uniqueSet);
-    },
+        workLocations() {
+            const uniqueSet = new Set();
+            this.careers.forEach((detail) => {
+                uniqueSet.add(detail.location);
+            });
+            return Array.from(uniqueSet);
+        },
 
-    searchFunction(){
-        const searched = new Set();
-        this.searched.forEach((detail) => {
-            searched.from(detail.id)
-        });
-        return Array.from(searched);
-    },
+        searchFunction(){
+            const searched = new Set();
+            this.searched.forEach((detail) => {
+                searched.from(detail.id)
+            });
+            return Array.from(searched);
+        },  
 
-    filteredCareers() {
-        return this.careers.filter((detail) => {
-          const locationMatch = this.selectedLocation === "1" || detail.location === this.selectedLocation;
-          
-          const searchMatch = 
-            (detail.jobname.toLowerCase().includes(this.searchQuery.toLowerCase()) &&
-            detail.location.toLowerCase().includes(this.selectedLocation.toLowerCase())) || detail.jobname.toLowerCase().includes(this.searchQuery.toLowerCase());
- 
-          return locationMatch && searchMatch;
-        });
-      },
-
+        filteredCareers() {
+            return this.careers.filter((detail) => {
+            const locationMatch = this.selectedLocation === "1" || detail.location === this.selectedLocation;
+            const searchMatch = 
+                (detail.name.toLowerCase().includes(this.searchQuery.toLowerCase()) &&
+                detail.location.toLowerCase().includes(this.selectedLocation.toLowerCase())) || detail.name.toLowerCase().includes(this.searchQuery.toLowerCase());
+            return locationMatch && searchMatch;
+            });
+        }
     },
 };
 </script>

@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const Service = require('../models/servicesModel');
+const Service = require('../../models/apolloModels/servicesModel');
 
 // route to get all services
 router.get('/services', async (req, res) => {

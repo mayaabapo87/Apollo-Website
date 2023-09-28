@@ -3,7 +3,7 @@
       <div class="modal-xl modal-dialog-centered modal-dialog modal-dialog-scrollable">
           <div class="modal-content">
               <div class="modal-header">
-                  <h5 class="modal-title d-none d-lg-block" id="partners-popupLabel">Partners</h5>
+                  <h5 class="modal-title d-none d-lg-block" id="partners-popupLabel">Projects</h5>
                   <form class="row align-items-center mx-auto w-75">
                       <label class="visually-hidden" for="searchInput">Search</label>
                       <div class="input-group">
@@ -48,6 +48,8 @@
 </template>
 
 <script>
+import { BACKEND_API_URL } from '../../apiConfig';
+
 export default {
   data() {
     return {
@@ -63,7 +65,7 @@ export default {
   methods: {
     async fetchProjectsData() {
       try {
-        const response = await fetch("http://localhost:3000/projects");
+        const response = await fetch(`${BACKEND_API_URL}/projects`);
         if (!response.ok) {
           throw new Error("Network response was not ok");
         }

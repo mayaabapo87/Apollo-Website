@@ -1,5 +1,5 @@
 <template>
-    <br id="careers-view">
+    <br  id="careers-view">  
     <div class="container my-1">
         <h1 class="text-center text-dark fw-bold mt-5">CAREERS</h1>
         <hr class="border-secondary border-2 border-dark">
@@ -11,23 +11,27 @@
                             <div class="container">
                                 <div class="row justify-content-center allign-items-center">
                                     <div class="col-auto p-0 d-none d-sm-block">
-                                        <img src="@/assets/icons/join.svg" alt="..."/>
+                                    <img width="100" height="100" :src="`${urlBackend}/files/icons/${detail.iconPath.split('\\').pop()}`" class="card-img-top" alt="...">
                                     </div>
                                     <div class="col px-0">
                                         <div class="card-body allign-text-start px-0">
-                                            <h5 class="card-title">{{ detail.jobname }}</h5>
+                                            <h5 class="card-title">{{ detail.name }}</h5>
                                             <p class="card-text">{{ detail.location }}</p>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="position-absolute top-100 start-50 translate-middle mt-1">
-                                    <CareerDetailsPopup :name="detail.id" />
+ 
+                                    <button class="btn btn-maroon" :data-bs-target="'#career-details-'+detail.id" data-bs-toggle="modal">
+                                        Details
+                                    </button>
+  
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class=" text-center mt-3" >
+                <div class=" text-center mt-3">
                     <button class="btn btn-outline-maroon " data-bs-target="#career-list" data-bs-toggle="modal">View All</button>
                 </div>
 
@@ -47,22 +51,23 @@
         </div>
         <hr class="border-secondary border-2 border-dark">
     </div>
-
 </template>
 
 <script>
-import careerData from "../assets/data/careers.json"
-import CareerDetailsPopup from './popups/CareerDetailsPopup.vue';
+import axios from 'axios'
+import { BACKEND_API_URL } from '../apiConfig';
 
 export default {
-    components:{
-        CareerDetailsPopup,
-     },
-
     data() {
         return {
-            careers: careerData,
-        };
+            careers: [],
+            urlBackend: BACKEND_API_URL,
+        }
+    },
+
+    mounted(){
+        axios.get(`${BACKEND_API_URL}/api/career/all`)
+            .then(response => this.careers = response.data.careers.careers)
     },
 
     computed: {
@@ -80,7 +85,3 @@ export default {
 
 }
 </script>
-
-<style scoped>
-  
-</style>

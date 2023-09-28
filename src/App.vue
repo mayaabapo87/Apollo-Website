@@ -1,9 +1,9 @@
 <template>
 <PartnersPopup />
+<ResumePopup />
 <ProjectsPopup />
 <ContactForm />
 <CareerDetailsPopup />
-<ResumePopup />
 <CareerPopup />
 <StoriesPopup />
 
@@ -18,7 +18,6 @@
     <Location />
     <Footer/>
   </nav>
-<router-view/>
 </template>
 
 <script>

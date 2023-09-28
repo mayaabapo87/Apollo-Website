@@ -23,6 +23,8 @@
 </template>
 
 <script>
+import { BACKEND_API_URL } from '../apiConfig';
+
 export default {
   data() {
     return {
@@ -35,7 +37,7 @@ export default {
   methods: {
     async fetchServicesData() {
       try {
-        const response = await fetch('http://localhost:3000/services');
+        const response = await fetch(`${BACKEND_API_URL}/services`);
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }

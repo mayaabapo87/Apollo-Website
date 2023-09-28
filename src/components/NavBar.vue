@@ -7,7 +7,7 @@
                     <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"/>
                 </svg>            
             </button>
-
+            
             <!--Logo-->
             <a class="navbar-brand mx-auto mx-xl-2 p-0" href="#landing-view">
                 <svg height="50" 
@@ -43,10 +43,10 @@
                             <a class="nav-link m-1 nav-color" href="#services-view">Services</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link m-1 nav-color" href="#projects-view">Projects</a>
+                            <a class="nav-link m-1 nav-color" href="#partners-view">Partners</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link m-1 nav-color" href="#partners-view">Partners</a>
+                            <a class="nav-link m-1 nav-color" href="#projects-view">Projects</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link m-1 nav-color" href="#careers-view">Careers</a>
