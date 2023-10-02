@@ -15,7 +15,7 @@
                     <div class="card border-1  w-75" style="height:350px">
                       <div class="card-body">
                         <div class="text-center">
-                          <img width="150" height="150" :src="`${urlBackend}/files/icons/${set.iconPath.split('\\').pop()}`" class="project-image img-fluid rounded" alt="...">
+                          <img :src="`${urlBackend}/files/icons/${set.iconPath.split('\\').pop()}`" class="project-image img-fluid rounded" alt="..." style="width: 30%; height: 10%;">
                         </div>
                         <div class="text-center">
                           <h2 class="text-maroon" v-html="set.name"></h2>
