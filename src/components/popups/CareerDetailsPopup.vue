@@ -15,6 +15,7 @@
                             <h3 class="text-maroon fw-bold"> Job Summary </h3>
                             <textarea
                                 :value="ids.summary"
+                                :id="'career-summary-details-'+ids.id"
                                 class="text-dark w-100 border-0"
                                 readonly
                                 :style="{ height: autoAdjustHeight(ids.summary) }"
@@ -22,6 +23,7 @@
                             <h3 class="text-maroon fw-bold">Qualifications</h3>
                             <textarea
                                 :value="ids.qualifications"
+                                :id="'career-qualifications-details-'+ids.id"
                                 class="text-dark w-100 border-0"
                                 readonly
                                 :style="{ height: autoAdjustHeight(ids.qualifications) }"

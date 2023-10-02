@@ -15,7 +15,6 @@
                             </div>
                         </div>
                         <div class="col-12">
-                            <label class="visually-hidden" for="inlineFormSelectPref">Preference</label>
                             <div class="input-group">
                                 <div class="input-group-text">
                                     <img width="30" height="30" src="../../assets/icons/location.svg" alt="...">

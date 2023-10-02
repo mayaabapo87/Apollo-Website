@@ -7,26 +7,16 @@
             <div id="carouselCareers" class="carousel carousel-fade">
                 <div class="carousel-inner overflow-auto p-xl-5 justify-content-center mx-auto">                   
                     <div v-for="(set, index) in careerSets" :key="index" :class="['carousel-item', { active: index === 0 }]">
-                        <div v-for="detail in set" :key="detail.id" class="card border-maroon border-2 mx-4 my-4 px-2 w-75 mx-auto">
-                            <div class="container">
-                                <div class="row justify-content-center allign-items-center">
-                                    <div class="col-auto p-0 d-none d-sm-block">
-                                    <img width="100" height="100" :src="`${urlBackend}/files/icons/${detail.iconPath.split('\\').pop()}`" class="card-img-top" alt="...">
-                                    </div>
-                                    <div class="col px-0">
-                                        <div class="card-body allign-text-start px-0">
-                                            <h5 class="card-title">{{ detail.name }}</h5>
-                                            <p class="card-text">{{ detail.location }}</p>
-                                        </div>
+                        <div v-for="detail in set" :key="detail.id" class="card border-dark border-0 mx-4 mb-1 px-2 w-50 mx-auto">
+                            <div class="container w-75 btn btn-outline-maroon"  :data-bs-target="'#career-details-'+detail.id" data-bs-toggle="modal">
+                                <div class="div justify-content-center">
+                                    <img width="100" height="100" :src="`${urlBackend}/files/icons/${detail.iconPath.split('\\').pop()}`" class="card-img-top my-1" alt="...">
+                                    <div class="card-body allign-text-start px-0">
+                                        <h5 class="card-title">{{ detail.name }}</h5>
+                                        <p class="card-text">{{ detail.location }}</p>
                                     </div>
                                 </div>
-                                <div class="position-absolute top-100 start-50 translate-middle mt-1">
- 
-                                    <button class="btn btn-maroon" :data-bs-target="'#career-details-'+detail.id" data-bs-toggle="modal">
-                                        Details
-                                    </button>
-  
-                                </div>
+                                
                             </div>
                         </div>
                     </div>
@@ -66,7 +56,7 @@ export default {
     },
 
     mounted(){
-        axios.get(`${BACKEND_API_URL}/api/career/all`)
+        axios.get(`${BACKEND_API_URL}/api/career/all?itemsPerPage=4`)
             .then(response => this.careers = response.data.careers.careers)
     },
 
@@ -76,7 +66,7 @@ export default {
         const careersCopy = [...this.careers];
   
         while (careersCopy.length > 0) {
-          sets.push(careersCopy.splice(0, 3));
+          sets.push(careersCopy.splice(0, 2));
         }
   
         return sets;

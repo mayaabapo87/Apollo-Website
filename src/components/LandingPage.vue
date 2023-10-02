@@ -1,5 +1,5 @@
 <template>
-    <div class="container-fluid">
+    <div class="container mb-5">
         <br id="landing-view">
 
         <!--Desktop-->
@@ -202,7 +202,7 @@
                 </div>                       
             </div>
         </div>
-     </div>
+    </div>
 </template>
      
 <style scoped>

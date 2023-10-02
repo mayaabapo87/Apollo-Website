@@ -12,17 +12,17 @@
                 <div class="col">
                   <div class="mb-3">
                     <label for="name" class="form-label text-dark fs-5">Name</label>
-                    <input v-model="formData.name" type="text" class="form-control" id="name" placeholder="Juan Delacruz">
+                    <input v-model="formData.name" type="text" class="form-control" id="name" placeholder="Juan Delacruz" required autocomplete="off">
                   </div>
                   <div class="mb-3">
                     <label for="email" class="form-label text-dark fs-5">Email address</label>
-                    <input v-model="formData.email" type="email" class="form-control" id="email" placeholder="name@example.com">
+                    <input v-model="formData.email" type="email" class="form-control" id="email" placeholder="name@example.com" autocomplete="off">
                   </div>
                 </div>
                 <div class="col">
                   <div class="mb-3">
                     <label for="phone" class="form-label text-dark fs-5">Phone Number</label>
-                    <input v-model="formData.phone" type="text" class="form-control" id="phone" placeholder="09xxxxxxxx">
+                    <input v-model="formData.phone" type="text" class="form-control" id="phone" placeholder="09xxxxxxxx" autocomplete="off">
                   </div>
                 </div>
               </div>
