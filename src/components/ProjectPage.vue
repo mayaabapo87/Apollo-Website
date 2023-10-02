@@ -8,20 +8,19 @@
         <div class="container">
           <div id="carouselProjects" class="carousel my-auto carousel-fade" data-bs-ride="carousel">
             <div class="carousel-inner my-2">
-              <div v-for="(set, index) in projectsData" :key="index" :class="['carousel-item', { active: index === 0 }]">
+              <div v-for="(set, index) in projectData" :key="index" :class="['carousel-item', { active: index === 0 }]">
                 <!--Desktop Project-->
                 <div class="d-none d-xl-block">
                   <div class="d-flex justify-content-center">
                     <div class="card border-1  w-75" style="height:350px">
                       <div class="card-body">
                         <div class="text-center">
-                          <img style="max-width: 30%; max-height: 10%;"
-                            :src="require(`@/assets/projects/${set.image}.png`)" class="card-img-top" alt="..." />
+                          <img width="150" height="150" :src="`${urlBackend}/files/icons/${set.iconPath.split('\\').pop()}`" class="project-image img-fluid rounded" alt="...">
                         </div>
                         <div class="text-center">
-                          <h2 class="text-maroon" v-html="set.title"></h2>
+                          <h2 class="text-maroon" v-html="set.name"></h2>
                           
-                          <p class="text-dark" style="font-size: 1.1rem;"  v-html="set.shortdescription"></p>
+                          <p class="text-dark" style="font-size: 1.1rem;"  v-html="set.description"></p>
                         </div>
                         <button type="button" class="button-more btn-outline-maroon" data-bs-toggle="modal"
                           :data-bs-target="'#projectDetails' + index">
@@ -37,11 +36,11 @@
                 <div class="d-none d-sm-block d-xl-none d-xxl-none h-100 w-100  justify-content-center">
                   <div class="card h-100 w-75 mx-auto">
                     <div class="card-body">
-                      <img :src="require(`@/assets/projects/${set.image}.png`)" class="card-img-top tablet-image img-fluid" alt="..." />
+                      <img :src="`${urlBackend}/files/icons/${set.iconPath.split('\\').pop()}`" class="card-img-top tablet-image img-fluid" alt="...">
                       <div class="text-center">
-                        <h2 class="text-maroon" v-html="set.title"></h2>
+                        <h2 class="text-maroon" v-html="set.name"></h2>
                         <div class="container">
-                          <p class="text-dark "  v-html="set.shortdescription"></p>
+                          <p class="text-dark "  v-html="set.description"></p>
                         </div>
                         <button type="button" class="button-more btn-outline-maroon" data-bs-toggle="modal"
                           :data-bs-target="'#projectDetails' + index">
@@ -57,11 +56,10 @@
                   <div class="d-flex justify-content-center align-items-center">
                     <div class="card border-0" >
                       <div class="card-body">
-                        <img :src="require(`@/assets/projects/${set.image}.png`)"
-                          class="card-img-top phone-image img-fluid"  alt="..." />
+                        <img :src="`${urlBackend}/files/icons/${set.iconPath.split('\\').pop()}`" class="card-img-top phone-image img-fluid" alt="...">
                         <div class="text-center">
-                          <h2 class="text-maroon "  v-html="set.title"></h2>
-                          <p class="text-dark "  v-html="set.shortdescription"></p>
+                          <h2 class="text-maroon "  v-html="set.name"></h2>
+                          <p class="text-dark "  v-html="set.description"></p>
                         </div>
                         <button type="button" class="button-more btn-outline-maroon" data-bs-toggle="modal"
                           :data-bs-target="'#projectDetails' + index">
@@ -97,17 +95,17 @@
   </section>
 
   <!-- Modals for Project Details -->
-  <div v-for="(set, index) in projectsData" :key="index" class="modal fade" :id="'projectDetails' + index" tabindex="-1"
+  <div v-for="(set, index) in projectData" :key="index" class="modal fade" :id="'projectDetails' + index" tabindex="-1"
     aria-labelledby="projectDetailsModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg modal-dialog-scrollable">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="projectDetailsModalLabel"  v-html="set.title"></h5>
+          <h5 class="modal-title" id="projectDetailsModalLabel"  v-html="set.name"></h5>
           <button type="button" class="close " data-bs-dismiss="modal" aria-label="Close" >
           </button>
         </div>
         <div class="modal-body">
-          <p style="text-align:justify" v-html="set.details"></p>
+          <p style="text-align:justify" v-html="set.detail"></p>
         </div>
         <div class="modal-footer">
         <button type="button" class="btn btn-danger" data-bs-dismiss="modal">
@@ -124,32 +122,28 @@
 
 
 <script>
+import axios from 'axios'
 import { BACKEND_API_URL } from '../apiConfig';
-
 export default {
-  data() {
-    return {
-      projectsData: [],
-    };
-  },
-  created() {
-    this.fetchProjectsData();
-  },
-  methods: {
-    async fetchProjectsData() {
-      try {
-        const response = await fetch(`${BACKEND_API_URL}/projects`); 
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        this.projectsData = await response.json();
-        console.log(this.projectsData); 
-      } catch (error) {
-        console.error('Error fetching project data', error);
-      }
+    components:{
     },
-  },
-};
+    data() {
+        return {
+            projectData: [],
+            urlBackend: BACKEND_API_URL,
+        };
+    },
+
+    async mounted() {
+        try {
+            axios.get(`${BACKEND_API_URL}/api/project/all`).
+            then(response => this.projectData = response.data.projects.projects)
+        } catch (error) {
+            console.error('Error fetching project data:', error);
+        }
+    },
+ 
+}
 </script>
 <style scoped>
 

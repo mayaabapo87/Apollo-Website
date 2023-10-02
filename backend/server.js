@@ -24,34 +24,11 @@ app.use((req, res, next) => {
 // -
 
 
-
-
-
-
 // -
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }));
 // -
 
-
-
-// -
-const projectsRoutes = require('./src/routes/apolloRoutes/projects');
-const servicesRoutes = require('./src/routes/apolloRoutes/services');
-
-app.use('/', projectsRoutes);
-app.use('/', servicesRoutes);
-
-app.get('/manage-services', (req, res) => {
-  const notification = req.query.notification;
-  res.render('admin-dashboard', { notification });
-});
-app.get('/manage-projects', (req, res) => {
-  const notification = req.query.notification;
-  res.render('admin-dashboard', { notification });
-  
-});
-// -
 
 app.use(express.json());
 
@@ -70,6 +47,15 @@ app.get("/partner", async (req, res) => {
 app.get("/story", async (req, res) => {
   res.render('admin-stories', { BACKEND_URL: ip });
 });
+
+app.get("/service", async (req, res) => {
+  res.render('admin-services', { BACKEND_URL: ip });
+});
+app.get("/project", async (req, res) => {
+  res.render('admin-projects', { BACKEND_URL: ip });
+});
+
+
 
 app.post('/api/send-email', sendEmail);
 

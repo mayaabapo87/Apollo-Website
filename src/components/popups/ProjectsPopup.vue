@@ -17,13 +17,13 @@
               </div>
               <div class="modal-body">
                   <div class="row justify-content-center">
-                      <div v-for="(set, index) in filteredPartners" :key="index" class="col-lg-5 my-1">
+                      <div v-for="(set, index) in filteredProject" :key="index" class="col-lg-5 my-1">
                           <div class="card border-1 border h-100">
                               <div class="card-body">
                                   <div class="container text-center">
-                                    <img :src="require(`@/assets/projects/${set.image}.png`)" class="card-img-top custom-image" alt="..." />
-                                      <h5 class="card-title text-maroon"  v-html="set.title"></h5>
-                                      <p class="fs-6 text-dark"  v-html="set.shortdescription"></p>
+                                    <img width="150" height="150" :src="`${urlBackend}/files/icons/${set.iconPath.split('\\').pop()}`" class="card-img-top" alt="...">
+                                      <h5 class="card-title text-maroon"  v-html="set.name"></h5>
+                                      <p class="fs-6 text-dark"  v-html="set.description"></p>
                                   </div>
                               </div>
                               <button type="button" class="button-more btn-outline-maroon" data-bs-toggle="modal"
@@ -46,45 +46,38 @@
       </div>
   </div>
 </template>
-
 <script>
+import axios from 'axios'
 import { BACKEND_API_URL } from '../../apiConfig';
 
 export default {
-  data() {
-    return {
-      projects: [],
-      searchQuery: "",
-    };
-  },
+    data() {
+        return {
+        projects: [],
+        searchQuery: "",
+        urlBackend: BACKEND_API_URL,
+        };
+    },
 
-  created() {
-    this.fetchProjectsData();
-  },
+    computed: {
+    filteredProject() {
+        return this.projects.filter((project) => {          
+            const searchMatch =
+            project.name.toLowerCase().includes(this.searchQuery.toLowerCase())
+           return searchMatch;
+        });
+      },
+    },
 
-  methods: {
-    async fetchProjectsData() {
-      try {
-        const response = await fetch(`${BACKEND_API_URL}/projects`);
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
+    async mounted() {
+        try {
+            axios.get(`${BACKEND_API_URL}/api/project/all`).
+            then(response => this.projects = response.data.projects.projects)
+        } catch (error) {
+            console.error('Error fetching project data:', error);
         }
-        this.projects = await response.json();
-      } catch (error) {
-        console.error("Error fetching project data", error);
-      }
     },
-  },
-
-  computed: {
-    filteredPartners() {
-      return this.projects.filter((project) => {
-        const searchMatch = project.title.toLowerCase().includes(this.searchQuery.toLowerCase());
-        return searchMatch;
-      });
-    },
-  },
-};
+}
 </script>
 
 <style scoped>

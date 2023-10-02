@@ -1,153 +1,582 @@
 <!DOCTYPE html>
 <html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Projects</title>
 
-<head>
-  <title>Admin Panel</title>
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <!-- Bootstrap CSS -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+            integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
 
-</head>
+        <!-- Bootstrap JavaScript -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+            crossorigin="anonymous">
+        </script>
 
-<body>
-  <div class="container">
-    <div class="jumbotron text-center" style="padding: 30px; ">
-      <h3 class="display-5 text-dark font-weight-bold" style="font-size: 30px;">Manage Your Projects</h3>
-    </div>
-  </div>
-</body>
-  <style>
-    body {
-      font-family: 'Roboto', sans-serif;
-      background-color: #f8f9fa;
-    }
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.8.335/pdf.js"></script>
+    </head>
 
-    .card-header {
-      background-color: #ffffff;
-      font-weight: bold;
-    }
-
-    .project-card {
-      margin-bottom: 20px;
-    }
-
-    .card-body {
-      height: auto;
-      overflow: hidden;
-    }
-    .bg-maroon {
-      background-image: linear-gradient(to bottom, #d93c3c, #6e0a0a);
-    }
-  </style>
-</body>
-
-</html>
-
-
-<body>
-  <div id="projects" class="container" >
-    <div class="row">
-      <% projects.forEach((project) => { %>
-        <div class="col-md-6">
-          <div class="card project-card ">
-            <div class="card-header bg-maroon text-white font-weight-bold">
-              <%= project.title %>
-            </div>
-            <div class="card-body">
-              <p class="card-text "><strong>ID:</strong>
-                <%= project.id %>
-              </p>
-              <p class="card-text"><strong>Image:</strong>
-                <%= project.image %>
-              </p>
-              <p class="card-text" style="text-align: justify;"><strong>Short Description:</strong>
-                <%= project.shortdescription %>
-              </p>
-              <p class="card-text"  style="text-align: justify;"><strong>Details:</strong>
-                <%= project.details %>
-              </p>
-
-             
-              <button type="button" class="btn btn-secondary bg-dark " data-toggle="modal" data-target="#editProjectModal-<%= project.id %>">
-                Edit Project
-              </button>
-              <!-- Modal -->
-              <div class="modal fade" id="editProjectModal-<%= project.id %>" tabindex="-1" role="dialog"
-                aria-labelledby="editProjectModalLabel-<%= project.id %>" aria-hidden="true">
-                <div class="modal-dialog modal-lg" role="document">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <h5 class="modal-title" id="editProjectModalLabel-<%= project.id %>">Edit Project - <%= project.title %>
-                      </h5>
-                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                      </button>
-                    </div>
-                    <div class="modal-body">
-                      <form action="/updateProject/<%= project.id %>" method="post">
-                      
-                        <div class="form-group">
-                          <label for="newTitle-<%= project.id %>">New Title:</label>
-                          <input type="text" class="form-control" id="newTitle-<%= project.id %>" name="newTitle" value="<%= project.title %>">
-                        </div>
-                        <div class="form-group">
-                          <label for="newImage">New Image Filename:</label>
-                          <input type="text" class="form-control" id="newImage" name="newImage" value="<%= project.image %>">
-                        </div>
-                        <div class="form-group">
-                          <label for="newShortDescription">New Short Description:</label>
-                          <textarea class="form-control" id="newShortDescription" name="newShortDescription" rows="4"><%= project.shortdescription %></textarea>
-                        </div>
-                        <div class="form-group">
-                          <label for="newDetails">New Details:</label>
-                          <textarea class="form-control" id="newDetails" name="newDetails"rows="4"><%= project.details %></textarea>
-                        </div>
-                        
-                        <button type="submit" class="btn btn-secondary">Update Project</button>
-                      </form>
-                      <form action="/deleteProject/<%= project.id %>" method="post" class="mt-3">
-                        <button type="submit" class="btn btn-danger">Delete Project</button>
-                      </form>
-                    </div>
-                    <div class="modal-footer"> 
-                      <button type="button" class="btn btn-danger bg-maroon" data-dismiss="modal">Close</button>
-                    </div>
-                  </div>
+    <body>
+        <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
+            <div class="container">
+                <div class="collapse navbar-collapse show" id="navbarDark">
+                    <ul class="navbar-nav me-auto mb-2 mb-xl-0">
+                        <li class="nav-item">
+                            <a class="nav-link" href="/resume">
+                                Resumes
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/career">
+                                Careers
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/partner">
+                                Partners
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/story">
+                                Stories
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link " href="/service">
+                                Services
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                          <a class="nav-link active " href="/project">
+                              Projects
+                          </a>
+                      </li>
+                    </ul>
+                    <form class="d-flex" id="searchForm">
+                        <input class="form-control mx-1" type="search" placeholder="Search" aria-label="Search"
+                            id="searchInput" name="search">
+                        <button class="btn btn-outline-light mx-1" type="submit" id="searchButton">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search"viewBox="0 0 16 16">
+                                <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 
+                                1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
+                            </svg>
+                        </button>
+                        <button class="btn btn-danger mx-1" type="button" id="resetSearchButton">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                class="bi bi-x-circle" viewBox="0 0 16 16">
+                                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+                                <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 
+                                2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 
+                                5.354a.5.5 0 0 1 0-.708z" />
+                            </svg>
+                        </button>
+                    </form>
                 </div>
-              </div>
             </div>
-          </div>
-        </div>
-      <% }); %>
-    </div>
+        </nav>
 
-   <div class="card project-card ">
-      <div class="card-header bg-maroon text-white font-weight-bold">
-      <h2>Add New Project</h2>
-      </div>
-      <div class=" p-5  bg-white rounded">
-      <form action="/addProject" method="post">
-        <div class="form-group">
-          <label for="title">Title:</label>
-          <input type="text" class="form-control" id="title" name="title" placeholder="Title" required>
+        <div class="container mt-3">
+            <table class="table table-hover caption-top">
+                <div class="caption my-1" id="projectCaption">
+                    <button class="btn btn-outline-success add-button" data-bs-target="#projectModal" data-bs-toggle="modal">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-database-add" viewBox="0 0 16 16">
+                            <path d="M12.5 16a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Zm.5-5v1h1a.5.5 0 
+                            0 1 0 1h-1v1a.5.5 0 0 1-1 0v-1h-1a.5.5 0 0 1 0-1h1v-1a.5.5 0 0 1 1 0Z"/>
+                            <path d="M12.096 6.223A4.92 4.92 0 0 0 13 5.698V7c0 .289-.213.654-.753 
+                            1.007a4.493 4.493 0 0 1 1.753.25V4c0-1.007-.875-1.755-1.904-2.223C11.022 
+                            1.289 9.573 1 8 1s-3.022.289-4.096.777C2.875 2.245 2 2.993 2 4v9c0 1.007.875 
+                            1.755 1.904 2.223C4.978 15.71 6.427 16 8 16c.536 0 1.058-.034 1.555-.097a4.525 
+                            4.525 0 0 1-.813-.927C8.5 14.992 8.252 15 8 15c-1.464 0-2.766-.27-3.682-.687C3.356 
+                            13.875 3 13.373 3 13v-1.302c.271.202.58.378.904.525C4.978 12.71 6.427 13 8 13h.027a4.552 
+                            4.552 0 0 1 0-1H8c-1.464 0-2.766-.27-3.682-.687C3.356 10.875 3 10.373 3 10V8.698c.271.202.58.378.904.525C4.978 
+                            9.71 6.427 10 8 10c.262 0 .52-.008.774-.024a4.525 4.525 0 0 1 1.102-1.132C9.298 8.944 8.666 9 8 9c-1.464 
+                            0-2.766-.27-3.682-.687C3.356 7.875 3 7.373 3 7V5.698c.271.202.58.378.904.525C4.978 6.711 6.427 7 8 
+                            7s3.022-.289 4.096-.777ZM3 4c0-.374.356-.875 1.318-1.313C5.234 2.271 6.536 2 8 2s2.766.27 
+                            3.682.687C12.644 3.125 13 3.627 13 4c0 .374-.356.875-1.318 1.313C10.766 5.729 9.464 6 8 6s-2.766-.27-3.682-.687C3.356 
+                            4.875 3 4.373 3 4Z"/>
+                        </svg>
+                    </button>
+                </div>
+                <thead>
+                    <tr class="table-dark">
+                        <th scope="col">Name</th>
+                        <th scope="col">Description</th>
+                        <th scope="col">Detail</th>
+                        <th scope="col">Date</th>
+                        <th scope="col" class="text-center">Edit</th>
+                        <th scope="col" class="text-center">Delete</th>
+                    </tr>
+                </thead>
+                <tbody id="project-table-body">
+                    <!-- Partner Data -->
+                </tbody>
+            </table>
+            <nav aria-label="Page navigation">
+                <ul class="pagination justify-content-center" id="pagination">
+                    <!-- Pagination -->
+                </ul>
+            </nav>
         </div>
-        <div class="form-group">
-          <label for="image">Image Filename:</label>
-          <input type="text" class="form-control" id="image" name="image" placeholder="Image Filename" required>
-        </div>
-        <div class="form-group">
-          <label for="shortdescription">Short Description:</label>
-          <textarea class="form-control" id="shortdescription" name="shortdescription" rows="4" placeholder="Short Description" required></textarea>
-        </div>
-        <div class="form-group">
-          <label for="details">Details:</label>
-          <textarea class="form-control" id="details" name="details" rows="4" placeholder="Details" required></textarea>
-        </div>
-        <button type="submit" class="btn btn-secondary bg-dark " >Add Project </button>
-      </form>
-    </div>
-  </div>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-</body>
 
+        <!-- Modal for Add/Edit Partners -->
+        <div class="modal fade" id="projectModal" tabindex="-1" aria-labelledby="projectModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-xl">
+                <div class="modal-content">
+                    <div class="modal-header" id="projectModalHeader">
+                        <!-- Insert -->
+                    </div>
+                    <div class="modal-body" id="insertInModalBody">
+                        <!-- Insert -->
+                    </div>
+                    <div class="modal-footer" id="insertInModalFooter">
+                        <!-- Insert -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+        <script>
+            let currentPage = 1;
+            let searchTerm = '';
+            const itemsPerPage = 10;
+
+            $(document).ready(function () {
+                function fetchProjectData() {
+                    const urlParams = new URLSearchParams(window.location.search);
+
+                    currentPage = parseInt(urlParams.get('page')) || currentPage;
+                    searchTerm = urlParams.get('search') || searchTerm;
+                    $('#searchInput').val(searchTerm);
+
+                    $.get(`<%= BACKEND_URL %>/api/project/all?search=${searchTerm}&page=${currentPage}&itemsPerPage=${itemsPerPage}`, function (data) {
+                        const projects = data.projects.projects;
+                        const totalPages = data.totalPages;
+                        const totalItems = data.projects.totalCount;
+
+                        const tableBody = document.getElementById('project-table-body');
+                        tableBody.innerHTML = '';
+
+                        projects.forEach(function (project) {
+                            const createdAt = new Date(project.createdAt);
+                            const year = createdAt.getFullYear();
+                            const month = (createdAt.getMonth() + 1).toString().padStart(2, '0');
+                            const day = createdAt.getDate().toString().padStart(2, '0');
+                            const formattedDate = `${year}-${month}-${day}`;
+                            let fileName = null;
+
+                            if (project.iconPath !== null) {
+                                fileName = project.iconPath.split('\\').pop();
+                            }
+
+                            const row = document.createElement('tr');
+                            row.innerHTML = `
+                                <td>${project.name}</td>
+                                <td class="text-truncate"  style="max-width: 150px;">${project.description}</td>
+                                <td class="text-truncate"  style="max-width: 150px;">${project.detail}</td>
+                                <td>${formattedDate}</td>
+                                <td class="text-center">
+                                    <button class="btn btn-outline-success edit-button"
+                                        data-id="${project.id}"
+                                        data-name="${project.name}"
+                                        data-detail="${project.detail}"
+                                        data-description="${project.description}"
+
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#projectModal"
+                                        data-icon-url="/files/icons/${fileName}">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" 
+                                        class="bi bi-pencil-square" viewBox="0 0 16 16">
+                                            <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 
+                                            2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 
+                                            0 .196-.12l6.813-6.814z"/>
+                                            <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 
+                                            0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 
+                                            1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
+                                        </svg>
+                                    </button>
+                                </td>
+                                <td class="text-center">
+                                    <button class="btn btn-outline-danger delete-button" 
+                                        type="button" 
+                                        data-id="${project.id}">
+                                        Delete
+                                    </button>
+                                </td>
+                            `;
+                            tableBody.appendChild(row);
+                        });
+
+                        updatePagination(totalPages);
+                    });
+                }
+
+                function updateURL() {
+                    const urlParams = new URLSearchParams(window.location.search);
+                    urlParams.set('page', currentPage);
+                    urlParams.set('search', searchTerm);
+                    history.pushState({}, '', `${window.location.pathname}?${urlParams}`);
+                }
+
+                $('#project-table-body').on('click', '.edit-button', function () {
+                    let iconUrl = $(this).data('icon-url');
+                    check = iconUrl.split('/').pop();
+                    
+                    if (check === "null"){
+                        iconUrl = "<%= BACKEND_URL %>/assets/upload.svg"
+                    }
+                    let projectId = $(this).data('id');
+                    let projectName = $(this).data('name');
+                    let projectDescription = $(this).data('description');
+                    let projectDetail = $(this).data('detail');
+                    const insertInModalHeader = document.getElementById('projectModalHeader');
+                    insertInModalHeader.innerHTML = `
+                        <h3>Edit Project</h3>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    `;
+
+                    const insertInModalBody = document.getElementById('insertInModalBody');
+                    insertInModalBody.innerHTML = `
+                        <div class="container">
+                            <div class="row">
+                                <div class="col d-flex flex-column">
+                                    <label for="floatingTextarea">Name</label>
+                                    <div class="input-group my-1">
+                                        <span class="input-group-text">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" 
+                                            class="bi bi-person-workspace" viewBox="0 0 16 16">
+                                                <path d="M4 16s-1 0-1-1 1-4 5-4 5 3 5 4-1 1-1 1H4Zm4-5.95a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Z"/>
+                                                <path d="M2 1a2 2 0 0 0-2 2v9.5A1.5 1.5 0 0 0 1.5 14h.653a5.373 5.373 0 0 1 1.066-2H1V3a1 1 
+                                                0 0 1 1-1h12a1 1 0 0 1 1 1v9h-2.219c.554.654.89 1.373 1.066 2h.653a1.5 1.5 0 0 0 1.5-1.5V3a2 
+                                                2 0 0 0-2-2H2Z"/>
+                                            </svg>
+                                        </span>
+                                        <input id="inputAddProject" type="text" class="form-control" placeholder="Partner" 
+                                        aria-label="Project" aria-describedby="input-group-left">
+                                    </div>
+                                    <label for="floatingTextarea">Description</label>
+                                    <textarea id="inputAddDescription" class="form-control h-100" placeholder="Write a description"></textarea>
+                                </div>
+                              </div>
+                                    <label for="floatingTextarea">Detail</label>
+                                    <textarea id="inputAddDetail" class="form-control h-100" placeholder="Write a description"></textarea>
+                                </div>
+                                <div class="col-4 d-flex flex-column mt-1">
+                                    <label for="floatingTextarea">Icon</label>
+                                    <div class="card h-100">
+                                        <div class="card-body d-flex flex-column justify-content-center align-items-center">
+                                            <img id="selectedImage" src="${iconUrl}" class="card-img-top my-1" width="200" height="200">
+                                            <label for="iconFile" class="btn btn-outline-dark">
+                                                Upload an Icon
+                                            </label>
+                                            <input class="form-control" type="file" id="iconFile">                                            
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+
+                    const insertInModalFooter = document.getElementById('insertInModalFooter');
+                    insertInModalFooter.innerHTML = '';
+                    insertInModalFooter.innerHTML = `   
+                        <button type="submit" class="btn btn-success project-edit-button">
+                            Confirm
+                        </button>
+                        <button class="btn btn-outline-danger" data-bs-dismiss="modal">
+                            Cancel
+                        </button>
+                    `;
+
+                    const iconFile = document.getElementById("iconFile");
+                    const selectedImage = document.getElementById("selectedImage");
+
+                    iconFile.addEventListener("change", function () {
+                        const file = iconFile.files[0];
+
+                        if (file) {
+                            if (file.type.startsWith("image/")) {
+                                const reader = new FileReader();
+                                reader.onload = function (e) {
+                                    selectedImage.src = e.target.result;
+                                };
+
+                                reader.readAsDataURL(file);
+                            } else {
+                                alert("Please select an image file.");
+                                iconFile.value = "";
+                            }
+                        }
+                    });
+
+                    $('.project-edit-button').data('project-id', projectId);
+                    $('#inputAddProject').val(projectName);
+                    $('#inputAddDescription').val(projectDescription);
+                    $('#inputAddDetail').val(projectDetail);
+                });
+
+                $('#insertInModalFooter').on('click', '.project-edit-button', function () {
+                    const projectId = $('.project-edit-button').data('project-id');
+                    const name = $('#inputAddProject').val();
+                    const description = $('#inputAddDescription').val();
+                    const detail = $('#inputAddDetail').val();
+                    const fileInput = document.getElementById('iconFile');
+                    const file = fileInput.files[0];
+
+                    const formData = new FormData();
+                    formData.append('name', name);
+                    formData.append('description', description);
+                    formData.append('detail', detail);
+                    formData.append('fileInput', file);
+
+                    const formDataJSON = {};
+                    formData.forEach((value, key) => {
+                    formDataJSON[key] = value;
+                    });
+
+                    $.ajax({
+                        url: `<%= BACKEND_URL %>/api/project/update/${projectId}`,
+                        type: 'PUT',
+                        data: formData,
+                        processData: false, 
+                        contentType: false, 
+                        success: function (response) {
+                            console.log('Project updated successfully:', response);
+                            $('#projectModal').modal('hide');
+                            fetchProjectData();
+                        },
+                        error: function (error) {
+                            console.error('Error updating project:', error);
+                        }
+                    });
+                });
+
+                $('#projectCaption').on('click', '.add-button', function () {
+                    const insertInModalHeader = document.getElementById('projectModalHeader');
+                    insertInModalHeader.innerHTML = `
+                        <h3>Add Project</h3>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    `;
+
+                    const insertInModalBody = document.getElementById('insertInModalBody');
+                    insertInModalBody.innerHTML = `
+                        <div class="container">
+                            <div class="row">
+                                <div class="col d-flex flex-column">
+                                    <label for="floatingTextarea">Name</label>
+                                    <div class="input-group my-1">
+                                        <span class="input-group-text">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-workspace" viewBox="0 0 16 16">
+                                                <path d="M4 16s-1 0-1-1 1-4 5-4 5 3 5 4-1 1-1 1H4Zm4-5.95a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Z"/>
+                                                <path d="M2 1a2 2 0 0 0-2 2v9.5A1.5 1.5 0 0 0 1.5 14h.653a5.373 5.373 0 0 1 1.066-2H1V3a1 1 
+                                                0 0 1 1-1h12a1 1 0 0 1 1 1v9h-2.219c.554.654.89 1.373 1.066 2h.653a1.5 1.5 0 0 0 1.5-1.5V3a2 
+                                                2 0 0 0-2-2H2Z"/>
+                                            </svg>
+                                        </span>
+                                        <input id="inputAddProject" type="text" class="form-control" placeholder="Write a name" aria-label="Project" aria-describedby="input-group-left">
+                                    </div>
+                                    <label for="floatingTextarea">Description</label>
+                                    <textarea id="inputAddDescription" class="form-control h-100" placeholder="Write a description" style="height: 200px"></textarea>
+                                </div>
+                              </div>
+                                    <label for="floatingTextarea">Detail</label>
+                                    <textarea id="inputAddDetail" class="form-control h-100" placeholder="Write a detail" style="height: 200px"></textarea>
+                                </div>
+                                <div class="col-4 d-flex flex-column mt-1">
+                                    <label for="floatingTextarea">Icon</label>
+                                    <div class="card h-100">
+                                        <div class="card-body d-flex flex-column justify-content-center align-items-center">
+                                            <img id="selectedImage" src="<%= BACKEND_URL %>/assets/upload.svg" class="card-img-top my-1" width="200" height="200">
+                                            <label for="iconFile" class="btn btn-outline-dark">
+                                                Upload an Icon
+                                            </label>
+                                            <input class="form-control" type="file" id="iconFile">                                            
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+
+                    const insertInModalFooter = document.getElementById('insertInModalFooter');
+                    insertInModalFooter.innerHTML = '';
+                    insertInModalFooter.innerHTML = `
+                        <button type="submit" class="btn btn-success project-add-button">
+                            Confirm
+                        </button>
+                        <button class="btn btn-outline-danger" data-bs-dismiss="modal">
+                            Cancel
+                        </button>
+                    `;
+
+                    const iconFile = document.getElementById("iconFile");
+                    const selectedImage = document.getElementById("selectedImage");
+
+                    iconFile.addEventListener("change", function () {
+                        const file = iconFile.files[0];
+
+                        if (file) {
+                            if (file.type.startsWith("image/")) {
+                                const reader = new FileReader();
+                                reader.onload = function (e) {
+                                    selectedImage.src = e.target.result;
+                                };
+                                reader.readAsDataURL(file);
+                            } else {
+                                alert("Please select an image file.");
+                                iconFile.value = "";
+                            }
+                        }
+                    });
+                });
+
+                $('#insertInModalFooter').on('click', '.project-add-button', function () {
+                    const name = $('#inputAddProject').val();
+                    const description = $('#inputAddDescription').val();
+                    const detail = $('#inputAddDetail').val();
+      
+                    const fileInput = document.getElementById('iconFile');
+                    const file = fileInput.files[0];
+
+                    const formData = new FormData();
+                    formData.append('name', name);
+                    formData.append('description', description);
+                    formData.append('detail', detail);
+                    formData.append('fileInput', file);
+
+                    $.ajax({
+                        url: '<%= BACKEND_URL %>/api/project/create',
+                        type: 'POST',
+                        data: formData,
+                        processData: false, 
+                        contentType: false, 
+                        success: function (response) {
+                            console.log('Project added successfully:', response);
+                            $('#projectModal').modal('hide');
+                            fetchProjectData();
+                        },
+                        error: function (error) {
+                            console.error('Error adding project:', error);
+                        }
+                    });
+                });
+
+                $('#searchForm').submit(function (e) {
+                    e.preventDefault();
+                    searchTerm = $('#searchInput').val();
+                    currentPage = 1;
+                    updateURL();
+                    fetchProjectData();
+                });
+
+                $('#resetSearchButton').click(function () {
+                    $('#searchInput').val('');
+                    searchTerm = $('#searchInput').val();
+                    currentPage = 1;
+                    updateURL();
+                    fetchProjectData();
+                });
+
+                function changePage(page) {
+                    currentPage = page;
+                    const urlParams = new URLSearchParams(window.location.search);
+                    urlParams.set('page', page);
+                    const newURL = `${window.location.pathname}?${urlParams}`;
+                    window.history.pushState({ path: newURL }, '', newURL);
+                    fetchProjectData(page, searchTerm);
+                }
+
+                function updatePagination(totalPages) {
+                    const pagination = document.getElementById('pagination');
+                    pagination.innerHTML = '';
+
+                    const previousItem = document.createElement('li');
+                    previousItem.className = `page-item ${currentPage === 1 ? 'disabled' : ''}`;
+                    const previousLink = document.createElement('a');
+                    previousLink.className = 'page-link';
+                    previousLink.href = 'javascript:void(0);';
+                    previousLink.textContent = '«';
+                    previousLink.onclick = () => changePage(currentPage - 1);
+                    previousItem.appendChild(previousLink);
+                    pagination.appendChild(previousItem);
+
+                    for (let i = 1; i <= totalPages; i++) {
+                        const pageItem = document.createElement('li');
+                        pageItem.className = `page-item ${i === currentPage ? 'active' : ''}`;
+                        const pageLink = document.createElement('a');
+                        pageLink.className = 'page-link';
+                        pageLink.href = 'javascript:void(0);';
+                        pageLink.textContent = i;
+                        pageLink.onclick = () => changePage(i);
+                        pageItem.appendChild(pageLink);
+                        pagination.appendChild(pageItem);
+                    }
+
+                    const nextItem = document.createElement('li');
+                    nextItem.className = `page-item ${currentPage === totalPages ? 'disabled' : ''}`;
+                    const nextLink = document.createElement('a');
+                    nextLink.className = 'page-link';
+                    nextLink.href = 'javascript:void(0);';
+                    nextLink.textContent = '»';
+                    nextLink.onclick = () => changePage(currentPage + 1);
+                    nextItem.appendChild(nextLink);
+                    pagination.appendChild(nextItem);
+                }
+
+                $('#project-table-body').on('click', '.delete-button', function () {
+                    const projectId = $(this).data('id');
+                    const rowCount = $('#project-table-body tr').length;
+
+                    $.ajax({
+                        url: `<%= BACKEND_URL %>/api/project/delete/${projectId}`,
+                        type: 'DELETE',
+                        success: function () {
+                            fetchProjectData();
+
+                            if ($('#project-table-body tr').length === 0) {
+                                updateURL();
+                                fetchProjectData();
+                            }
+                            if (rowCount === 1 && currentPage!==1) {
+                                changePage(currentPage - 1);
+                            }
+                        },
+                        error: function (error) {
+                            console.error('Error deleting project:', error);
+                        },
+                    });
+                });
+
+                fetchProjectData();
+            });
+        </script>
+
+    </body>
 </html>
+
+<style>
+    .page-item.active .page-link {
+        background-color: #212529;
+        color: white;
+    }
+
+    .page-link {
+        background-color: #E9ECEF;
+        color: #212529;
+    }
+
+    .page-link:hover {
+        background-color: #212529;
+        color: white;
+    }
+
+  
+
+    #iconFile {
+        display: none;
+    }
+
+</style>

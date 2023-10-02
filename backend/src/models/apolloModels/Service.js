@@ -1,24 +1,20 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../../../config/db');
 
-const Service = sequelize.define('services', {
+const Service = sequelize.define('Services', {
   id: {
     type: DataTypes.UUID,
     defaultValue: DataTypes.UUIDV4,
     primaryKey: true,
   },
-  title: {
+  name: {
     type: DataTypes.TEXT,
     allowNull: false,
   },
-  image: {
-    type: DataTypes.TEXT,
-  },
-  details: {
-    type: DataTypes.TEXT,
-  },
-}, {
-  timestamps: false, 
+  description: DataTypes.TEXT,
+ 
+  iconPath: DataTypes.TEXT,
+
 });
 
 module.exports = Service;
