@@ -1,0 +1,28 @@
+[
+    {
+      "id": "7cf6a628-e6af-4d3c-a56a-59e3b26e3f15",
+      "iconPath": "services1.png",
+      "name": "Trade & Logistics",
+      "description": "End-to-end multi-branch retail systems hardware, software, network infrastructure, operations, and support"
+    },
+    {
+      "id": "6f99a843-71c4-4968-bc96-5ea92f3eac1b",
+      "iconPath": "services2.png",
+      "name": "Retail & Supply Chain",
+      "description": "Software as a Service platform for brokers, importers, and exporters"
+    },
+    {
+      "id": "71d889ae-0eb4-4a14-8c88-92575845f37e",
+      "iconPath": "services3.png",
+      "name": "Electronic Payments",
+      "description": "Electronic document creation, delivery, and processing for institutions and their clients"
+    },
+    {
+      "id": "c0bced77-95bf-4214-a47d-1c66d4910a45",
+      "iconPath": "services4.png",
+      "name": "Electronic Government",
+      "description": "Secure payment solutions designed for the local and other emerging markets"
+    }
+    
+  ]
+  

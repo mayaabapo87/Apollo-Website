@@ -1,8 +1,11 @@
 'use strict';
+const fs = require('fs');
+const path = require('path');
 
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
-  async up (queryInterface, Sequelize) {
+  async up(queryInterface, Sequelize) {
+    // Create the 'Services' table
     await queryInterface.createTable('Services', {
       id: {
         allowNull: false,
@@ -29,9 +32,21 @@ module.exports = {
         type: Sequelize.DATE,
       },
     });
+
+  
+    const dataFilePath = path.join(__dirname, '..', 'data', 'services-data.json');
+    const rawData = fs.readFileSync(dataFilePath);
+    const servicesData = JSON.parse(rawData);
+
+    await queryInterface.bulkInsert('Services', servicesData.map(service => ({
+      ...service,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    })));
   },
 
-  async down (queryInterface, Sequelize) {
+  async down(queryInterface, Sequelize) {
+    // Drop the 'Services' table
     await queryInterface.dropTable('Services');
   }
 };
