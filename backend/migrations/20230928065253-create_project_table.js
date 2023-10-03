@@ -1,4 +1,6 @@
 'use strict';
+const fs = require('fs');
+const path = require('path');
 
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
@@ -32,6 +34,15 @@ module.exports = {
         type: Sequelize.DATE,
       },
     });
+    const dataFilePath = path.join(__dirname, '..', 'data', 'projects-data.json');
+    const rawData = fs.readFileSync(dataFilePath);
+    const projectsData = JSON.parse(rawData);
+
+    await queryInterface.bulkInsert('Projects', projectsData.map(project => ({
+      ...project,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    })));
   },
 
   async down (queryInterface, Sequelize) {
