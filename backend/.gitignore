@@ -3,3 +3,14 @@
 
 /src/files/resumes/*
 /src/files/icons/*
+
+# Include specific files or patterns in the icons directory
+!/src/files/icons/services1.png
+!/src/files/icons/services2.png
+!/src/files/icons/services3.png
+!/src/files/icons/services4.png
+
+!/src/files/icons/project1.png
+!/src/files/icons/project2.png
+!/src/files/icons/project3.png
+!/src/files/icons/project4.png
