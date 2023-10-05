@@ -21,7 +21,7 @@
                           <div class="card border-1 border h-100">
                               <div class="card-body">
                                   <div class="container text-center">
-                                    <img width="150" height="150" :src="`${urlBackend}/files/icons/${set.iconPath.split('\\').pop()}`" class="card-img-top" alt="...">
+                                    <img width="150" height="150" :src="`${urlBackend}/files/icons/${set.iconPath.split('\\').pop()}`" class="card-img-top custom-image" alt="...">
                                       <h5 class="card-title text-maroon"  v-html="set.name"></h5>
                                       <p class="fs-6 text-dark"  v-html="set.description"></p>
                                   </div>
@@ -35,12 +35,7 @@
                   </div>
                </div>
               <div class="modal-footer">
-                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x" viewBox="0 0 16 16">
-                      <path d="M5.354 8L0 3.293 1.293 2 8 8.707 14.707 2 16 3.293 10.646 8 16 12.707 14.707 14 8 9.293 1.293 16 0 14.707 5.354 8 0 2.293 1.293 1 8 6.707 14.707 1 16 2.293 10.646 8z"/>
-                    </svg>
-                    Close
-                  </button>
+                <button type="button" class="btn btn-maroon" data-bs-dismiss="modal">Close</button>
               </div>
           </div>
       </div>
@@ -134,7 +129,7 @@ export default {
     content: '';
     position: absolute;
     width: 2px;
-    height: 12px;
+    height: 15px;
     top: 50%; 
     left: 50%; 
     background-color: #fff;

@@ -1,5 +1,5 @@
 <template>
-  <section id="projects-view" class=" py-5"  style="background-color: #f6f4f3;">
+  <section id="projects-view" class=" py-4"  style="background-color: #f6f4f3;">
   <div class="container mt-5">
     <h1 class="text-center text-dark fw-bold mt-4">OUR PROJECTS</h1>
     <hr class="border-secondary border-2 border-dark">
@@ -83,9 +83,9 @@
               <span class="bg-maroon rounded carousel-control-next-icon" aria-hidden="true"
                 style="width: 50px; height: 50px;"></span>
             </button>
-            <button type="button" class="button-view" data-bs-toggle="modal" data-bs-target="#projectsPopup">
+            <button type="button" class="mt-2 btn btn-outline-maroon" data-bs-toggle="modal" data-bs-target="#projectsPopup">
               View All
-            </button>
+          </button>  
           </div>
         </div>
       </div>
@@ -108,12 +108,7 @@
           <p style="text-align:justify" v-html="set.detail"></p>
         </div>
         <div class="modal-footer">
-        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x" viewBox="0 0 16 16">
-                <path d="M5.354 8L0 3.293 1.293 2 8 8.707 14.707 2 16 3.293 10.646 8 16 12.707 14.707 14 8 9.293 1.293 16 0 14.707 5.354 8 0 2.293 1.293 1 8 6.707 14.707 1 16 2.293 10.646 8z"/>
-              </svg>
-              Close
-            </button>
+          <button type="button" class="btn btn-maroon" data-bs-dismiss="modal">Close</button>
         </div>
       </div>
     </div>
@@ -175,7 +170,7 @@ export default {
   content: '';
   position: absolute;
   width: 2px;
-  height: 12px;
+  height: 15px;
   top: 50%; 
   left: 50%; 
   background-color: #fff;
@@ -223,111 +218,6 @@ export default {
 
 .button-more:not([disabled]):hover {
   box-shadow: 0 0 .25rem rgba(0, 0, 0, 0.5), -.125rem -.125rem 1rem rgba(239, 71, 101, 0.5), .125rem .125rem 1rem rgba(255, 154, 90, 0.5);
-}
-
-/* MODERN VIEW ALL BUTTON */
-.button-view {
-  
-  align-items: center;
-  appearance: none;
-  background-clip: padding-box;
-  background-color: initial;
-  background-image: none;
-  border-style: none;
-  box-sizing: border-box;
-  color: #fff;
-  cursor: pointer;
-  display: inline-block;
-  flex-direction: row;
-  flex-shrink: 0;
-  font-family: Eina01,sans-serif;
-  font-size: 16px;
-  font-weight: 800;
-  justify-content: center;
-  line-height: 24px;
-  margin: 0;
-  min-height: 64px;
-  outline: none;
-  overflow: visible;
-  padding: 19px 26px;
-  margin-bottom: 2%;
-  pointer-events: auto;
-  position: relative;
-  text-align: center;
-  text-decoration: none;
-  text-transform: none;
-  user-select: none;
-  -webkit-user-select: none;
-  touch-action: manipulation;
-  vertical-align: middle;
-  width: auto;
-  word-break: keep-all;
-  z-index: 0;
-  margin-top: 2%;
-}
-
-@media (min-width: 768px) {
-  .button-view {
-    padding: 19px 32px;
-  }
-}
-
-.button-view:before,
-.button-view:after {
-  border-radius: 80px;
-}
-
-.button-view:before {
-  background-color: rgb(249, 58, 19, .32);
-  content: "";
-  display: block;
-  height: 100%;
-  left: 0;
-  overflow: hidden;
-  position: absolute;
-  top: 0;
-  width: 100%;
-  z-index: -2;
-}
-
-.button-view:after {
-  background-color: initial;
-  background-image: linear-gradient(92.83deg, #ff4040 0, #ac0c0c  100%);
-  bottom: 4px;
-  content: "";
-  display: block;
-  left: 4px;
-  overflow: hidden;
-  position: absolute;
-  right: 4px;
-  top: 4px;
-  transition: all 100ms ease-out;
-  z-index: -1;
-}
-
-.button-view:hover:not(:disabled):after {
-  bottom: 0;
-  left: 0;
-  right: 0;
-  top: 0;
-  transition-timing-function: ease-in;
-}
-
-.button-view:active:not(:disabled) {
-  color: #ccc;
-}
-
-.button-view:active:not(:disabled):after {
-  background-image: linear-gradient(0deg, rgba(0, 0, 0, .2), rgba(0, 0, 0, .2)), linear-gradient(92.83deg, #ff7426 0, #f93a13 100%);
-  bottom: 4px;
-  left: 4px;
-  right: 4px;
-  top: 4px;
-}
-
-.button-view:disabled {
-  cursor: default;
-  opacity: .24;
 }
 
 </style>

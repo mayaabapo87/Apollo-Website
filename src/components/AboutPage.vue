@@ -1,26 +1,20 @@
 <template>
   <section id="about-view">
-    <nav class="navbar navbar-expand-lg navbar-dark " style="height: 70px; background-image: linear-gradient(to bottom, #d93c3c, #6e0a0a);">
-      <div class="container-fluid text-center">
-        <div class="d-flex justify-content-center align-items-center mx-auto">
-          <ul class="navbar-nav d-flex justify-content-center align-items-center mx-auto">
-
-            <li class="nav-item">
-              <a :class="{ 'nav-link': true, 'active-button': currentTab === 'About' }" @click="showTab('About')">About
-                Us</a>
-            </li>
-            <li class="nav-item">
-              <a :class="{ 'nav-link': true, 'active-button': currentTab === 'History' }"
-                @click="showTab('History')">History</a>
-            </li>
-            <li class="nav-item">
-              <a :class="{ 'nav-link': true, 'active-button': currentTab === 'Purpose' }"
-                @click="showTab('Purpose')">Purpose</a>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </nav>
+    <nav class="navbar navbar-expand-lg navbar-dark mt-3 " style="background-image: linear-gradient(to bottom, #d93c3c, #6e0a0a);">
+    <div class="container">
+      <ul class="navbar-nav mx-auto">
+        <li class="nav-item">
+          <a :class="{ 'nav-link': true, 'active-button': currentTab === 'About' }" @click="showTab('About')">About Us</a>
+        </li>
+        <li class="nav-item">
+          <a :class="{ 'nav-link': true, 'active-button': currentTab === 'History' }" @click="showTab('History')">History</a>
+        </li>
+        <li class="nav-item">
+          <a :class="{ 'nav-link': true, 'active-button': currentTab === 'Purpose' }" @click="showTab('Purpose')">Purpose</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
     <!-- About Tab -->
     <div v-if="currentTab === 'About'" class="container">
       <!-- About Content -->
@@ -139,7 +133,7 @@ export default {
 }
 
 .nav-link {
-  font-size: 20px;
+  font-size: 17px;
   margin-left: 20px;
   text-transform: uppercase;
   letter-spacing: 1px;
@@ -152,8 +146,12 @@ export default {
 
 .active-button {
   color: #fff;
-  border-bottom: 3px solid white;
+  border-bottom: 2px solid white;
   padding-bottom: 6px;
   text-transform: uppercase;
   font-weight: bold;
+
+  
+  
+  
 }</style>

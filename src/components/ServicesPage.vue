@@ -1,6 +1,6 @@
 <template>
-  <section id="services-view" class="mt-5 py-5" style="background-color: #a8a8a8;">
-    <div class="container">
+  <section id="services-view" class="mt-5 py-4" style="background-color: #a8a8a8;">
+    <div class="container my-5">
       <h1 class="text-center text-white fw-bold mt-4">OUR SERVICES</h1>
       <hr class="border-secondary border-2 border-dark">
       <div class="row mt-5">
