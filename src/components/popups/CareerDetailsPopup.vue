@@ -14,6 +14,7 @@
                         <div class="container-fluid">
                             <h3 class="text-maroon fw-bold"> Job Summary </h3>
                             <textarea
+                                :id = "'summaryId-'+ids.id"
                                 :value="ids.summary"
                                 class="text-dark w-100 border-0"
                                 readonly
@@ -21,6 +22,7 @@
                             ></textarea>
                             <h3 class="text-maroon fw-bold">Qualifications</h3>
                             <textarea
+                                :id = "'qualificationId-'+ids.id"
                                 :value="ids.qualifications"
                                 class="text-dark w-100 border-0"
                                 readonly

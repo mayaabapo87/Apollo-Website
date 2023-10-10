@@ -7,38 +7,48 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
+
                     <div class="container">
+                 
+
                         <form  @submit.prevent="uploadFile" class="w-75 mx-auto">
+
+                            <div v-if="isResumeSent" id="resumeSent" class="my-2 toast toast-demo d-flex align-items-center text-white bg-success border-0 fade show" role="alert" aria-live="assertive" aria-atomic="true">
+      <div class="toast-body">
+        Resume has been sent
+      </div>
+      <button type="button" class="btn-close btn-close-white ms-auto me-2" data-bs-dismiss="toast" aria-label="Close" @click="closeResumeSentToast"></button>
+    </div>
 
                             <div class="input-group mb-3">
                                 <span class="input-group-text" id="basic-addon1">
                                     <img width="40" height="40" src="../../assets/icons/person.svg" class="card-img-top" alt="...">
                                 </span>
-                                <input id="fullName" type="text" class="form-control" placeholder="Full Name" aria-label="Username" aria-describedby="basic-addon1" required>
+                                <input id="full-name" type="text" class="form-control" placeholder="Full Name" required autocomplete="off">
                             </div>
 
                             <div class="input-group mb-3">
                                 <span class="input-group-text" id="basic-addon1">
                                     <img width="40" height="40" src="../../assets/icons/envelope.svg" class="card-img-top" alt="...">
                                 </span>
-                                <input id="email" type="email" class="form-control" placeholder="Email" aria-label="Username" aria-describedby="basic-addon1" required>
+                                <input id="email" type="email" class="form-control" placeholder="Email" required autocomplete="off">
                             </div>
 
                             <div class="input-group mb-3">
                                 <span class="input-group-text" id="basic-addon1">
                                     <img width="40" height="40" src="../../assets/icons/telephone.svg" class="card-img-top" alt="...">
                                 </span>
-                                <input id="phoneNumber" type="text" class="form-control" placeholder="09xxxxxxxx" aria-label="Username" aria-describedby="basic-addon1" required>
+                                <input id="phone-number" type="text" class="form-control" placeholder="09XXXXXXXX" required autocomplete="off">
                             </div>
 
                             <div class="container allign-items-center text-center justify-items-center border rounded py-2">
-                                <label for="formFileLg" class="form-label">
+                                <label class="form-label">
                                     <img width="50" height="50" src="../../assets/icons/upload.svg" class="card-img-top" alt="...">
+                                    <input class="iconFile" type="file" ref="fileInput" accept=".pdf" required>
                                 </label>
-                                <input type="file" ref="fileInput" accept=".pdf" required>
                             </div>
  
-                            <button class="btn btn-outline-maroon" type="submit">Submit</button>
+                            <button class="btn btn-outline-maroon">Submit</button>
 
                         </form>
                      </div>
@@ -61,6 +71,8 @@ export default {
     data() {
         return {
             showModal: false,
+            isResumeSent: false, // Initially not shown
+
         };
     },
 
@@ -72,13 +84,19 @@ export default {
   },
   
     methods: {
+        showResumeSentToast() {
+      this.isResumeSent = true; // Show the toast
+    },
+    closeResumeSentToast() {
+      this.isResumeSent = false; // Close the toast
+    },
         async uploadFile() {
         const fileInput = this.$refs.fileInput;
         const formData = new FormData();
 
-        const name = document.querySelector('#fullName').value;
+        const name = document.querySelector('#full-name').value;
         const email = document.querySelector('#email').value;
-        const number = document.querySelector('#phoneNumber').value;
+        const number = document.querySelector('#phone-number').value;
         const position = this.$store.state.positionName; 
         formData.append('name', name);
         formData.append('email', email);
@@ -98,10 +116,10 @@ export default {
             document.body.classList.remove('modal-open'); 
             document.body.style.paddingRight = '';
 
-            document.querySelector('#fullName').value = '';
+            document.querySelector('#full-name').value = '';
             document.querySelector('#email').value = '';
-            document.querySelector('#phoneNumber').value = '';
-
+            document.querySelector('#phone-number').value = '';
+            this.showResumeSentToast();
         } catch (error) {
             console.error('Error uploading file:', error);
         }
@@ -109,3 +127,9 @@ export default {
     },
 };
 </script>
+
+<style scoped>
+    #iconFile {
+        display: none;
+    }
+</style>

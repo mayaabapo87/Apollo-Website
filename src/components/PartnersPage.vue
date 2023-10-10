@@ -11,18 +11,18 @@
                 <a class="nav-link text-maroon border-1 border border-maroon" data-bs-toggle="pill" href="#partnerStories">Partner Stories</a>
             </li>
         </ul>
-        <div class="tab-content my-2 h-100">
-            <div id="ourPartners" class="collapse show text-center tab-pane fade active h-100">
+        <div class="tab-content my-2">
+            <div id="ourPartners" class="collapse show text-center tab-pane fade active">
                 <div class="container">
-                    <div id="carouselPartners" class="carousel my-auto carousel-fade" data-bs-ride="carousel">
-                        <div class="carousel-inner my-2">
+                    <div id="carouselPartners" class="carousel my-auto carousel-fade">
+                        <div class="carousel-inner p-5">
                             <div v-for="(set, index) in partnerData" :key="index" :class="['carousel-item', { active: index === 0 }]">
                                 <!--Desktop Partners-->
                                 <div class="d-none d-xl-block">
                                     <div class="d-flex justify-content-center">
-                                        <div class="card border-0  w-75">
+                                        <div class="card border-0">
                                             <div class="card-body">
-                                                <img width="150" height="150" :src="`${urlBackend}/files/icons/${set.iconPath.split('\\').pop()}`" class="card-img-top" alt="...">
+                                                <img width="150" height="150" :src="`${urlBackend}/files/icons/${set.iconPath.split('\\').pop()}`" alt="...">
                                                 <div class="text-center">
                                                     <h2 class="text-maroon">{{ set.name }}</h2>
                                                     <p class=" text-dark text-truncate">{{ set.description }}</p>
@@ -36,7 +36,7 @@
                                 <div class="d-none d-sm-block d-xl-none d-xxl-none h-100 w-100  justify-content-center">
                                     <div class="card border-0 h-100 w-75 mx-auto">
                                         <div class="card-body">
-                                            <img width="150" height="150" :src="`${urlBackend}/files/icons/${set.iconPath.split('\\').pop()}`" class="card-img-top" alt="...">
+                                            <img width="150" height="150" :src="`${urlBackend}/files/icons/${set.iconPath.split('\\').pop()}`" alt="...">
                                             <div class="text-center">
                                                 <h2 class="text-maroon">{{ set.name }}</h2>
                                                 <div class="container">
@@ -79,13 +79,14 @@
             </div>
             <div id="partnerStories" class="collapse text-center tab-pane fade">
                 <div class="container">
-                    <div id="carouselStories" class="carousel mt-2 carousel-fade" data-bs-ride="carousel">
-                            <div class="carousel-inner">
+                    <div id="carouselStories" class="carousel mt-2 carousel-fade">
+                            <div class="carousel-inner p-5">
                                 <div v-for="(set, index) in storiesData" :key="index" :class="['carousel-item', { active: index === 0 }]">
                                     <!--Desktop Stories-->
                                     <div class="d-none d-xl-block">
                                         <div class="d-flex justify-content-center align-items-center">
-                                            <div class="text-center text-dark w-75" style="height: auto;">
+                                            <div class="text-center text-dark" style="height: auto;">
+                                                <h2 class="text-dark">{{ set.name }}</h2>
                                                 <p>{{ set.description }}</p>
                                             </div>
                                         </div>
@@ -97,6 +98,7 @@
                                             <div class="card border-0 border" style="width: 100%;">
                                                 <div class="card-body">
                                                 <div class="text-center">
+                                                    <h2 class="text-dark">{{ set.name }}</h2>
                                                     <p class="text-dark">{{ set.description }}</p>
                                                 </div>
                                                 </div>
@@ -110,6 +112,7 @@
                                             <div class="card border-0 border" style="width: 100%;">
                                                 <div class="card-body">
                                                 <div class="text-center">
+                                                    <h2 class="text-dark">{{ set.name }}</h2>
                                                     <p class="text-dark">{{ set.description }}</p>
                                                 </div>
                                                 </div>

@@ -21,7 +21,7 @@
                             <div class="card border-1 border h-100">
                                 <div class="card-body">
                                     <div class="container text-center">
-                                        <img width="150" height="150" :src="`${urlBackend}/files/icons/${set.iconPath.split('\\').pop()}`" class="card-img-top" alt="...">
+                                        <img width="150" height="150" :src="`${urlBackend}/files/icons/${set.iconPath.split('\\').pop()}`" alt="...">
                                         <h5 class="card-title text-maroon">{{ set.name }}</h5>
                                         <p class="fs-6 text-dark">{{ set.description }}</p>
                                     </div>
