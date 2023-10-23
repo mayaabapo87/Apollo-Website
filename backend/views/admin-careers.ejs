@@ -34,7 +34,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="/partner">
+                            <a class="nav-link " href="/partner">
                                 Partners
                             </a>
                         </li>
@@ -44,8 +44,8 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link active" href="/service">
-                                Services 
+                            <a class="nav-link " href="/service">
+                                Services
                             </a>
                         </li>
                         <li class="nav-item">
@@ -54,7 +54,6 @@
                             </a>
                         </li>
                     </ul>
-
                     <form class="d-flex" id="searchForm">
                         <input class="form-control mx-1" type="search" placeholder="Search" aria-label="Search"
                             id="searchInput" name="search">
@@ -77,7 +76,6 @@
                 </div>
             </div>
         </nav>
-
         <div class="container mt-3">
             <table class="table table-hover caption-top">
                 <div class="caption my-1" id="careerCaption">
@@ -124,7 +122,7 @@
 
         <!-- Modal for Add/Edit Careers -->
         <div class="modal fade" id="careerModal" tabindex="-1" aria-labelledby="careerModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-xl">
+            <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
                 <div class="modal-content">
                     <div class="modal-header" id="careerModalHeader">
                         <!-- Insert -->
@@ -207,7 +205,14 @@
                                     <button class="btn btn-outline-danger delete-button" 
                                         type="button" 
                                         data-id="${career.id}">
-                                        Delete
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16">
+                                            <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 
+                                            0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 
+                                            2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 
+                                            1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 
+                                            0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 
+                                            0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z"/>
+                                        </svg>
                                     </button>
                                 </td>
                             `;
@@ -373,6 +378,7 @@
                     });
                 });
 
+                //Add Career Form
                 $('#careerCaption').on('click', '.add-button', function () {
                     const insertInModalHeader = document.getElementById('careerModalHeader');
                     insertInModalHeader.innerHTML = `
@@ -384,7 +390,8 @@
                     insertInModalBody.innerHTML = `
                         <div class="container">
                             <div class="row">
-                                <div class="col">
+                                <div class="col d-flex flex-column">
+                                    <label>Career Name</label>
                                     <div class="input-group my-1">
                                         <span class="input-group-text">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" 
@@ -395,9 +402,9 @@
                                                 2 0 0 0-2-2H2Z"/>
                                             </svg>
                                         </span>
-                                        <input id="inputAddCareer" type="text" class="form-control" placeholder="Career" 
-                                        aria-label="Career" aria-describedby="input-group-left">
+                                        <input id="inputAddCareer" type="text" class="form-control" placeholder="Career" required autocomplete="off">
                                     </div>
+                                    <label>Location</label>
                                     <div class="input-group my-1">
                                         <span class="input-group-text">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" 
@@ -409,15 +416,17 @@
                                                 <path d="M8 8a2 2 0 1 1 0-4 2 2 0 0 1 0 4zm0 1a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
                                             </svg>
                                         </span>
-                                        <input id="inputAddLocation" type="text" class="form-control" placeholder="Location" 
-                                        aria-label="Location" aria-describedby="input-group-left">
+                                        <input id="inputAddLocation" type="text" class="form-control" placeholder="Location" required autocomplete="off">
                                     </div>
+                                   
                                 </div>
-                                <div class="col-4 mt-1">
-                                    <div class="card">
-                                        <img id="selectedImage" src="<%= BACKEND_URL %>/assets/upload.svg" class="card-img-top" width="100" height="100">
-                                        <div class="card-body text-center">
-                                            <label for="iconFile" class="btn btn-outline-dark" style="";>
+
+                                <div class="col-4  d-flex flex-column  mt-1">
+                                    <label>Icon</label>
+                                    <div class="card h-100">
+                                        <img id="selectedImage" src="<%= BACKEND_URL %>/assets/upload.svg" class="card-img-top mt-2" width="100" height="100">
+                                        <div class="card-body d-flex flex-column justify-content-center align-items-center">
+                                            <label for="iconFile" class="btn btn-outline-dark">
                                                 Upload an Icon
                                             </label>
                                             <input class="form-control" type="file" id="iconFile">                                            
@@ -425,12 +434,19 @@
                                     </div>
                                 </div>
                             </div>
-                            <label for="floatingTextarea">Summary</label>
-                            <textarea id="inputAddSummary" class="form-control" placeholder="Write a summary" style="height: 200px"></textarea>
 
-                            <label for="floatingTextarea">Qualifications</label>
-                            <textarea id="inputAddQualifications" class="form-control" placeholder="Write a summary" 
-                            id="qualificationsTextarea" style="height: 200px"></textarea>
+                            <div class="row" style="height: 250px;">
+                                <div class="col d-flex flex-column">
+                                    <label>Summary</label>
+                                    <textarea id="inputAddSummary" class="form-control h-100" placeholder="Write a summary"></textarea>
+                                </div>
+                                <div class="col d-flex flex-column">
+                                    <label>Qualifications</label>
+                                    <textarea id="inputAddQualifications" class="form-control h-100" placeholder="Write qualifications" 
+                                    id="qualificationsTextarea"></textarea>
+                                </div>
+                            </div>
+
                         </div>
                     `;
 
@@ -466,6 +482,7 @@
                     });
                 });
 
+                //Add Career Button Function
                 $('#insertInModalFooter').on('click', '.career-add-button', function () {
                     const name = $('#inputAddCareer').val();
                     const location = $('#inputAddLocation').val();

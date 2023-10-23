@@ -4,13 +4,43 @@ const path = require('path');
 const Resume = require('../../models/apolloModels/Resume');
 const { Sequelize } = require('sequelize');
 
+// Function to fetch distinct positions
+async function getDistinctPositions() {
+  try {
+    // Fetch distinct positions from the Resume model
+    const distinctPositions = await Resume.findAll({
+      attributes: [[Sequelize.fn('DISTINCT', Sequelize.col('position')), 'position']],
+    });
+
+    // Extract the distinct positions and create an array
+    const positionsArray = distinctPositions.map((position) => position.position);
+
+    return positionsArray;
+  } catch (error) {
+    throw error;
+  }
+}
 
 // Retrieve a list of all resumes
-async function getAllResumes(searchTerm, offset = 0, limit = 10) {
+async function getAllResumes(searchTerm, offset = 0, limit = 10, filter) {
   try {
     let whereClause = {};
 
-    if (searchTerm) {
+    if (searchTerm && filter) {
+      whereClause = {
+        [Sequelize.Op.and]: [
+          {
+            [Sequelize.Op.or]: [
+              { name: { [Sequelize.Op.like]: `%${searchTerm}%` } },
+              { email: { [Sequelize.Op.like]: `%${searchTerm}%` } },
+              { number: { [Sequelize.Op.like]: `%${searchTerm}%` } },
+              { position: { [Sequelize.Op.like]: `%${searchTerm}%` } },
+            ],
+          },
+          { position: { [Sequelize.Op.like]: `%${filter}%` } },
+        ],
+      };
+    } else if (searchTerm) {
       whereClause = {
         [Sequelize.Op.or]: [
           { name: { [Sequelize.Op.like]: `%${searchTerm}%` } },
@@ -19,7 +49,11 @@ async function getAllResumes(searchTerm, offset = 0, limit = 10) {
           { position: { [Sequelize.Op.like]: `%${searchTerm}%` } },
         ],
       };
+    } else if (filter) {
+      whereClause = { position: { [Sequelize.Op.like]: `%${filter}%` } };
     }
+    
+
 
     const totalCount = await Resume.count({
       where: whereClause,
@@ -27,11 +61,32 @@ async function getAllResumes(searchTerm, offset = 0, limit = 10) {
 
     const resumes = await Resume.findAll({
       where: whereClause,
-      offset: offset,
-      limit: limit,
+      offset,
+      limit,
     });
 
-    return {resumes, totalCount};
+    // Fetch distinct positions using the controller function
+    const distinctPositions = await getDistinctPositions();
+
+    return { resumes, totalResumes: totalCount, distinctPositions  };
+  } catch (error) {
+    throw error;
+  }
+}
+
+// Function to fetch valid positions and create valid filters
+async function getValidFilters() {
+  try {
+    // Fetch the list of valid positions from the Resume model
+    const validPositions = await Resume.findAll({
+      attributes: ['position'],
+      group: ['position'],
+    });
+
+    // Extract the positions and create an array of valid filters
+    const validFilters = validPositions.map((position) => position.position);
+
+    return validFilters;
   } catch (error) {
     throw error;
   }
@@ -125,6 +180,8 @@ async function deleteResume(id) {
 
 module.exports = {
   getAllResumes,
+  getDistinctPositions,
+  getValidFilters,
   countResumes,
   createResume,
   getResumeById,

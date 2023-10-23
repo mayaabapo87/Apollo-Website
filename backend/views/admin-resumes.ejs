@@ -34,7 +34,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="/partner">
+                            <a class="nav-link " href="/partner">
                                 Partners
                             </a>
                         </li>
@@ -44,12 +44,12 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link " href="/service">
+                            <a class="nav-link" href="/service">
                                 Services
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link  " href="/project">
+                            <a class="nav-link " href="/project">
                                 Projects
                             </a>
                         </li>
@@ -78,7 +78,23 @@
         </nav>
 
         <div class="container mt-3">
-            <table class="table table-hover">
+            <table class="table table-hover caption-top">
+                <div class="caption my-1" id="resumeCaption">
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-success dropdown-toggle" data-bs-toggle="dropdown">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-funnel" viewBox="0 0 16 16">
+                                    <path d="M1.5 1.5A.5.5 0 0 1 2 1h12a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.128.334L10 8.692V13.5a.5.5 0 0 
+                                    1-.342.474l-3 1A.5.5 0 0 1 6 14.5V8.692L1.628 3.834A.5.5 0 0 1 1.5 3.5v-2zm1 .5v1.308l4.372 
+                                    4.858A.5.5 0 0 1 7 8.5v5.306l2-.666V8.5a.5.5 0 0 1 .128-.334L13.5 3.308V2h-11z"/>
+                                </svg>
+                        </button>
+                        <ul class="dropdown-menu" id="dropDownResumePositions">
+
+                     
+                        </ul>
+                    </div>
+ 
+                </div>
                 <thead>
                     <tr class="table-dark">
                         <th scope="col">Name</th>
@@ -122,6 +138,8 @@
             let currentPage = 1;
             let searchTerm = '';
             const itemsPerPage = 10;
+            let filterPosition = '';
+            let positionList = {};
 
             $(document).ready(function () {
                 function fetchResumeData() {
@@ -129,14 +147,14 @@
 
                     currentPage = parseInt(urlParams.get('page')) || currentPage;
                     searchTerm = urlParams.get('search') || searchTerm;
+                    filterPosition = urlParams.get('filter') || filterPosition;
                     $('#searchInput').val(searchTerm);
 
                     // Fetch and display resume data
-                    $.get(`<%= BACKEND_URL %>/api/resume/all?search=${searchTerm}&page=${currentPage}&itemsPerPage=${itemsPerPage}`, function (data) {
-                        const resumes = data.resumes.resumes;
+                    $.get(`<%= BACKEND_URL %>/api/resume/all?search=${searchTerm}&page=${currentPage}&itemsPerPage=${itemsPerPage}&filter=${filterPosition}`, function (data) {
+                        const resumes = data.resumes;
                         const totalPages = data.totalPages;
-                        const totalItems = data.resumes.totalCount;
-
+                        const totalItems = data.totalResumes;
                         const tableBody = document.getElementById('resume-table-body');
                         tableBody.innerHTML = '';
 
@@ -160,21 +178,56 @@
                                         data-bs-toggle="modal"
                                         data-bs-target="#pdfModal"
                                         data-pdf-url="/files/resumes/${fileName}">
-                                        Resume
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-person" viewBox="0 0 16 16">
+                                            <path d="M11 8a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
+                                            <path d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2zM9.5 3A1.5 1.5 0 0 0 11 4.5h2v9.255S12 12 8 12s-5 1.755-5 1.755V2a1 1 0 0 1 1-1h5.5v2z"/>
+                                        </svg>
                                     </button>
                                 </td>
                                 <td class="text-center">
                                     <button class="btn btn-outline-danger delete-button" 
                                         type="button" 
                                         data-id="${resume.id}">
-                                        Delete
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16">
+                                            <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 
+                                            0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 
+                                            2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 
+                                            1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 
+                                            0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 
+                                            0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z"/>
+                                        </svg>
                                     </button>
                                 </td>
                             `;
-                            tableBody.appendChild(row);
+                        tableBody.appendChild(row);
+
+                        });
+
+                        const filterResetItems = document.getElementById('dropDownResumePositions');
+                            filterResetItems.innerHTML = '';
+                            const dropResetList = document.createElement('li');
+                            dropResetList.innerHTML = `
+                            <a class="dropdown-item" href="<%= BACKEND_URL %>/resume?search=${searchTerm}&page=${currentPage}&itemsPerPage=${itemsPerPage}&filter=">All</a>
+                            `;
+                        filterResetItems.appendChild(dropResetList);
+
+                        const filterItems = document.getElementById('dropDownResumePositions');
+                            positionList.forEach(function (position) {
+                            const dropList = document.createElement('li');
+                            dropList.innerHTML = `
+                            <a class="dropdown-item" href="<%= BACKEND_URL %>/resume?search=${searchTerm}&page=${currentPage}&itemsPerPage=${itemsPerPage}&filter=${position}"${position}">${position}</a>
+                            `;
+                        filterItems.appendChild(dropList);
                         });
 
                         updatePagination(totalPages);
+                    });
+                }
+
+                //update list of positions
+                function fetchPositionData(){
+                    $.get(`<%= BACKEND_URL %>/api/resume/all`, function (data) {
+                        positionList = data.distinctPositions
                     });
                 }
 
@@ -182,9 +235,10 @@
                     const urlParams = new URLSearchParams(window.location.search);
                     urlParams.set('page', currentPage);
                     urlParams.set('search', searchTerm);
+                    urlParams.set('filter', filterPosition);
+
                     history.pushState({}, '', `${window.location.pathname}?${urlParams}`);
                 }
-
 
                 // Handle "Resume" button click
                 $('#resume-table-body').on('click', '.resume-button', function () {
@@ -215,7 +269,9 @@
                     $('#searchInput').val('');
                     searchTerm = $('#searchInput').val();
                     currentPage = 1;
+                    filterPosition ='';
                     updateURL();
+                    fetchPositionData();
                     fetchResumeData();
                 });
 
@@ -226,7 +282,7 @@
                     urlParams.set('page', page);
                     const newURL = `${window.location.pathname}?${urlParams}`;
                     window.history.pushState({ path: newURL }, '', newURL);
-                    fetchResumeData(page, searchTerm);
+                    fetchResumeData(page, searchTerm, filterPosition);
                 }
 
                 // Updated updatePagination function
@@ -276,9 +332,11 @@
                         url: `<%= BACKEND_URL %>/api/resume/delete/${resumeId}`,
                         type: 'DELETE',
                         success: function () {
+                            fetchPositionData()
                             fetchResumeData();
 
                             if ($('#resume-table-body tr').length === 0) {
+                                fetchPositionData()
                                 updateURL();
                                 fetchResumeData();
                             }
@@ -292,6 +350,8 @@
                     });
                 });
 
+                //Initialize Data
+                fetchPositionData()
                 fetchResumeData();
 
             });

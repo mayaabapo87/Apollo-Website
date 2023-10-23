@@ -8,19 +8,38 @@ const upload = require('../../files/fileConfig');
 // Retrieve a list of all resumes with pagination and search
 router.get('/all', async (req, res) => {
   try {
-    const { page = 1, itemsPerPage, search } = req.query;
+    const { page = 1, itemsPerPage, search, filter } = req.query;
     const effectiveItemsPerPage = itemsPerPage || 10000;
     const offset = (page - 1) * effectiveItemsPerPage;
-    const resumes = await resumeController.getAllResumes(search, offset, effectiveItemsPerPage);
+
+    // Fetch the list of valid filters using the controller function
+    const validFilters = await resumeController.getValidFilters();
+
+    // Check if the filter value is valid
+    if (filter && !validFilters.includes(filter)) {
+      return res.status(400).json({ message: 'Invalid filter value' });
+    }
+
+    const resumesData = await resumeController.getAllResumes(search, offset, effectiveItemsPerPage, filter);
     const totalResumes = await resumeController.countResumes(search);
     const totalPages = Math.ceil(totalResumes / effectiveItemsPerPage);
 
-    res.json({ resumes, totalPages });
+    // Include the distinct positions array in the JSON response
+    const response = {
+      resumes: resumesData.resumes,
+      totalResumes: resumesData.totalResumes,
+      totalPages,
+      distinctPositions: resumesData.distinctPositions,
+    };
+
+    res.json(response);
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: 'Server error' });
   }
 });
+
+
 
 // Create a new resume
 router.post('/create', upload.single('fileInput'), async (req, res) => {
