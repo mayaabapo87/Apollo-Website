@@ -4,9 +4,15 @@ const router = express.Router();
 const resumeController = require('../../controllers/apolloControllers/resumeController');
 const upload = require('../../files/fileConfig');
 
+const isAuthenticated = (req, res, next) => {
+  if (req.isAuthenticated()) {
+    return next(); 
+  }
+  res.redirect('/login'); 
+};
 
 // Retrieve a list of all resumes with pagination and search
-router.get('/all', async (req, res) => {
+router.get('/all', isAuthenticated, async (req, res) => {
   try {
     const { page = 1, itemsPerPage, search, filter } = req.query;
     const effectiveItemsPerPage = itemsPerPage || 10000;
@@ -57,7 +63,7 @@ router.post('/create', upload.single('fileInput'), async (req, res) => {
 });
 
 // Retrieve a resume by id
-router.get('/:id', async (req, res) => {
+router.get('/:id', isAuthenticated, async (req, res) => {
   try {
     const { id } = req.params;
     const resume = await resumeController.getResumeById(id);
@@ -71,7 +77,7 @@ router.get('/:id', async (req, res) => {
 });
 
 // Update a resume by custom_id
-router.put('/update/:id', async (req, res) => {
+router.put('/update/:id', isAuthenticated, async (req, res) => {
   try {
     const { id } = req.params;
     const newData = req.body;
@@ -86,7 +92,7 @@ router.put('/update/:id', async (req, res) => {
 });
 
 // Delete a resume by custom_id
-router.delete('/delete/:id', async (req, res) => {
+router.delete('/delete/:id', isAuthenticated, async (req, res) => {
   try {
     const { id } = req.params;
     const deletedRows = await resumeController.deleteResume(id);

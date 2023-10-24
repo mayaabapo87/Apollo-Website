@@ -4,6 +4,13 @@ const router = express.Router();
 const storyController = require('../../controllers/apolloControllers/storyController');
 const upload = require('../../files/iconConfig');
 
+const isAuthenticated = (req, res, next) => {
+  if (req.isAuthenticated()) {
+    return next(); 
+  }
+  res.redirect('/login'); 
+};
+
 // Retrieve a list of all stories
 router.get('/all', async (req, res) => {
   try {
@@ -22,7 +29,7 @@ router.get('/all', async (req, res) => {
 });
 
 // Create a new story
-router.post('/create', upload.single('fileInput'), async (req, res) => {
+router.post('/create', isAuthenticated, upload.single('fileInput'), async (req, res) => {
   try {
     const storyData = req.body;
     if (req.file) {
@@ -51,7 +58,7 @@ router.get('/:id', async (req, res) => {
 });
 
 // Update a story by id
-router.put('/update/:id', upload.single('fileInput'), async (req, res) => {
+router.put('/update/:id', isAuthenticated, upload.single('fileInput'), async (req, res) => {
   try {
     const { id } = req.params;
     const newData = req.body;
@@ -69,7 +76,7 @@ router.put('/update/:id', upload.single('fileInput'), async (req, res) => {
 });
 
 // Delete a story by id
-router.delete('/delete/:id', async (req, res) => {
+router.delete('/delete/:id', isAuthenticated, async (req, res) => {
   try {
     const { id } = req.params;
     const deletedRows = await storyController.deleteStory(id);
