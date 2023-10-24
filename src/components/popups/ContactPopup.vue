@@ -37,12 +37,11 @@
             </div>
           </div>
           <div class="container">
-            <RecaptchaForm
-              :recaptchaSiteKey="recaptchaSiteKey"
-              @recaptcha-verified="recaptchaVerified"
-              @recaptcha-expired="recaptchaExpired"
-              @recaptcha-failed="recaptchaFailed"
-            ></RecaptchaForm>
+            <vue-recaptcha v-if="showRecaptcha" :sitekey="recaptchaSiteKey"
+                @verify="recaptchaVerified"
+                @expire="recaptchaExpired"
+                @fail="recaptchaFailed">
+            </vue-recaptcha>
           </div>        </div>
         <div class="modal-footer">
           <button @click="sendEmailWithRecaptcha" type="button" class="btn btn-maroon" :disabled="!isFormValid">Send</button>
@@ -56,11 +55,11 @@
 <script>
 import axios from 'axios';
 import { BACKEND_API_URL } from '../../apiConfig';
-import RecaptchaForm from '../RecaptchaForm.vue';
+import vueRecaptcha from 'vue3-recaptcha2';
 
 export default {
   components: {
-    RecaptchaForm
+    vueRecaptcha
   },
 
   data() {
@@ -72,8 +71,12 @@ export default {
         message: '',
       },
       isRecaptchaVerified: false,
-      recaptchaSiteKey: '6LfBRsYoAAAAAOS9H9wZ0NHm8vkyNTl7T-0IQ54W'
+      recaptchaSiteKey: '6LfBRsYoAAAAAOS9H9wZ0NHm8vkyNTl7T-0IQ54W',
+      showRecaptcha: true
     };
+  },
+
+  mounted() {
   },
 
   computed: {
@@ -104,9 +107,9 @@ export default {
       }
     },
 
-    recaptchaVerified(response) {
+    recaptchaVerified() {
       this.isRecaptchaVerified = true;
-      console.log('reCAPTCHA verified:', response);
+      console.log('reCAPTCHA verified:');
     },
 
     recaptchaExpired() {

@@ -47,12 +47,13 @@
                             <button class="btn btn-outline-maroon">Submit</button>
                         </div>
                     </form>
-                    <RecaptchaForm
-                        :recaptchaSiteKey="recaptchaSiteKey"
-                        @recaptcha-verified="recaptchaVerified"
-                        @recaptcha-expired="recaptchaExpired"
-                        @recaptcha-failed="recaptchaFailed"
-                    ></RecaptchaForm>
+                     <div class="container">
+                        <vue-recaptcha v-if="showRecaptcha" :sitekey="recaptchaSiteKey"
+                            @verify="recaptchaVerified"
+                            @expire="recaptchaExpired"
+                            @fail="recaptchaFailed">
+                        </vue-recaptcha>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button class="btn btn-outline-maroon" :data-bs-target="'#career-details-'+$store.state.positionId" data-bs-toggle="modal">Back</button>
@@ -64,19 +65,21 @@
 </template>
 
 <script>
+import vueRecaptcha from 'vue3-recaptcha2';
 import axios from 'axios';
 import { mapState } from 'vuex';
 import { BACKEND_API_URL } from '../../apiConfig';
-import RecaptchaForm from '../RecaptchaForm.vue';
-
+ 
 export default {
     components: {
-        RecaptchaForm
+        vueRecaptcha
     },
     data() {
         return {
             showModal: false,
             isResumeSent: false, 
+            recaptchaSiteKey: '6Lf3u8YoAAAAAF5RyM6NoDiTM1lnuB5mvq8KP3Z_',
+            showRecaptcha: true
         };
     },
     computed: {
@@ -122,6 +125,18 @@ export default {
                 console.error('Error uploading file:', error);
             }
         },
+
+        recaptchaVerified() {
+            console.log("Recaptcha Verified");
+        },
+        recaptchaExpired() {
+          console.log("Recaptcha Expired");
+
+        },
+        recaptchaFailed() {
+          console.log("Recaptcha Failed");
+
+        }
     },
 };
 </script>
