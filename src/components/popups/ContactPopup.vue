@@ -32,13 +32,20 @@
           <div class="container mb-5" style="height: 200px;">
             <div class="mb-3">
               <label for="message" class="form-label text-dark fs-5">Message</label>
-              <textarea v-model="formData.message" class="form-control" id="message" rows="3" style="height: 100%; resize: none;" required></textarea>
+              <textarea v-model="formData.message" class="form-control" id="message" rows="3" style="height: 200px; resize: none;" required></textarea>
               <div class="invalid-feedback" v-if="!formData.message">Please provide a message.</div>
             </div>
           </div>
-        </div>
+          <div class="container">
+            <RecaptchaForm
+              :recaptchaSiteKey="recaptchaSiteKey"
+              @recaptcha-verified="recaptchaVerified"
+              @recaptcha-expired="recaptchaExpired"
+              @recaptcha-failed="recaptchaFailed"
+            ></RecaptchaForm>
+          </div>        </div>
         <div class="modal-footer">
-          <button @click="sendEmail" type="button" class="btn btn-maroon" :disabled="!isFormValid">Send</button>
+          <button @click="sendEmailWithRecaptcha" type="button" class="btn btn-maroon" :disabled="!isFormValid">Send</button>
           <button type="button" class="btn btn-outline-maroon" data-bs-dismiss="modal">Close</button>
         </div>
       </div>
@@ -49,8 +56,13 @@
 <script>
 import axios from 'axios';
 import { BACKEND_API_URL } from '../../apiConfig';
+import RecaptchaForm from '../RecaptchaForm.vue';
 
 export default {
+  components: {
+    RecaptchaForm
+  },
+
   data() {
     return {
       formData: {
@@ -59,19 +71,24 @@ export default {
         phone: '',
         message: '',
       },
+      isRecaptchaVerified: false,
+      recaptchaSiteKey: '6LfBRsYoAAAAAOS9H9wZ0NHm8vkyNTl7T-0IQ54W'
     };
   },
+
   computed: {
     isFormValid() {
-      return (
-        this.formData.name &&
-        this.formData.email &&
-        this.formData.message
-      );
+      return this.formData.name && this.formData.email && this.formData.message && this.isRecaptchaVerified;
     },
   },
+
   methods: {
-    async sendEmail() {
+    async sendEmailWithRecaptcha() {
+      if (!this.isRecaptchaVerified) {
+        alert('Please verify the reCAPTCHA.');
+        return;
+      }
+
       try {
         const response = await axios.post(`${BACKEND_API_URL}/api/send-email`, this.formData);
         console.log(response);
@@ -83,8 +100,23 @@ export default {
         }
       } catch (error) {
         console.error(error);
-        alert('Error to sending message');
+        alert('Error sending message');
       }
+    },
+
+    recaptchaVerified(response) {
+      this.isRecaptchaVerified = true;
+      console.log('reCAPTCHA verified:', response);
+    },
+
+    recaptchaExpired() {
+      this.isRecaptchaVerified = false;
+      console.log('reCAPTCHA expired');
+    },
+
+    recaptchaFailed() {
+      this.isRecaptchaVerified = false;
+      console.log('reCAPTCHA verification failed');
     },
 
     clearForm() {
