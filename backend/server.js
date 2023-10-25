@@ -125,6 +125,9 @@ app.get("/service", isAuthenticated, async (req, res) => {
 app.get("/project", isAuthenticated, async (req, res) => {
   res.render('admin-projects', { BACKEND_URL: ip });
 });
+app.get("/settings", isAuthenticated, async (req, res) => {
+  res.render('admin-settings', { BACKEND_URL: ip });
+});
 
 app.post('/api/send-email', sendEmail);
 app.use('/api', routes);
