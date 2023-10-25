@@ -13,21 +13,13 @@
                     <div class="modal-body">
                         <div class="container-fluid">
                             <h3 class="text-maroon fw-bold"> Job Summary </h3>
-                            <textarea
-                                :id = "'summaryId-'+ids.id"
-                                :value="ids.summary"
-                                class="text-dark w-100 border-0"
-                                readonly
-                                :style="{ height: autoAdjustHeight(ids.summary) }"
-                            ></textarea>
+                            <p :id = "'summaryId-'+ids.id" class="text-dark w-100 border-0">
+                                {{ids.summary}}
+                            </p>
                             <h3 class="text-maroon fw-bold">Qualifications</h3>
-                            <textarea
-                                :id = "'qualificationId-'+ids.id"
-                                :value="ids.qualifications"
-                                class="text-dark w-100 border-0"
-                                readonly
-                                :style="{ height: autoAdjustHeight(ids.qualifications) }"
-                            ></textarea>
+                            <p :id = "'qualificationId-'+ids.id" class="text-dark w-100 border-0">
+                                {{ids.qualifications}}
+                            </p>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -63,15 +55,6 @@ export default {
     },
 
     methods: {
-        autoAdjustHeight(content) {
-        const lineHeight = 15; 
-        const minLines = 10; 
-        const maxLines = 100; 
-        const lines = content.split('\n').length;
-
-        const height = Math.min(maxLines, Math.max(minLines, lines)) * lineHeight + 'px';
-        return height;
-        },
         ...mapMutations(['setResumeData']),
         applyForJob(ids) {
         this.setResumeData({ positionName: ids.name, positionId: ids.id });

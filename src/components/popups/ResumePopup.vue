@@ -48,7 +48,10 @@
                         </div>
                         
                         <div class="container text-center my-1">
-                            <button class="btn btn-outline-maroon">Submit</button>
+                            <button class="btn btn-outline-maroon" :disabled="loading">
+                                <span v-if="loading" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                <span v-else>Submit</span>
+                            </button>
                         </div>
                     </form>
                     
@@ -75,6 +78,7 @@ export default {
   },
   data() {
     return {
+      loading: false,
       showModal: false,
       isResumeSent: false,
       recaptchaSiteKey: '6Lf3u8YoAAAAAF5RyM6NoDiTM1lnuB5mvq8KP3Z_',
@@ -112,6 +116,7 @@ export default {
         alert('Please verify the reCAPTCHA.');
         return;
       }
+      this.loading = true;
       const fileInput = this.$refs.fileInput;
       const formData = new FormData();
       const name = this.formData.name;
@@ -140,6 +145,8 @@ export default {
         alert('Resume sent');
       } catch (error) {
         alert('Error sending resume');
+      } finally {
+        this.loading = false;
       }
     },
     recaptchaVerified() {

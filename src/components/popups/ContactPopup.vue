@@ -48,7 +48,10 @@
           </div>        
         </div>
         <div class="modal-footer">
-          <button @click="sendEmailWithRecaptcha" type="button" class="btn btn-maroon" :disabled="loading || !isFormValid">Send</button>
+          <button @click="sendEmailWithRecaptcha" type="button" class="btn btn-maroon" :disabled="loading || !isFormValid">
+            <span v-if="loading" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+            <span v-else>Send</span>
+          </button>          
           <button type="button" class="btn btn-outline-maroon" data-bs-dismiss="modal">Close</button>
         </div>
       </div>
