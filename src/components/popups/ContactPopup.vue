@@ -37,12 +37,16 @@
             </div>
           </div>
           <div class="container">
-            <vue-recaptcha v-if="showRecaptcha" :sitekey="recaptchaSiteKey"
-                @verify="recaptchaVerified"
-                @expire="recaptchaExpired"
-                @fail="recaptchaFailed">
-            </vue-recaptcha>
-          </div>        </div>
+            <vue-recaptcha
+              v-if="showRecaptcha"
+              :sitekey="recaptchaSiteKey"
+              @verify="recaptchaVerified"
+              @expire="recaptchaExpired"
+              @fail="recaptchaFailed"
+              ref="vueRecaptcha" 
+            ></vue-recaptcha>
+          </div>        
+        </div>
         <div class="modal-footer">
           <button @click="sendEmailWithRecaptcha" type="button" class="btn btn-maroon" :disabled="!isFormValid">Send</button>
           <button type="button" class="btn btn-outline-maroon" data-bs-dismiss="modal">Close</button>
@@ -72,7 +76,7 @@ export default {
       },
       isRecaptchaVerified: false,
       recaptchaSiteKey: '6LfBRsYoAAAAAOS9H9wZ0NHm8vkyNTl7T-0IQ54W',
-      showRecaptcha: true
+      showRecaptcha: true,
     };
   },
 
@@ -98,6 +102,7 @@ export default {
         if (response.status === 200) {
           alert('Message has been sent');
           this.clearForm();
+          this.$refs.vueRecaptcha.reset(); // Reset the reCAPTCHA
         } else {
           alert('Failed to send message');
         }

@@ -8,52 +8,47 @@
                 </div>
                 <div class="modal-body">            
                     <form  @submit.prevent="uploadFile" class="mx-auto">
-                        <div v-if="isResumeSent" id="resumeSent" class="my-2 toast toast-demo d-flex align-items-center text-white bg-success border-0 fade show" role="alert" aria-live="assertive" aria-atomic="true">
-                        <div class="toast-body">
-                            Resume has been sent
+                        <div class="container">
+                            <div class="input-group mb-3">
+                                <span class="input-group-text" id="basic-addon1">
+                                    <img width="30" height="30" src="../../assets/icons/person.svg" class="card-img-top" alt="...">
+                                </span>
+                                <input id="full-name" type="text" class="form-control" placeholder="Full Name" required autocomplete="off">
+                            </div>
+                            <div class="input-group mb-3">
+                                <span class="input-group-text" id="basic-addon1">
+                                    <img width="30" height="30" src="../../assets/icons/envelope.svg" class="card-img-top" alt="...">
+                                </span>
+                                <input id="email" type="email" class="form-control" placeholder="Email" required autocomplete="off">
+                            </div>
+                            <div class="input-group mb-3">
+                                <span class="input-group-text" id="basic-addon1">
+                                    <img width="30" height="30" src="../../assets/icons/telephone.svg" class="card-img-top" alt="...">
+                                </span>
+                                <input id="phone-number" type="text" class="form-control" placeholder="09xxxxxxxx" required autocomplete="off">
+                            </div>
+                            <div class="input-group mb-3">
+                                <span class="input-group-text" id="upload-img-resume">
+                                    <img width="30" height="30" src="../../assets/icons/upload.svg" class="card-img-top" alt="...">
+                                </span>
+                                <label class="form-label mx-2 my-auto">
+                                    <input class="iconFile" type="file" ref="fileInput" accept=".pdf" required>
+                                </label>
+                            </div>
                         </div>
-                        <button type="button" class="btn-close btn-close-white ms-auto me-2" data-bs-dismiss="toast" aria-label="Close" @click="closeResumeSentToast"></button>
-                        </div>
-
-                        <div class="input-group mb-3">
-                            <span class="input-group-text" id="basic-addon1">
-                                <img width="30" height="30" src="../../assets/icons/person.svg" class="card-img-top" alt="...">
-                            </span>
-                            <input id="full-name" type="text" class="form-control" placeholder="Full Name" required autocomplete="off">
-                        </div>
-
-                        <div class="input-group mb-3">
-                            <span class="input-group-text" id="basic-addon1">
-                                <img width="30" height="30" src="../../assets/icons/envelope.svg" class="card-img-top" alt="...">
-                            </span>
-                            <input id="email" type="email" class="form-control" placeholder="Email" required autocomplete="off">
-                        </div>
-
-                        <div class="input-group mb-3">
-                            <span class="input-group-text" id="basic-addon1">
-                                <img width="30" height="30" src="../../assets/icons/telephone.svg" class="card-img-top" alt="...">
-                            </span>
-                            <input id="phone-number" type="text" class="form-control" placeholder="09xxxxxxxx" required autocomplete="off">
-                        </div>
-
-                        <div class="container allign-items-center text-center justify-items-center border rounded py-2">
-                            <label class="form-label">
-                                <img width="50" height="50" src="../../assets/icons/upload.svg" class="card-img-top" alt="...">
-                                <input class="iconFile" type="file" ref="fileInput" accept=".pdf" required>
-                            </label>
+                        <div class="container">
+                            <vue-recaptcha  id="recaptcha2" v-if="showRecaptcha" :sitekey="recaptchaSiteKey"
+                                @verify="recaptchaVerified"
+                                @expire="recaptchaExpired"
+                                @fail="recaptchaFailed">
+                            </vue-recaptcha>
                         </div>
                         
-                        <div class="container text-center my-3">
+                        <div class="container text-center my-1">
                             <button class="btn btn-outline-maroon">Submit</button>
                         </div>
                     </form>
-                     <div class="container">
-                        <vue-recaptcha v-if="showRecaptcha" :sitekey="recaptchaSiteKey"
-                            @verify="recaptchaVerified"
-                            @expire="recaptchaExpired"
-                            @fail="recaptchaFailed">
-                        </vue-recaptcha>
-                    </div>
+                    
                 </div>
                 <div class="modal-footer">
                     <button class="btn btn-outline-maroon" :data-bs-target="'#career-details-'+$store.state.positionId" data-bs-toggle="modal">Back</button>
@@ -69,7 +64,7 @@ import vueRecaptcha from 'vue3-recaptcha2';
 import axios from 'axios';
 import { mapState } from 'vuex';
 import { BACKEND_API_URL } from '../../apiConfig';
- 
+
 export default {
     components: {
         vueRecaptcha
@@ -79,7 +74,7 @@ export default {
             showModal: false,
             isResumeSent: false, 
             recaptchaSiteKey: '6Lf3u8YoAAAAAF5RyM6NoDiTM1lnuB5mvq8KP3Z_',
-            showRecaptcha: true
+            showRecaptcha: false,
         };
     },
     computed: {
@@ -90,13 +85,14 @@ export default {
   },
   
     methods: {
-        showResumeSentToast() {
-            this.isResumeSent = true;
-        },
-        closeResumeSentToast() {
-            this.isResumeSent = false;
+        initializeRecaptcha() {
+            this.showRecaptcha = true;
         },
         async uploadFile() {
+            if (!this.isRecaptchaVerified) {
+                alert('Please verify the reCAPTCHA.');
+                return;
+            }
             const fileInput = this.$refs.fileInput;
             const formData = new FormData();
             const name = document.querySelector('#full-name').value;
@@ -120,29 +116,38 @@ export default {
                 document.querySelector('#full-name').value = '';
                 document.querySelector('#email').value = '';
                 document.querySelector('#phone-number').value = '';
-                this.showResumeSentToast();
             } catch (error) {
                 console.error('Error uploading file:', error);
             }
         },
 
         recaptchaVerified() {
+            this.isRecaptchaVerified = true;
+
             console.log("Recaptcha Verified");
         },
         recaptchaExpired() {
+            this.isRecaptchaVerified = false;
+
           console.log("Recaptcha Expired");
 
         },
         recaptchaFailed() {
+            this.isRecaptchaVerified = false;
+
           console.log("Recaptcha Failed");
 
         }
+
+ 
     },
+    mounted() {
+    const modalElement = document.getElementById('resume-form');
+    modalElement.addEventListener('shown.bs.modal', this.initializeRecaptcha);
+  },
 };
 </script>
 
 <style scoped>
-    #iconFile {
-        display: none;
-    }
+   
 </style>
