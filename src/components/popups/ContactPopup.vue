@@ -48,7 +48,7 @@
           </div>        
         </div>
         <div class="modal-footer">
-          <button @click="sendEmailWithRecaptcha" type="button" class="btn btn-maroon" :disabled="!isFormValid">Send</button>
+          <button @click="sendEmailWithRecaptcha" type="button" class="btn btn-maroon" :disabled="loading || !isFormValid">Send</button>
           <button type="button" class="btn btn-outline-maroon" data-bs-dismiss="modal">Close</button>
         </div>
       </div>
@@ -68,6 +68,7 @@ export default {
 
   data() {
     return {
+      loading: false, 
       formData: {
         name: '',
         email: '',
@@ -96,21 +97,26 @@ export default {
         return;
       }
 
+      this.loading = true;
+
       try {
         const response = await axios.post(`${BACKEND_API_URL}/api/send-email`, this.formData);
-        console.log(response);
         if (response.status === 200) {
           alert('Message has been sent');
           this.clearForm();
-          this.$refs.vueRecaptcha.reset(); // Reset the reCAPTCHA
+          this.$refs.vueRecaptcha.reset();
+          this.isRecaptchaVerified = false;
         } else {
           alert('Failed to send message');
         }
       } catch (error) {
         console.error(error);
         alert('Error sending message');
+      } finally {
+        this.loading = false; 
       }
     },
+
 
     recaptchaVerified() {
       this.isRecaptchaVerified = true;
