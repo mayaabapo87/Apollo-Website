@@ -62,7 +62,7 @@
                             </a>
                         </li>
                     </ul>
-                    <form class="d-flex" id="searchForm">
+                    <form class="d-flex" id="logout">
                         <button class="btn btn-danger" id="logout-button">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box-arrow-in-left" viewBox="0 0 16 16">
                                 <path fill-rule="evenodd" d="M10 3.5a.5.5 0 0 0-.5-.5h-8a.5.5 0 0 0-.5.5v9a.5.5 0 0 0 .5.5h8a.5.5 0 0 0 .5-.5v-2a.5.5 0 0 1 1 0v2A1.5 1.5 0 0 1 9.5 14h-8A1.5 1.5 0 0 1 0 12.5v-9A1.5 1.5 0 0 1 1.5 2h8A1.5 1.5 0 0 1 11 3.5v2a.5.5 0 0 1-1 0v-2z"/>
@@ -73,26 +73,240 @@
                 </div>
             </div>
         </nav>
-        <div class="container">
-          
-           
+        <div class="container my-5" id="input-userdata">
+         
         </div>
+
+        <!-- Modal for Add/Edit Settings -->
+        <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header" id="editModalHeader">
+                        <!-- Insert -->
+                    </div>
+                    <div class="modal-body" id="insertInModalBody">
+                        <!-- Insert -->
+                    </div>
+                    <div class="modal-footer" id="insertInModalFooter">
+                        <button type="submit" class="btn btn-success edit-button">
+                            Confirm
+                        </button>
+                        <button class="btn btn-outline-danger" data-bs-dismiss="modal">
+                            Cancel
+                        </button>                    
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script>
+            $(document).ready(function () {
+                let auth_passkey;
+                let createdAt;
+                let email;
+                let id;
+                let password;
+                let to_email;
+                let updatedAt;
+                let username;
+        
+                function fetchUserData() {
+                    $.get(`<%= BACKEND_URL %>/api/user/getData`, function (data) {
+                        auth_passkey = data.auth_passkey;
+                        createdAt = data.createdAt;
+                        email = data.email;
+                        id = data.id;
+                        password = data.password;
+                        to_email = data.to_email;
+                        updatedAt = data.updatedAt;
+                        username = data.username;
+        
+                        const userdataBody = document.getElementById('input-userdata');
+                        userdataBody.innerHTML = '';
+
+                        const inputs = document.createElement('div');
+                        inputs.innerHTML = `
+                        <div class="input-group my-2">
+                            <span class="input-group-text" id="username-input">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-badge" viewBox="0 0 16 16">
+                                    <path d="M6.5 2a.5.5 0 0 0 0 1h3a.5.5 0 0 0 0-1h-3zM11 8a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
+                                    <path d="M4.5 0A2.5 2.5 0 0 0 2 2.5V14a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V2.5A2.5 2.5 0 0 0 11.5 0h-7zM3 2.5A1.5 1.5 0 0 1 4.5 1h7A1.5 1.5 0 0 1 13 2.5v10.795a4.2 4.2 0 0 0-.776-.492C11.392 12.387 10.063 12 8 12s-3.392.387-4.224.803a4.2 4.2 0 0 0-.776.492V2.5z"/>
+                                </svg>
+                            </span>
+                            <button class="btn btn-secondary edit-username-button" data-bs-toggle="modal" data-bs-target="#editModal">Change Username</button>
+                        </div>
+                        <div class="input-group my-2">
+                            <span class="input-group-text" id="password-input">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-key" viewBox="0 0 16 16">
+                                    <path d="M0 8a4 4 0 0 1 7.465-2H14a.5.5 0 0 1 .354.146l1.5 1.5a.5.5 0 0 1 0 .708l-1.5 1.5a.5.5 0 0 1-.708 0L13 9.207l-.646.647a.5.5 0 0 1-.708 0L11 9.207l-.646.647a.5.5 0 0 1-.708 0L9 9.207l-.646.647A.5.5 0 0 1 8 10h-.535A4 4 0 0 1 0 8zm4-3a3 3 0 1 0 2.712 4.285A.5.5 0 0 1 7.163 9h.63l.853-.854a.5.5 0 0 1 .708 0l.646.647.646-.647a.5.5 0 0 1 .708 0l.646.647.646-.647a.5.5 0 0 1 .708 0l.646.647.793-.793-1-1h-6.63a.5.5 0 0 1-.451-.285A3 3 0 0 0 4 5z"/>
+                                    <path d="M4 8a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/>
+                                </svg>
+                            </span>
+                            <button class="btn btn-secondary edit-password-button"  data-bs-toggle="modal" data-bs-target="#editModal" >Change Password</button>
+                        </div>
+                        <div class="input-group my-2">
+                            <span class="input-group-text" id="contact-email-input">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-lines-fill" viewBox="0 0 16 16">
+                                    <path d="M6 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm-5 6s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H1zM11 3.5a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1h-4a.5.5 0 0 1-.5-.5zm.5 2.5a.5.5 0 0 0 0 1h4a.5.5 0 0 0 0-1h-4zm2 3a.5.5 0 0 0 0 1h2a.5.5 0 0 0 0-1h-2zm0 3a.5.5 0 0 0 0 1h2a.5.5 0 0 0 0-1h-2z"/>
+                                </svg>
+                            </span>
+                            <button class="btn btn-secondary edit-contact-email-button" data-bs-toggle="modal" data-bs-target="#editModal" >Change Contact Email</button>
+                        </div>
+                        <div class="input-group my-2">
+                            <span class="input-group-text" id="email-input">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-envelope" viewBox="0 0 16 16">
+                                    <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4Zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1H2Zm13 2.383-4.708 2.825L15 11.105V5.383Zm-.034 6.876-5.64-3.471L8 9.583l-1.326-.795-5.64 3.47A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.741ZM1 11.105l4.708-2.897L1 5.383v5.722Z"/>
+                                </svg></span>
+                            <button class="btn btn-secondary edit-email-button"  data-bs-toggle="modal" data-bs-target="#editModal" >Change Email</button>
+                        </div>
+                        <div class="input-group my-2">
+                            <span class="input-group-text" id="passkey-input">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-filetype-key" viewBox="0 0 16 16">
+                                    <path fill-rule="evenodd" d="M14 4.5V14a2 2 0 0 1-2 2h-1v-1h1a1 1 0 0 0 1-1V4.5h-2A1.5 1.5 0 0 1 9.5 3V1H4a1 1 0 0 0-1 1v9H2V2a2 2 0 0 1 2-2h5.5L14 4.5ZM3.21 11.85h-.87L.83 13.64H.79v-1.79H0v3.999h.791v-1.283l.41-.466 1.12 1.749h.951l-1.488-2.276 1.427-1.723Zm2.903 3.352h-1.79v-1.073h1.685v-.606H4.323v-1.025h1.79v-.648H3.538v3.999h2.575v-.647Zm2.243-.888v1.535h-.794v-1.52L6.223 11.85H7.1l.853 1.696h.032l.855-1.696h.856l-1.339 2.464Z"/>
+                                </svg>
+                            </span>
+                            <button class="btn btn-secondary edit-passkey-button"  data-bs-toggle="modal" data-bs-target="#editModal" >Change Passkey</button>
+                        </div>
+
+                        `;
+                    userdataBody.appendChild(inputs);
+                        
+                    }).fail(function() {
+                        console.error('Error fetching user data');
+                    });
+                }
+
+                $('#input-userdata').on('click', '.edit-username-button', function () {
+                    const insertInModalHeader = document.getElementById('editModalHeader');
+                    insertInModalHeader.innerHTML = `
+                        <h5>Change Username</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    `;
+                    const insertInModalBody = document.getElementById('insertInModalBody');
+                    insertInModalBody.innerHTML = `
+                        <div class="container" id="username-container">
+                            <input id="edit-input" type="text" class="form-control" placeholder="Username" aria-label="Change" aria-describedby="input-group-left">
+                        </div>
+                    `;
+                    $('#edit-input').val(username);
+                });
+
+                $('#input-userdata').on('click', '.edit-password-button', function () {
+                    const insertInModalHeader = document.getElementById('editModalHeader');
+                    insertInModalHeader.innerHTML = `
+                        <h5>Change Passowrd</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    `;
+                    const insertInModalBody = document.getElementById('insertInModalBody');
+                    insertInModalBody.innerHTML = `
+                        <div class="container my-2">
+                            <input id="old-password-input" type="password" class="form-control" placeholder="Old Password" aria-label="Change" aria-describedby="input-group-left">
+                        </div>
+                        <div class="container my-2">
+                            <input id="edit-input" type="password" class="form-control" placeholder="New Password" aria-label="Change" aria-describedby="input-group-left">
+                        </div>
+                        <div class="container my-2">
+                            <input id="confirm-password-input" type="password" class="form-control" placeholder="Confirm Password" aria-label="Change" aria-describedby="input-group-left">
+                        </div>
+                    `;
+                 });
+
+                 $('#input-userdata').on('click', '.edit-contact-email-button', function () {
+                    const insertInModalHeader = document.getElementById('editModalHeader');
+                    insertInModalHeader.innerHTML = `
+                        <h5>Change Contact Email</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    `;
+                    const insertInModalBody = document.getElementById('insertInModalBody');
+                    insertInModalBody.innerHTML = `
+                        <div class="container">
+                            <input id="edit-input" type="text" class="form-control" placeholder="Contact Email" aria-label="Change" aria-describedby="input-group-left">
+                        </div>
+                    `;
+                    $('#edit-input').val(to_email);
+                });
+
+                $('#input-userdata').on('click', '.edit-email-button', function () {
+                    const insertInModalHeader = document.getElementById('editModalHeader');
+                    insertInModalHeader.innerHTML = `
+                        <h5>Change Email</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    `;
+                    const insertInModalBody = document.getElementById('insertInModalBody');
+                    insertInModalBody.innerHTML = `
+                        <div class="container">
+                            <input id="edit-input" type="text" class="form-control" placeholder="Email" aria-label="Change" aria-describedby="input-group-left">
+                        </div>
+                    `;
+                    $('#edit-input').val(email);
+                });
+
+                $('#input-userdata').on('click', '.edit-passkey-button', function () {
+                    const insertInModalHeader = document.getElementById('editModalHeader');
+                    insertInModalHeader.innerHTML = `
+                        <h5>Change Passkey</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    `;
+                    const insertInModalBody = document.getElementById('insertInModalBody');
+                    insertInModalBody.innerHTML = `
+                        <div class="container">
+                            <input id="edit-input" type="text" class="form-control" placeholder="Passkey" aria-label="Change" aria-describedby="input-group-left">
+                        </div>
+                    `;
+                    $('#edit-input').val(auth_passkey);
+                });
+
+                $('#insertInModalFooter').on('click', '.edit-button', function () {
+
+                    let edit_username;
+
+                    edit_username = $('#edit-input').val();
+                    
+ 
+                    const formData = new FormData();
+
+                        formData.append('username', edit_username);
+
+                    const formDataJSON = {};
+                    formData.forEach((value, key) => {
+                    formDataJSON[key] = value;
+                    });
+
+                    $.ajax({
+                        url: `<%= BACKEND_URL %>/api/user/update/${id}`,
+                        type: 'PUT',
+                        data: formData,
+                        processData: false, 
+                        contentType: false, 
+                        success: function (response) {
+                            console.log('User updated successfully:', response);
+                            $('#editModal').modal('hide');
+                            fetchUserData();
+                        },
+                        error: function (error) {
+                            console.error('Error updating user:', error);
+                        }
+                    });
+                });
+
+                fetchUserData();
+
+            });
             document.getElementById('logout-button').addEventListener('click', function() {
                 $.ajax({
-                url: `<%= BACKEND_URL %>/api/logout/`,
-                type: 'GET',
-                success: function (response) {
-                    console.log('Logged out successfully.');
-                    window.location.href = '/login';
-                },
-                error: function (xhr, textStatus, error) {
-                    console.error('Error logging out:', error);
-                }
+                    url: `<%= BACKEND_URL %>/api/logout/`,
+                    type: 'GET',
+                    success: function (response) {
+                        console.log('Logged out successfully.');
+                        window.location.href = '/login';
+                    },
+                    error: function (xhr, textStatus, error) {
+                        console.error('Error logging out:', error);
+                    }
                 });
             });
-        </script>
+        </script>            
     </body>
 </html>
 
@@ -109,7 +323,6 @@
         background-color: #212529;
         color: white;
     }
-
     #iconFile {
         display: none;
     }

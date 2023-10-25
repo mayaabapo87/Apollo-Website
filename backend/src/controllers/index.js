@@ -5,6 +5,7 @@ const storyController = require('./apolloControllers/storyController');
 const partnerController = require('./apolloControllers/partnerController');
 const servicesController = require('./apolloControllers/servicesController');
 const projectController = require('./apolloControllers/projectController');
+const userController = require('./apolloControllers/userController');
 
 module.exports = {
   resumeController,
@@ -13,4 +14,5 @@ module.exports = {
   partnerController,
   servicesController,
   projectController,
+  userController,
 };
