@@ -7,7 +7,7 @@
             <div id="carouselCareers" class="carousel carousel-fade">
                 <div class="carousel-inner p-5">                   
                     <div v-for="(set, index) in careerSets" :key="index" :class="['carousel-item', { active: index === 0 }]">
-                        <div v-for="detail in set" :key="detail.id" class="card border-dark mx-auto">
+                        <div v-for="detail in set" :key="detail.id" class="card border-maroon border-2 mx-auto">
                             <div class="container my-5" >
                                 <div class="justify-content-center allign-items-center">
                                     <div class="p-0 pt-2 ">
