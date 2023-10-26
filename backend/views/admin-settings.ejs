@@ -185,7 +185,7 @@
                     `;
                     const insertInModalBody = document.getElementById('insertInModalBody');
                     insertInModalBody.innerHTML = `
-                        <div class="container" id="username-container">
+                        <div class="container" id="user-container">
                             <input id="edit-input" type="text" class="form-control" placeholder="Username" aria-label="Change" aria-describedby="input-group-left">
                         </div>
                     `;
@@ -203,7 +203,7 @@
                         <div class="container my-2">
                             <input id="old-password-input" type="password" class="form-control" placeholder="Old Password" aria-label="Change" aria-describedby="input-group-left">
                         </div>
-                        <div class="container my-2">
+                        <div class="container my-2" id="password-container">
                             <input id="edit-input" type="password" class="form-control" placeholder="New Password" aria-label="Change" aria-describedby="input-group-left">
                         </div>
                         <div class="container my-2">
@@ -212,7 +212,7 @@
                     `;
                  });
 
-                 $('#input-userdata').on('click', '.edit-contact-email-button', function () {
+                $('#input-userdata').on('click', '.edit-contact-email-button', function () {
                     const insertInModalHeader = document.getElementById('editModalHeader');
                     insertInModalHeader.innerHTML = `
                         <h5>Change Contact Email</h5>
@@ -220,7 +220,7 @@
                     `;
                     const insertInModalBody = document.getElementById('insertInModalBody');
                     insertInModalBody.innerHTML = `
-                        <div class="container">
+                        <div class="container " id="contact-email-container">
                             <input id="edit-input" type="text" class="form-control" placeholder="Contact Email" aria-label="Change" aria-describedby="input-group-left">
                         </div>
                     `;
@@ -235,7 +235,7 @@
                     `;
                     const insertInModalBody = document.getElementById('insertInModalBody');
                     insertInModalBody.innerHTML = `
-                        <div class="container">
+                        <div class="container " id="email-container">
                             <input id="edit-input" type="text" class="form-control" placeholder="Email" aria-label="Change" aria-describedby="input-group-left">
                         </div>
                     `;
@@ -250,48 +250,58 @@
                     `;
                     const insertInModalBody = document.getElementById('insertInModalBody');
                     insertInModalBody.innerHTML = `
-                        <div class="container">
+                        <div class="container " id="passkey-container">
                             <input id="edit-input" type="text" class="form-control" placeholder="Passkey" aria-label="Change" aria-describedby="input-group-left">
                         </div>
                     `;
                     $('#edit-input').val(auth_passkey);
                 });
 
+
                 $('#insertInModalFooter').on('click', '.edit-button', function () {
-
-                    let edit_username;
-
-                    edit_username = $('#edit-input').val();
-                    
- 
                     const formData = new FormData();
+                    const editInputValue = $('#edit-input').val();
 
-                        formData.append('username', edit_username);
+                    const containerId = $('#edit-input').closest('.container').attr('id');
 
-                    const formDataJSON = {};
-                    formData.forEach((value, key) => {
-                    formDataJSON[key] = value;
-                    });
+                    if(containerId === 'user-container'){
+                        console.log(editInputValue);
+                        formData.append('username', editInputValue);  
+                    }else if(containerId === 'password-container'){
+                        formData.append('password', editInputValue);  
+                    }else if(containerId === 'contact-email-container'){
+                        formData.append('to_email', editInputValue);  
+                    }else if(containerId === 'email-container'){
+                        formData.append('email', editInputValue);  
+                    }else if(containerId === 'passkey-container'){
+                        formData.append('auth_passkey', editInputValue);  
+                    }
+
+                    let object = {};
+                    for (let pair of formData.entries()) {
+                        object[pair[0]] = pair[1];
+                    }
 
                     $.ajax({
                         url: `<%= BACKEND_URL %>/api/user/update/${id}`,
                         type: 'PUT',
-                        data: formData,
-                        processData: false, 
-                        contentType: false, 
+                        data: object,
                         success: function (response) {
                             console.log('User updated successfully:', response);
                             $('#editModal').modal('hide');
                             fetchUserData();
                         },
-                        error: function (error) {
-                            console.error('Error updating user:', error);
+                        error: function (xhr, ajaxOptions, thrownError) {
+                            if (xhr.status == 404) {
+                                console.error('Error updating user:', 'User not found');
+                            } else {
+                                console.error('Error updating user:', thrownError);
+                            }
                         }
                     });
                 });
 
                 fetchUserData();
-
             });
             document.getElementById('logout-button').addEventListener('click', function() {
                 $.ajax({
@@ -311,19 +321,5 @@
 </html>
 
 <style>
-    .page-item.active .page-link {
-        background-color: #212529;
-        color: white;
-    }
-    .page-link {
-        background-color: #E9ECEF;
-        color: #212529;
-    }
-    .page-link:hover {
-        background-color: #212529;
-        color: white;
-    }
-    #iconFile {
-        display: none;
-    }
+
 </style>
