@@ -79,7 +79,7 @@ export default {
         message: '',
       },
       isRecaptchaVerified: false,
-      recaptchaSiteKey: '6LfBRsYoAAAAAOS9H9wZ0NHm8vkyNTl7T-0IQ54W',
+      recaptchaSiteKey: '6LfX4M4oAAAAAHD3GNZbdlTINiWRJPNBEqL6nyQ7',
       showRecaptcha: true,
     };
   },

@@ -81,7 +81,7 @@ export default {
       loading: false,
       showModal: false,
       isResumeSent: false,
-      recaptchaSiteKey: '6Lf3u8YoAAAAAF5RyM6NoDiTM1lnuB5mvq8KP3Z_',
+      recaptchaSiteKey: '6LdP484oAAAAAA0zA4GFhdhfPYzhfV7MsOxioWDs',
       showRecaptcha: false,
       isRecaptchaVerified: false,
       formData: {
