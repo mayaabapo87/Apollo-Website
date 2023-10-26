@@ -2,6 +2,7 @@
 const express = require('express');
 const router = express.Router();
 const userController = require('../../controllers/apolloControllers/userController');
+const bcrypt = require('bcrypt');
 
 const isAuthenticated = (req, res, next) => {
   if (req.isAuthenticated()) {
@@ -25,7 +26,11 @@ router.put('/update/:id', isAuthenticated, async (req, res) => {
   try {
     const { id } = req.params;
     const newData = req.body;
-  
+    if (newData.password) {
+      const saltRounds = 10;
+      const hashedPassword = await bcrypt.hash(newData.password, saltRounds);
+      newData.password = hashedPassword;
+    }
     const updatedRows = await userController.updateUser(id, newData);
     if (updatedRows === 0) {
       return res.status(404).json({ error: 'User not found' });
