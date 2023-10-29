@@ -342,27 +342,29 @@
                 $('#resume-table-body').on('click', '.delete-button', function () {
                     const resumeId = $(this).data('id');
                     const rowCount = $('#resume-table-body tr').length;
-
-                    $.ajax({
-                        url: `<%= BACKEND_URL %>/api/resume/delete/${resumeId}`,
-                        type: 'DELETE',
-                        success: function () {
-                            fetchPositionData()
-                            fetchResumeData();
-
-                            if ($('#resume-table-body tr').length === 0) {
+                    if(window.confirm("Are you sure you want delete?")){
+                        $.ajax({
+                            url: `<%= BACKEND_URL %>/api/resume/delete/${resumeId}`,
+                            type: 'DELETE',
+                            success: function () {
                                 fetchPositionData()
-                                updateURL();
                                 fetchResumeData();
-                            }
-                            if (rowCount === 1 && currentPage!==1) {
-                                changePage(currentPage - 1);
-                            }
-                        },
-                        error: function (error) {
-                            console.error('Error deleting resume:', error);
-                        },
-                    });
+
+                                if ($('#resume-table-body tr').length === 0) {
+                                    fetchPositionData()
+                                    updateURL();
+                                    fetchResumeData();
+                                }
+                                if (rowCount === 1 && currentPage!==1) {
+                                    changePage(currentPage - 1);
+                                }
+                            },
+                            error: function (error) {
+                                console.error('Error deleting resume:', error);
+                            },
+                        });
+                    }
+          
                 });
 
                 //Initialize Data
@@ -372,17 +374,19 @@
             });
 
             document.getElementById('logout-button').addEventListener('click', function() {
-                $.ajax({
-                url: `<%= BACKEND_URL %>/api/logout/`,
-                type: 'GET',
-                success: function (response) {
-                    console.log('Logged out successfully.');
-                    window.location.href = '/login';
-                },
-                error: function (xhr, textStatus, error) {
-                    console.error('Error logging out:', error);
+                if(window.confirm("Are you sure you want to log out?")){
+                    $.ajax({
+                        url: `<%= BACKEND_URL %>/api/logout/`,
+                        type: 'GET',
+                        success: function (response) {
+                            console.log('Logged out successfully.');
+                            window.location.href = '/login';
+                        },
+                        error: function (xhr, textStatus, error) {
+                            console.error('Error logging out:', error);
+                        }
+                    });
                 }
-                });
             });
 
         </script>

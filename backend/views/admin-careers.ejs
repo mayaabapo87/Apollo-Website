@@ -597,42 +597,45 @@
                 $('#career-table-body').on('click', '.delete-button', function () {
                     const careerId = $(this).data('id');
                     const rowCount = $('#career-table-body tr').length;
-
-                    $.ajax({
-                        url: `<%= BACKEND_URL %>/api/career/delete/${careerId}`,
-                        type: 'DELETE',
-                        success: function () {
-                            fetchCareerData();
-
-                            if ($('#career-table-body tr').length === 0) {
-                                updateURL();
+                    if(window.confirm("Are you sure you want delete?")){
+                        $.ajax({
+                            url: `<%= BACKEND_URL %>/api/career/delete/${careerId}`,
+                            type: 'DELETE',
+                            success: function () {
                                 fetchCareerData();
-                            }
-                            if (rowCount === 1 && currentPage!==1) {
-                                changePage(currentPage - 1);
-                            }
-                        },
-                        error: function (error) {
-                            console.error('Error deleting career:', error);
-                        },
-                    });
+
+                                if ($('#career-table-body tr').length === 0) {
+                                    updateURL();
+                                    fetchCareerData();
+                                }
+                                if (rowCount === 1 && currentPage!==1) {
+                                    changePage(currentPage - 1);
+                                }
+                            },
+                            error: function (error) {
+                                console.error('Error deleting career:', error);
+                            },
+                        });
+                    }
                 });
 
                 fetchCareerData();
             });
 
             document.getElementById('logout-button').addEventListener('click', function() {
-                $.ajax({
-                url: `<%= BACKEND_URL %>/api/logout/`,
-                type: 'GET',
-                success: function (response) {
-                    console.log('Logged out successfully.');
-                    window.location.href = '/login';
-                },
-                error: function (xhr, textStatus, error) {
-                    console.error('Error logging out:', error);
+                if(window.confirm("Are you sure you want to log out?")){
+                    $.ajax({
+                        url: `<%= BACKEND_URL %>/api/logout/`,
+                        type: 'GET',
+                        success: function (response) {
+                            console.log('Logged out successfully.');
+                            window.location.href = '/login';
+                        },
+                        error: function (xhr, textStatus, error) {
+                            console.error('Error logging out:', error);
+                        }
+                    });
                 }
-                });
             });
             
         </script>

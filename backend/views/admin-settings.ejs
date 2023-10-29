@@ -195,7 +195,7 @@
                 $('#input-userdata').on('click', '.edit-password-button', function () {
                     const insertInModalHeader = document.getElementById('editModalHeader');
                     insertInModalHeader.innerHTML = `
-                        <h5>Change Passowrd</h5>
+                        <h5>Change Password</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     `;
                     const insertInModalBody = document.getElementById('insertInModalBody');
@@ -268,7 +268,19 @@
                         console.log(editInputValue);
                         formData.append('username', editInputValue);  
                     }else if(containerId === 'password-container'){
-                        formData.append('password', editInputValue);  
+                        fetchUserData();
+                        const oldpass = $('#old-password-input').val();
+                        console.log(password)
+                        if (oldpass != password){
+                            alert("Wrong old password!")
+                            return
+                        }
+                        const confirmpass = $('#confirm-password-input').val();
+                        if (confirmpass!=editInputValue){
+                            alert("Password does not match")
+                            return
+                        }
+                        formData.append('password', editInputValue);
                     }else if(containerId === 'contact-email-container'){
                         formData.append('to_email', editInputValue);  
                     }else if(containerId === 'email-container'){
@@ -304,17 +316,19 @@
                 fetchUserData();
             });
             document.getElementById('logout-button').addEventListener('click', function() {
-                $.ajax({
-                    url: `<%= BACKEND_URL %>/api/logout/`,
-                    type: 'GET',
-                    success: function (response) {
-                        console.log('Logged out successfully.');
-                        window.location.href = '/login';
-                    },
-                    error: function (xhr, textStatus, error) {
-                        console.error('Error logging out:', error);
-                    }
-                });
+                if(window.confirm("Are you sure you want to log out?")){
+                    $.ajax({
+                        url: `<%= BACKEND_URL %>/api/logout/`,
+                        type: 'GET',
+                        success: function (response) {
+                            console.log('Logged out successfully.');
+                            window.location.href = '/login';
+                        },
+                        error: function (xhr, textStatus, error) {
+                            console.error('Error logging out:', error);
+                        }
+                    });
+                }
             });
         </script>            
     </body>
