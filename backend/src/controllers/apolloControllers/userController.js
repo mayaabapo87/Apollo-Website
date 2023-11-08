@@ -3,6 +3,7 @@ const fs = require('fs');
 const path = require('path');
 const Users = require('../../models/apolloModels/Users');
 const { Sequelize } = require('sequelize');
+const bcrypt = require('bcrypt');
 
 // Retrieve a user
 async function getUser() {
@@ -27,7 +28,12 @@ async function updateUser(id, newData) {
   }
 }
 
+async function checkPassword(plainTextPassword, user) {
+  return bcrypt.compare(plainTextPassword, user.password);
+}
+
 module.exports = {
   getUser,
   updateUser,
+  checkPassword,
 };

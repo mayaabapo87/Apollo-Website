@@ -21,19 +21,6 @@ router.get('/getData', isAuthenticated, async (req, res) => {
   }
 });
 
-router.get('/checkPassword/:pass', isAuthenticated, async (req, res) => {
-  try {
-    const user = await userController.getUser();
-    const passwordMatch = await bcrypt.compare(pass, user.password);
-    if (!passwordMatch) {
-      return done(null, false, { message: 'Incorrect password.' });
-    }
-  } catch (error) {
-    res.status(500).json({ error: 'Unable to verify password' });
-  }
-});
-
-
 // Update a user by id
 router.put('/update/:id', isAuthenticated, async (req, res) => {
   try {
@@ -54,4 +41,14 @@ router.put('/update/:id', isAuthenticated, async (req, res) => {
   }
 });
 
+router.post('/checkPassword', isAuthenticated, async (req, res) => {
+  try {
+    const user = await userController.getUser();
+    const passwordMatch = await userController.checkPassword(req.body.password, user);
+    res.json({ passwordMatch });
+  } catch (error) {
+    res.status(500).json({ error: 'Unable to check password' });
+  }
+ });
+ 
 module.exports = router;

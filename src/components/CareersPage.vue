@@ -7,24 +7,22 @@
             <div id="carouselCareers" class="carousel carousel-fade">
                 <div class="carousel-inner p-5">                   
                     <div v-for="(set, index) in careerSets" :key="index" :class="['carousel-item', { active: index === 0 }]">
-                        <div v-for="detail in set" :key="detail.id" class="card border-maroon border-2 mx-auto">
-                            <div class="container my-5" >
+                        <div v-for="detail in set" :key="detail.id" class="card mx-auto">
+                            <div class="container mt-5" >
                                 <div class="justify-content-center allign-items-center">
-                                    <div class="p-0 pt-2 ">
+                                    <div class="p-0 pt-2">
                                         <img width="100" height="100" :src="`${urlBackend}/files/icons/${detail.iconPath.split('\\').pop()}`" class="card-img-top" alt="...">
                                     </div>
                                     <div class="card-body allign-text-start text-center py-0 pb-4">
-                                        <h3 class="card-title">{{ detail.name }}</h3>
+                                        <h3 class="card-title text-maroon">{{ detail.name }}</h3>
                                         <p class="card-text">{{ detail.location }}</p>
                                     </div>
                                 </div>
                             </div>
-                            <div class="position-absolute top-100 start-50 translate-middle mt-1">
-                                <button class="btn btn-maroon" :data-bs-target="'#career-details-'+detail.id" data-bs-toggle="modal">
-                                    Details
-                                </button>
-                            </div>
-                        </div>
+                            <button class="btn btn-maroon mx-auto mb-2" :data-bs-target="'#career-details-'+detail.id" data-bs-toggle="modal">
+                                Details
+                            </button>
+                         </div>
                     </div>
                 </div>
                 <div class=" text-center mt-3">

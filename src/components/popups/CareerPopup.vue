@@ -33,10 +33,10 @@
                     <div class="container">
                         <div class="row"> 
                             <div v-for="detail in filteredCareers" :key="detail.id" class="col-lg-4 my-1">   
-                                <div class="card border-maroon border-2 h-100" style="width: auto;">
+                                <div class="card border-maroon border-1 h-100" style="width: auto;">
                                     <img width="100" height="100" :src="`${urlBackend}/files/icons/${detail.iconPath.split('\\').pop()}`" class="card-img-top" alt="...">
                                     <div class="card-body">
-                                        <h5 class="card-title">{{ detail.name }}</h5>
+                                        <h5 class="card-title text-maroon">{{ detail.name }}</h5>
                                         <p class="card-text">{{ detail.location }}</p>
                                     </div>
 

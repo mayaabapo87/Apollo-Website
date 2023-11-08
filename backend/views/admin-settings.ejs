@@ -110,7 +110,7 @@
                 let to_email;
                 let updatedAt;
                 let username;
-        
+                let oldpassword;
                 function fetchUserData() {
                     $.get(`<%= BACKEND_URL %>/api/user/getData`, function (data) {
                         auth_passkey = data.auth_passkey;
@@ -200,6 +200,7 @@
                     `;
                     const insertInModalBody = document.getElementById('insertInModalBody');
                     insertInModalBody.innerHTML = `
+                    <div>
                         <div class="container my-2">
                             <input id="old-password-input" type="password" class="form-control" placeholder="Old Password" aria-label="Change" aria-describedby="input-group-left">
                         </div>
@@ -209,6 +210,7 @@
                         <div class="container my-2">
                             <input id="confirm-password-input" type="password" class="form-control" placeholder="Confirm Password" aria-label="Change" aria-describedby="input-group-left">
                         </div>
+                    </div>
                     `;
                  });
 
@@ -257,38 +259,56 @@
                     $('#edit-input').val(auth_passkey);
                 });
 
-
                 $('#insertInModalFooter').on('click', '.edit-button', function () {
                     const formData = new FormData();
                     const editInputValue = $('#edit-input').val();
-
                     const containerId = $('#edit-input').closest('.container').attr('id');
 
-                    if(containerId === 'user-container'){
+                    if (containerId === 'user-container') {
                         console.log(editInputValue);
-                        formData.append('username', editInputValue);  
-                    }else if(containerId === 'password-container'){
+                        formData.append('username', editInputValue);
+                    } else if (containerId === 'password-container') {
                         fetchUserData();
                         const oldpass = $('#old-password-input').val();
-                        console.log(password)
-                        if (oldpass != password){
-                            alert("Wrong old password!")
-                            return
-                        }
-                        const confirmpass = $('#confirm-password-input').val();
-                        if (confirmpass!=editInputValue){
-                            alert("Password does not match")
-                            return
-                        }
-                        formData.append('password', editInputValue);
-                    }else if(containerId === 'contact-email-container'){
-                        formData.append('to_email', editInputValue);  
-                    }else if(containerId === 'email-container'){
-                        formData.append('email', editInputValue);  
-                    }else if(containerId === 'passkey-container'){
-                        formData.append('auth_passkey', editInputValue);  
+                        $.ajax({
+                            url: '<%= BACKEND_URL %>/api/user/checkPassword',
+                            type: 'POST',
+                            data: { password: oldpass },
+                            success: function (response) {
+                                if (response.passwordMatch) {
+                                    const confirmpass = $('#confirm-password-input').val();
+                                    if (confirmpass != editInputValue) {
+                                        alert("Password does not match");
+                                        return;
+                                    } else if (editInputValue === "") {
+                                        alert("Password is empty");
+                                        return;
+                                    } else {
+                                        formData.append('password', editInputValue);
+                                        updateUser(formData);
+                                    }
+                                } else {
+                                    alert('Old password does not match');
+                                }
+                            },
+                            error: function (xhr, textStatus, error) {
+                                console.error(xhr.status + ': ' + xhr.statusText);
+                                alert('Error checking password');
+                            }
+                        });
+                    } else if (containerId === 'contact-email-container') {
+                        formData.append('to_email', editInputValue);
+                        updateUser(formData);
+                    } else if (containerId === 'email-container') {
+                        formData.append('email', editInputValue);
+                        updateUser(formData);
+                    } else if (containerId === 'passkey-container') {
+                        formData.append('auth_passkey', editInputValue);
+                        updateUser(formData);
                     }
+                });
 
+                function updateUser(formData) {
                     let object = {};
                     for (let pair of formData.entries()) {
                         object[pair[0]] = pair[1];
@@ -311,10 +331,12 @@
                             }
                         }
                     });
-                });
+                }
 
+               
                 fetchUserData();
             });
+
             document.getElementById('logout-button').addEventListener('click', function() {
                 if(window.confirm("Are you sure you want to log out?")){
                     $.ajax({

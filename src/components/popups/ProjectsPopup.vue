@@ -13,7 +13,7 @@
                           <input v-model="searchQuery" type="text" class="form-control" id="searchInput" placeholder="Search...">
                       </div>
                   </form>
-                  <button type="button" class="close " data-bs-dismiss="modal" aria-label="Close"></button>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
               </div>
               <div class="modal-body">
                   <div class="row justify-content-center">
@@ -26,7 +26,7 @@
                                       <p class="fs-6 text-dark"  v-html="set.description"></p>
                                   </div>
                               </div>
-                              <button type="button" class="button-more btn-outline-maroon" data-bs-toggle="modal"
+                              <button type="button" class="btn btn-maroon" data-bs-toggle="modal"
                               :data-bs-target="'#projectDetails' + index">
                               Learn More
                             </button>

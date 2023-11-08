@@ -7,12 +7,12 @@
       <div id="ourProjects" class="collapse show text-center tab-pane fade active h-100">
         <div class="container">
           <div id="carouselProjects" class="carousel my-auto carousel-fade" data-bs-ride="carousel">
-            <div class="carousel-inner my-2">
+            <div class="carousel-inner my-2 p-5">
               <div v-for="(set, index) in projectData" :key="index" :class="['carousel-item', { active: index === 0 }]">
                 <!--Desktop Project-->
                 <div class="d-none d-xl-block">
                   <div class="d-flex justify-content-center">
-                    <div class="card border-1  w-75" style="height:350px">
+                    <div class="card border-1" style="height:350px">
                       <div class="card-body">
                         <div class="text-center">
                           <img :src="`${urlBackend}/files/icons/${set.iconPath.split('\\').pop()}`" class="project-image img-fluid rounded" alt="..." style="width: 30%; height: 10%;">
@@ -22,7 +22,7 @@
                           
                           <p class="text-dark" style="font-size: 1.1rem;"  v-html="set.description"></p>
                         </div>
-                        <button type="button" class="button-more btn-outline-maroon" data-bs-toggle="modal"
+                        <button type="button" class="btn btn-maroon" data-bs-toggle="modal"
                           :data-bs-target="'#projectDetails' + index">
                           Learn More
                         </button>
@@ -34,7 +34,7 @@
 
                 <!--Tablet Project-->
                 <div class="d-none d-sm-block d-xl-none d-xxl-none h-100 w-100  justify-content-center">
-                  <div class="card h-100 w-75 mx-auto">
+                  <div class="card h-100  mx-auto">
                     <div class="card-body">
                       <img :src="`${urlBackend}/files/icons/${set.iconPath.split('\\').pop()}`" class="card-img-top tablet-image img-fluid" alt="...">
                       <div class="text-center">
@@ -42,7 +42,7 @@
                         <div class="container">
                           <p class="text-dark "  v-html="set.description"></p>
                         </div>
-                        <button type="button" class="button-more btn-outline-maroon" data-bs-toggle="modal"
+                        <button type="button" class="btn btn-maroon" data-bs-toggle="modal"
                           :data-bs-target="'#projectDetails' + index">
                           Learn More
                         </button>
@@ -61,7 +61,7 @@
                           <h2 class="text-maroon "  v-html="set.name"></h2>
                           <p class="text-dark "  v-html="set.description"></p>
                         </div>
-                        <button type="button" class="button-more btn-outline-maroon" data-bs-toggle="modal"
+                        <button type="button" class="btn btn-maroon" data-bs-toggle="modal"
                           :data-bs-target="'#projectDetails' + index">
                           Learn More
                         </button>
@@ -101,8 +101,9 @@
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="projectDetailsModalLabel"  v-html="set.name"></h5>
-          <button type="button" class="close " data-bs-dismiss="modal" aria-label="Close" >
-          </button>
+           
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+
         </div>
         <div class="modal-body">
           <p style="text-align:justify" v-html="set.detail"></p>

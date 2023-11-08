@@ -20,7 +20,7 @@
                                 <!--Desktop Partners-->
                                 <div class="d-none d-xl-block">
                                     <div class="d-flex justify-content-center">
-                                        <div class="card border-0">
+                                        <div class="card w-100">
                                             <div class="card-body">
                                                 <img width="150" height="150" :src="`${urlBackend}/files/icons/${set.iconPath.split('\\').pop()}`" alt="...">
                                                 <div class="text-center">
@@ -34,7 +34,7 @@
 
                                 <!--Tablet Partners-->
                                 <div class="d-none d-sm-block d-xl-none d-xxl-none h-100 w-100  justify-content-center">
-                                    <div class="card border-0 h-100 w-75 mx-auto">
+                                    <div class="card w-100">
                                         <div class="card-body">
                                             <img width="150" height="150" :src="`${urlBackend}/files/icons/${set.iconPath.split('\\').pop()}`" alt="...">
                                             <div class="text-center">
@@ -50,7 +50,7 @@
                                 <!--Phone Partners-->
                                 <div class="d-block d-sm-none ">
                                     <div class="d-flex justify-content-center align-items-center">
-                                        <div class="card border-0" style="height: 300px;">
+                                        <div class="card w-100" style="height: 300px;">
                                             <div class="card-body">
                                                 <img width="150" height="150" :src="`${urlBackend}/files/icons/${set.iconPath.split('\\').pop()}`" class="card-img-top" alt="...">
                                                 <div class="text-center">
@@ -85,17 +85,22 @@
                                     <!--Desktop Stories-->
                                     <div class="d-none d-xl-block">
                                         <div class="d-flex justify-content-center align-items-center">
+                                            <div class="card w-100">
+                                        <div class="card-body">
                                             <div class="text-center text-dark" style="height: auto;">
                                                 <h2 class="text-dark">{{ set.name }}</h2>
                                                 <p>{{ set.description }}</p>
                                             </div>
                                         </div>
                                     </div>
+                                          
+                                        </div>
+                                    </div>
 
                                     <!--Tablet Stories-->
                                     <div class="d-none d-sm-block d-xl-none d-xxl-none">
                                         <div class="d-flex justify-content-center align-items-center" style="height: 100%;">
-                                            <div class="card border-0 border" style="width: 100%;">
+                                            <div class="card w-100" style="width: 100%;">
                                                 <div class="card-body">
                                                 <div class="text-center">
                                                     <h2 class="text-dark">{{ set.name }}</h2>
@@ -109,7 +114,7 @@
                                     <!--Phone Stories-->
                                     <div class="d-block d-sm-none">
                                         <div class="d-flex justify-content-center align-items-center vertical-scrollable" style="height: 100%;">
-                                            <div class="card border-0 border" style="width: 100%;">
+                                            <div class="card w-100" style="width: 100%;">
                                                 <div class="card-body">
                                                 <div class="text-center">
                                                     <h2 class="text-dark">{{ set.name }}</h2>
