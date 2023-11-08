@@ -267,6 +267,7 @@
                     if (containerId === 'user-container') {
                         console.log(editInputValue);
                         formData.append('username', editInputValue);
+                        updateUser(formData);
                     } else if (containerId === 'password-container') {
                         fetchUserData();
                         const oldpass = $('#old-password-input').val();
@@ -332,8 +333,6 @@
                         }
                     });
                 }
-
-               
                 fetchUserData();
             });
 
